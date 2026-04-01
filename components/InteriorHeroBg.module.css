@@ -1,0 +1,93 @@
+.heroBg {
+  position: relative;
+  overflow: hidden;
+  padding: var(--spacing-4xl) 0 var(--spacing-3xl);
+}
+
+.bgContainer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+/* Base positions */
+.blob1 {
+  width: 600px;
+  height: 600px;
+  top: -100px;
+  left: -100px;
+}
+.blob2 {
+  width: 500px;
+  height: 500px;
+  top: 40%;
+  right: -100px;
+}
+.blob3 {
+  width: 400px;
+  height: 400px;
+  bottom: -50px;
+  left: 30%;
+}
+
+/* Purple Blobs */
+.blob1_purple { background: #c4b5fd; filter: blur(80px); opacity: 0.8; animation: float1 12s ease-in-out infinite alternate; }
+.blob2_purple { background: #e0d7ff; filter: blur(80px); opacity: 0.6; animation: float2 10s ease-in-out infinite alternate; }
+.blob3_purple { background: #ffffff; filter: blur(60px); opacity: 0.4; animation: float3 8s ease-in-out infinite alternate; }
+
+/* Teal Blobs */
+.blob1_teal { background: #b2dfdb; filter: blur(80px); opacity: 0.8; animation: floatTeal1 12s ease-in-out infinite alternate; }
+.blob2_teal { background: #dbeafe; filter: blur(80px); opacity: 0.6; animation: floatTeal2 14s ease-in-out infinite alternate; }
+.blob3_teal { background: #ffffff; filter: blur(60px); opacity: 0.4; animation: floatTeal3 16s ease-in-out infinite alternate; }
+
+/* Default Blobs */
+.blob1_default { background: #ececec; filter: blur(80px); opacity: 0.8; animation: floatTeal1 12s ease-in-out infinite alternate; }
+.blob2_default { background: #f5f5f5; filter: blur(80px); opacity: 0.6; animation: floatTeal2 14s ease-in-out infinite alternate; }
+.blob3_default { background: #ffffff; filter: blur(60px); opacity: 0.4; animation: floatTeal3 16s ease-in-out infinite alternate; }
+
+/* Mint Blobs */
+.blob1_mint { background: #b7e4c7; filter: blur(80px); opacity: 0.8; animation: float1 12s ease-in-out infinite alternate; }
+.blob2_mint { background: #d8f3dc; filter: blur(80px); opacity: 0.6; animation: float2 14s ease-in-out infinite alternate; }
+.blob3_mint { background: #ffffff; filter: blur(60px); opacity: 0.4; animation: float3 16s ease-in-out infinite alternate; }
+
+/* Lilac Blobs */
+.blob1_lilac { background: #e0c3fc; filter: blur(80px); opacity: 0.8; animation: floatTeal1 12s ease-in-out infinite alternate; }
+.blob2_lilac { background: #dcd3ff; filter: blur(80px); opacity: 0.6; animation: floatTeal2 14s ease-in-out infinite alternate; }
+.blob3_lilac { background: #ffffff; filter: blur(60px); opacity: 0.4; animation: floatTeal3 16s ease-in-out infinite alternate; }
+
+/* Peach Blobs */
+.blob1_peach { background: #ffe5b4; filter: blur(80px); opacity: 0.8; animation: float1 12s ease-in-out infinite alternate; }
+.blob2_peach { background: #ffdab9; filter: blur(80px); opacity: 0.6; animation: float2 14s ease-in-out infinite alternate; }
+.blob3_peach { background: #ffffff; filter: blur(60px); opacity: 0.4; animation: float3 16s ease-in-out infinite alternate; }
+
+/* Dark Blobs */
+.darkBg { background-color: #1a202c; }
+.dark {
+  --color-bg: #1a202c;
+  --color-text: #f3f3f3;
+  --color-text-secondary: #a0aec0;
+  --color-border: #2d3748;
+  --color-surface: #2a3441;
+  color: var(--color-text);
+}
+.blob1_dark { background: #2c5252; filter: blur(80px); opacity: 0.7; animation: floatTeal1 12s ease-in-out infinite alternate; }
+.blob2_dark { background: #1a3636; filter: blur(80px); opacity: 0.6; animation: floatTeal2 14s ease-in-out infinite alternate; }
+.blob3_dark { background: #0d1a1a; filter: blur(60px); opacity: 0.5; animation: floatTeal3 16s ease-in-out infinite alternate; }
+
+/* Keyframes Purple */
+@keyframes float1 { from { transform: translate(0, 0) } to { transform: translate(40px, 30px) } }
+@keyframes float2 { from { transform: translate(100px, 50px) } to { transform: translate(60px, 80px) } }
+@keyframes float3 { from { transform: translate(200px, 100px) } to { transform: translate(240px, 70px) } }
+/* Keyframes Teal */
+@keyframes floatTeal1 { from { transform: translate(0, 0) } to { transform: translate(30px, 40px) } }
+@keyframes floatTeal2 { from { transform: translate(80px, 60px) } to { transform: translate(50px, 90px) } }
+@keyframes floatTeal3 { from { transform: translate(160px, 80px) } to { transform: translate(190px, 50px) } }
+

@@ -1,0 +1,90 @@
+.inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  width: 100%;
+}
+
+.title {
+  font-size: var(--font-size-h1);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.emailSection {
+  margin-bottom: var(--spacing-3xl);
+}
+
+.emailLink {
+  display: block;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 300;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+  transition: opacity var(--transition-fast);
+  margin-bottom: var(--spacing-sm);
+}
+
+.emailLink:hover {
+  opacity: 0.6;
+}
+
+.responseTime {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-weight: 300;
+}
+
+.locationGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+}
+
+.locationCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xl);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.locationCard:hover {
+  border-color: var(--color-text);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.locationLabel {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.locationAddress {
+  font-size: var(--font-size-body);
+  font-weight: 300;
+  color: var(--color-text);
+}
+
+.viewMap {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text);
+  margin-top: var(--spacing-sm);
+  transition: opacity var(--transition-fast);
+}
+
+.locationCard:hover .viewMap {
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .locationGrid {
+    grid-template-columns: 1fr;
+  }
+}

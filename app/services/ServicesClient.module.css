@@ -1,0 +1,350 @@
+.heroInner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: clamp(32px, 6vw, 56px);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--spacing-md);
+}
+
+.heroSubline {
+  font-size: var(--font-size-body);
+  font-weight: 300;
+  color: var(--color-text-secondary);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Services content layout */
+.servicesContent {
+  padding: 0 0 var(--spacing-4xl);
+  background: transparent;
+}
+
+.servicesLayout {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: var(--spacing-3xl);
+}
+
+/* Sidebar */
+.sidebar {
+  position: sticky;
+  top: calc(var(--header-height) + var(--spacing-2xl));
+  align-self: start;
+}
+
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.sidebarLink {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--color-text-secondary);
+  padding: 2px 0 2px 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.sidebarLink::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.5px;
+  height: 0;
+  background-color: var(--color-dark);
+  transition: height 0.3s ease;
+}
+
+.sidebarLink:hover {
+  color: var(--color-dark);
+}
+
+.sidebarActive {
+  color: var(--color-dark);
+  font-weight: 600;
+}
+
+.sidebarActive::before {
+  height: 18px;
+}
+
+.sidebarBadges {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+}
+
+.sidebarBadge {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.4;
+  transition: all 0.3s ease;
+}
+
+.sidebarBadge:hover {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+/* Service blocks */
+.serviceBlocks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4xl);
+}
+
+.serviceBlock {
+  scroll-margin-top: calc(var(--header-height) + var(--spacing-2xl));
+}
+
+.serviceImageWrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: var(--spacing-lg);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.serviceImage {
+  object-fit: cover;
+}
+
+.serviceTitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.serviceDesc {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  max-width: 700px;
+  margin-bottom: var(--spacing-lg);
+}
+
+.includedSection {
+  margin-top: var(--spacing-lg);
+}
+
+.includedTitle {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-md);
+  opacity: 0.8;
+}
+
+.includedGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px var(--spacing-2xl);
+}
+
+.includedItem {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bullet {
+  opacity: 0.5;
+  font-size: 10px;
+}
+
+/* Ways to work */
+.waysSection {
+  padding: var(--spacing-4xl) 0;
+  background: white;
+  scroll-margin-top: var(--header-height);
+}
+
+.waysInner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.waysTitle {
+  font-size: 32px;
+  font-weight: 300;
+  margin-bottom: var(--spacing-3xl);
+  max-width: 600px;
+  line-height: 1.2;
+}
+
+.waysGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-2xl);
+}
+
+.wayCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wayCardTitle {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text);
+  padding-bottom: 8px;
+  border-bottom: 1.5px solid #000;
+  align-self: flex-start;
+}
+
+.wayCardDesc {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* Collab CTA */
+.collabCta {
+  padding: var(--spacing-4xl) 0;
+  background: #c3f2ef;
+}
+
+.collabInner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--spacing-lg);
+}
+
+.collabCard {
+  background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-3xl);
+  color: white;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.collabCardContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-3xl);
+  align-items: center;
+}
+
+.collabCardTitle {
+  font-size: 42px;
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: var(--spacing-xl);
+  color: white;
+}
+
+.collabCardDesc {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.collabLogoGrid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-xl);
+}
+
+.collabLogo {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .servicesLayout {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .sidebar {
+    position: static;
+  }
+
+  .sidebarNav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sidebarLink {
+    padding: 6px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    font-size: 11px;
+  }
+
+  .sidebarLink::before { display: none; }
+
+  .sidebarActive {
+    background: var(--color-dark);
+    color: white;
+    border-color: var(--color-dark);
+  }
+
+  .sidebarBadges {
+    display: none;
+  }
+
+  .waysGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .includedGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .collabCardContent {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .collabCardTitle {
+    font-size: 32px;
+  }
+
+  .collabLogoGrid {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

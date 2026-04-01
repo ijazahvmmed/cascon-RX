@@ -1,0 +1,86 @@
+.morphBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  padding: 4px 4px 4px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  white-space: nowrap;
+  background: transparent;
+  color: #0a0a0a;
+  border: 1px solid transparent; 
+  /* Using border transparent so it doesn't shift, or just no border if it's not needed. 
+     The background is managed by ::before */
+  overflow: hidden;
+  transform: translateZ(0); /* For smooth will-change behavior */
+}
+
+/* The circle background that sweeps */
+.morphBtn::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  /* Total height inside is 30px, so we match it */
+  height: 28px;
+  width: 28px;
+  background: #0a0a0a;
+  border-radius: 999px;
+  transform-origin: right center;
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1), background 0.6s ease;
+  z-index: 0;
+}
+
+.morphBtn:hover::before {
+  /* Expand to cover full pill width including padding */
+  width: calc(100% - 8px);
+  /* Optional: change background to something else on sweep, but spec says background is #0a0a0a */
+}
+
+.label {
+  position: relative;
+  z-index: 1;
+  color: #0a0a0a;
+  transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.morphBtn:hover .label {
+  color: #ffffff;
+}
+
+.icon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: #ffffff;
+}
+
+/* LIGHT VARIANT (Inverse) */
+.light {
+  color: #ffffff;
+}
+
+.light::before {
+  background: #ffffff;
+}
+
+.light .label {
+  color: #ffffff;
+}
+
+.light:hover .label {
+  color: #0a0a0a;
+}
+
+.light .icon {
+  color: #0a0a0a;
+}

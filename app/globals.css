@@ -1,0 +1,232 @@
+/* ============================================
+   GLOBALS — CSS Custom Properties, Reset, Base Typography ONLY
+   ============================================ */
+
+:root {
+  /* Colors */
+  --color-bg: #ffffff;
+  --color-text: #0a0a0a;
+  --color-text-secondary: #555555;
+  --color-accent: #ff0000;
+  --color-border: #dadada;
+  --color-surface: #f3f3f3;
+  --color-dark: #0a0a0a;
+  --color-white: #ffffff;
+
+  /* Typography */
+  --font-size-h1: clamp(26px, 5vw, 48px);
+  --font-size-h2: clamp(22px, 4vw, 40px);
+  --font-size-h3: clamp(18px, 3vw, 28px);
+  --font-size-h4: clamp(16px, 2.5vw, 20px);
+  --font-size-body: clamp(14px, 2vw, 16px);
+  --font-size-sm: 13px;
+  --font-size-xs: 11px;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+  --spacing-2xl: 64px;
+  --spacing-3xl: 96px;
+  --spacing-4xl: 128px;
+  --header-height: 64px;
+
+  /* Max widths */
+  --max-width: 1440px;
+  --content-max: 1200px;
+
+  /* Border radius */
+  --radius-pill: 999px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Transitions */
+  --transition-fast: 0.2s var(--ease-out-expo);
+  --transition-base: 0.4s var(--ease-out-quint);
+}
+
+/* ============================================
+   CSS RESET
+   ============================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: var(--font-size-body);
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  overflow-x: hidden;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ============================================
+   BASE TYPOGRAPHY
+   ============================================ */
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: 600;
+  line-height: 46px;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+p {
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
+   SKIP LINK (Accessibility)
+   ============================================ */
+.skipLink {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 10000;
+  padding: 8px 16px;
+  background: var(--color-dark);
+  color: var(--color-white);
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-sm);
+  transition: top 0.2s;
+}
+
+.skipLink:focus {
+  top: 16px;
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+/* ============================================
+   GLOBAL BUTTONS
+   ============================================ */
+.btn-primary {
+  background: #f3f3f3;
+  color: #0a0a0a;
+  border: 1px solid #dadada;
+  border-radius: 999px;
+  padding: 6px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #dadada;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0a0a0a;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 6px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #222222;
+}
+
+.btn-secondary .arrow {
+  transition: transform 0.3s ease;
+}
+
+.btn-secondary:hover .arrow {
+  transform: translateX(3px);
+}
