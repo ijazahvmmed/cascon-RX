@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
 import ScrollReveal from '@/components/ScrollReveal';
 import MorphButton from '@/components/MorphButton';
-import { CAL_LINK } from '@/lib/constants';
 import styles from './careers.module.css';
 
 export const metadata: Metadata = {
@@ -43,9 +41,9 @@ export default function CareersPage() {
         <section className={styles.heroSection}>
           <div className={styles.heroInner}>
             <ScrollReveal>
-              <h1 className={styles.heroTitle}>Career-curious? Let's talk.</h1>
+              <h1 className={styles.heroTitle}>Career-curious? Let&apos;s talk.</h1>
               <p className={styles.heroSubtitle}>
-                We're a fast-paced, execution-heavy agency that values independence. Most communication happens async, most decisions happen fast.
+                We&apos;re a fast-paced, execution-heavy agency that values independence. Most communication happens async, most decisions happen fast.
               </p>
               <div className={styles.heroBtns}>
                 <MorphButton href="#positions" label="Current positions" />
@@ -65,20 +63,20 @@ export default function CareersPage() {
               <ScrollReveal>
                 <div className={styles.grid2x2}>
                   <div className={styles.valueItem}>
-                    <h4>Do it like it's yours</h4>
+                    <h4>Do it like it&apos;s yours</h4>
                     <p>Take ownership. We treat every store and asset like it belongs to us. No cutting corners, no half-baked solutions.</p>
                   </div>
                   <div className={styles.valueItem}>
                     <h4>Impact over fancy</h4>
-                    <p>If it doesn't drive conversions or elevate the brand, it's just noise. We build for revenue, not just for Dribbble.</p>
+                    <p>If it doesn&apos;t drive conversions or elevate the brand, it&apos;s just noise. We build for revenue, not just for Dribbble.</p>
                   </div>
                   <div className={styles.valueItem}>
                     <h4>Honest communication</h4>
-                    <p>If something's broken, say so. If you're stuck, ask. If you disagree, explain why. No politics, no games.</p>
+                    <p>If something&apos;s broken, say so. If you&apos;re stuck, ask. If you disagree, explain why. No politics, no games.</p>
                   </div>
                   <div className={styles.valueItem}>
                     <h4>Independence</h4>
-                    <p>You don't wait to be told what to do — you figure it out, do it, and ask for feedback after. We trust people to manage their output.</p>
+                    <p>You don&apos;t wait to be told what to do — you figure it out, do it, and ask for feedback after. We trust people to manage their output.</p>
                   </div>
                 </div>
               </ScrollReveal>
@@ -130,11 +128,11 @@ export default function CareersPage() {
               </div>
               <div className={styles.principleCard}>
                 <h3>No pure strategists - all execution, all the time</h3>
-                <p>Strategy is useless if it's not implemented. Everyone here, from designers to developers, spends 90% of their time actively building.</p>
+                <p>Strategy is useless if it&apos;s not implemented. Everyone here, from designers to developers, spends 90% of their time actively building.</p>
               </div>
               <div className={styles.principleCard}>
                 <h3>Concept is nothing without execution</h3>
-                <p>You can have the best idea in the world, but if the final export is sloppy, it doesn't matter. We pride ourselves on the last 10% of polish.</p>
+                <p>You can have the best idea in the world, but if the final export is sloppy, it doesn&apos;t matter. We pride ourselves on the last 10% of polish.</p>
               </div>
             </div>
           </ScrollReveal>
@@ -167,7 +165,7 @@ export default function CareersPage() {
           <div className={styles.sectionGrid}>
             <div className={styles.sectionLeft}>
               <span className={styles.sectionLabel}>OPEN ROLES</span>
-              <h2 className={styles.sectionTitle}>It's meant to be</h2>
+              <h2 className={styles.sectionTitle}>It&apos;s meant to be</h2>
             </div>
             <div className={styles.sectionRight}>
               <div className={styles.filterRow}>
@@ -201,7 +199,7 @@ export default function CareersPage() {
             <p className={styles.darkDesc}>
               We maintain a global network of elite freelance talent. If you specialize in Shopify development, UI/UX, or AI media generation, we want to hear from you.
               <br/><br/>
-              Submit your portfolio and we'll reach out when a project fits.
+              Submit your portfolio and we&apos;ll reach out when a project fits.
             </p>
           </ScrollReveal>
           

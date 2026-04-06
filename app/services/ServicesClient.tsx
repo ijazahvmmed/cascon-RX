@@ -227,7 +227,7 @@ export default function ServicesClient() {
                   </div>
                   <div className={styles.dpRight}>
                     <p>
-                      The reality is most brands don't need a bloated agency roster. They need a team that operates like an internal growth arm, without the overhead.
+                      The reality is most brands don&apos;t need a bloated agency roster. They need a team that operates like an internal growth arm, without the overhead.
                       <br/><br/>
                       Our partners trust us to handle their heaviest lifting across everything from platform migrations to global AI campaigns.
                     </p>

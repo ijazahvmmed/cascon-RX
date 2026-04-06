@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
+
 import ScrollReveal from '@/components/ScrollReveal';
 import MorphButton from '@/components/MorphButton';
 import { CAL_LINK } from '@/lib/constants';
@@ -59,7 +59,7 @@ export default function AboutPage() {
           <div className={styles.heroInner}>
             <ScrollReveal>
               <h1 className={styles.heroTitle}>
-                We're building a <strong>benchmark agency</strong> to make the creative industry even more creative
+                We&apos;re building a <strong>benchmark agency</strong> to make the creative industry even more creative
               </h1>
             </ScrollReveal>
 
@@ -74,10 +74,10 @@ export default function AboutPage() {
                   </h2>
                   <div className={styles.aboutDesc}>
                     <p>
-                      We started Cascon because we kept seeing the same gap — ecommerce brands with great products but stores that didn't convert, and content that didn't look the part. We built a two-pillar agency to fix both: Shopify development engineered for revenue, and AI media production that looks better than traditional shoots.
+                      We started Cascon because we kept seeing the same gap — ecommerce brands with great products but stores that didn&apos;t convert, and content that didn&apos;t look the part. We built a two-pillar agency to fix both: Shopify development engineered for revenue, and AI media production that looks better than traditional shoots.
                     </p>
                   </div>
-                  
+
                   <div className={styles.featuresGrid}>
                     <div className={styles.featureItem}>
                       <h4>Partners</h4>
@@ -148,7 +148,7 @@ export default function AboutPage() {
                 </div>
                 <div className={styles.officeMeta}>
                   <span className={styles.officeName}>COVENTRY</span>
-                  <span className={styles.officeAddress}>Headquarters, UK<br/>Est. 2023</span>
+                  <span className={styles.officeAddress}>Headquarters, UK<br />Est. 2023</span>
                 </div>
               </div>
             </ScrollReveal>
@@ -159,7 +159,7 @@ export default function AboutPage() {
                 </div>
                 <div className={styles.officeMeta}>
                   <span className={styles.officeName}>KOCHI</span>
-                  <span className={styles.officeAddress}>Creative Hub, IN<br/>Est. 2024</span>
+                  <span className={styles.officeAddress}>Creative Hub, IN<br />Est. 2024</span>
                 </div>
               </div>
             </ScrollReveal>
@@ -173,10 +173,10 @@ export default function AboutPage() {
           <ScrollReveal>
             <span className={styles.mapSmallLabel}>JOIN THE JOURNEY</span>
             <h2 className={styles.mapTitle}>
-              You can find Cascon here. And here.<br/>And here. And here. And here.
+              You can find Cascon here. And here.<br />And here. And here. And here.
             </h2>
             <p className={styles.mapDesc}>
-              We are always on the lookout for elite talent everywhere.<br/>Discover the right position for you.
+              We are always on the lookout for elite talent everywhere.<br />Discover the right position for you.
             </p>
             <div className={styles.mapBtnRow}>
               <MorphButton href={CAL_LINK} label="See all roles" variant="light" external />
