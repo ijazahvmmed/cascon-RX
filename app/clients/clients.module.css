@@ -72,7 +72,7 @@
 }
 
 .hero h1 {
-  font-size: clamp(28px, 4vw, 54px); /* Matched to homepage hero */
+  font-size: clamp(28px, 4vw, 42px); /* Matched to homepage hero */
   font-weight: 300;
   line-height: 1;
   letter-spacing: -0.03em;
