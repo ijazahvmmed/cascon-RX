@@ -3,18 +3,11 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { services } from '@/data/services';
-import InteriorHeroBg from '@/components/InteriorHeroBg';
+import { clients } from '@/data/clients';
 import ScrollReveal from '@/components/ScrollReveal';
 import MorphButton from '@/components/MorphButton';
 import { CAL_LINK } from '@/lib/constants';
 import styles from './ServicesClient.module.css';
-
-const partnerBadges = [
-  { src: '/images/badges/shopifypartners.png', alt: 'Shopify Partners' },
-  { src: '/images/badges/figma.png', alt: 'Figma' },
-  { src: '/images/badges/higgsfield.png', alt: 'Higgsfield' },
-  { src: '/images/badges/supermoney.png', alt: 'SuperMoney' },
-];
 
 const waysToWork = [
   {
@@ -36,176 +29,235 @@ export default function ServicesClient() {
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
   useEffect(() => {
-    const observers: IntersectionObserver[] = [];
+    const visibleSections = new Set<string>();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let changed = false;
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            visibleSections.add(entry.target.id);
+            changed = true;
+          } else {
+            visibleSections.delete(entry.target.id);
+            changed = true;
+          }
+        });
+
+        if (changed) {
+          const activeId = services.find((svc) => visibleSections.has(svc.id))?.id;
+          if (activeId) {
+            setActiveSection(activeId);
+          }
+        }
+      },
+      { rootMargin: '-20% 0px -40% 0px', threshold: 0 }
+    );
 
     services.forEach((svc) => {
       const el = sectionRefs.current[svc.id];
-      if (!el) return;
-
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveSection(svc.id);
-          }
-        },
-        { threshold: 0.3, rootMargin: '-20% 0px -60% 0px' }
-      );
-
-      observer.observe(el);
-      observers.push(observer);
+      if (el) observer.observe(el);
     });
 
-    return () => observers.forEach((o) => o.disconnect());
+    return () => observer.disconnect();
   }, []);
 
   return (
     <>
-    <InteriorHeroBg variant="teal">
-      {/* Hero */}
-      <div className={styles.heroInner}>
-        <h1 className={styles.heroTitle}>We made brands and grow brands.</h1>
-        <p className={styles.heroSubline}>
-          Selected projects across Shopify, AI media, performance marketing, and more.
-        </p>
-      </div>
+      <div className={styles.lightSectionWrapper}>
+        <div className={styles.bgContainer}>
+          <div className={`${styles.blob} ${styles.blob1}`} />
+          <div className={`${styles.blob} ${styles.blob2}`} />
+          <div className={`${styles.blob} ${styles.blob3}`} />
+        </div>
 
-      {/* Services content */}
-      <div className={styles.servicesContent}>
-        <div className={styles.servicesLayout}>
-          {/* Sticky sidebar */}
-          <aside className={styles.sidebar}>
-            <nav className={styles.sidebarNav}>
+        {/* 1. HERO */}
+        <section className={styles.heroSection}>
+          <div className={styles.heroInner}>
+            <ScrollReveal>
+              <h1 className={styles.heroTitle}>We create, launch, <br/>and grow brands.</h1>
+              <p className={styles.heroSubtitle}>
+                Shopify development, AI media, performance marketing, automation, and SEO. Most clients use a few of these together. We act as your growth engine.
+              </p>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* 2. SERVICES LIST */}
+        <section className={styles.servicesGridSection}>
+          <div className={styles.servicesGridInner}>
+            {/* Sticky Sidebar */}
+            <aside className={styles.sidebar}>
+              <div className={styles.sidebarSticky}>
+                <span className={styles.sidebarLabel}>ALL SERVICES</span>
+                <nav className={styles.sidebarNav}>
+                  {services.map((svc) => (
+                    <a
+                      key={svc.id}
+                      href={`#${svc.id}`}
+                      className={`${styles.sidebarLink} ${activeSection === svc.id ? styles.sidebarActive : ''}`}
+                    >
+                      {svc.name}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+            </aside>
+
+            {/* Scrollable Blocks */}
+            <div className={styles.serviceBlocks}>
               {services.map((svc) => (
-                <a
+                <section
                   key={svc.id}
-                  href={`#${svc.id}`}
-                  className={`${styles.sidebarLink} ${activeSection === svc.id ? styles.sidebarActive : ''}`}
+                  id={svc.id}
+                  ref={(el) => { sectionRefs.current[svc.id] = el; }}
+                  className={styles.serviceRow}
                 >
-                  {svc.name}
-                </a>
-              ))}
-            </nav>
-            <div className={styles.sidebarBadges}>
-              {partnerBadges.map((badge) => (
-                <Image
-                  key={badge.alt}
-                  src={badge.src}
-                  alt={badge.alt}
-                  width={80}
-                  height={28}
-                  className={styles.sidebarBadge}
-                />
+                  <ScrollReveal>
+                    <div className={styles.serviceRowInner}>
+                      <div className={styles.serviceRowText}>
+                        <h2 className={styles.serviceTitle}>{svc.name}</h2>
+                        <p className={styles.serviceDesc}>{svc.description}</p>
+                        
+                        <div className={styles.serviceExpertise}>
+                          <span className={styles.expertiseLabel}>EXPERTISE INCLUDES</span>
+                          <div className={styles.expertiseGrid}>
+                            {svc.included.map((item) => (
+                              <div key={item} className={styles.expertiseItem}>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.checkIcon}>
+                                  <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                                {item}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className={styles.serviceRowMedia}>
+                        {svc.image.includes('vimeo.com') ? (
+                          <iframe
+                            src={svc.image}
+                            className={styles.mediaFrame}
+                            style={{ border: 'none', width: '100%', height: '100%', objectFit: 'cover' }}
+                            allow="autoplay; fullscreen"
+                            loading="lazy"
+                            title={svc.name}
+                          />
+                        ) : svc.image.endsWith('.mp4') ? (
+                          <video
+                            src={svc.image}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                            className={styles.mediaFrame}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          />
+                        ) : (
+                          <Image
+                            src={svc.image}
+                            alt={svc.name}
+                            fill
+                            sizes="(max-width: 960px) 100vw, 50vw"
+                            className={styles.mediaFrame}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                </section>
               ))}
             </div>
-          </aside>
+          </div>
+        </section>
 
-          {/* Scrollable blocks */}
-          <div className={styles.serviceBlocks}>
-            {services.map((svc) => (
-              <section
-                key={svc.id}
-                id={svc.id}
-                ref={(el) => { sectionRefs.current[svc.id] = el; }}
-                className={styles.serviceBlock}
-              >
-                <ScrollReveal>
-                  <div className={styles.serviceImageWrap}>
-                    {svc.image.includes('vimeo.com') ? (
-                      <iframe
-                        src={svc.image}
-                        className={styles.serviceImage}
-                        style={{ border: 'none', width: '100%', height: '100%', objectFit: 'cover' }}
-                        allow="autoplay; fullscreen"
-                        loading="lazy"
-                        title={svc.name}
-                      />
-                    ) : svc.image.endsWith('.mp4') ? (
-                      <video
-                        src={svc.image}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className={styles.serviceImage}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
-                    ) : (
-                      <Image
-                        src={svc.image}
-                        alt={svc.name}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 60vw"
-                        className={styles.serviceImage}
-                        priority={svc.id === services[0].id}
-                      />
-                    )}
+        {/* 3. WAYS TO WORK */}
+        <section className={styles.collaborationSection}>
+          <div className={styles.collabInner}>
+            <ScrollReveal>
+              <span className={styles.collabLabel}>COLLABORATION MODELS</span>
+              <h2 className={styles.collabTitle}>
+                Typically, we work in three different ways with our clients:
+              </h2>
+            </ScrollReveal>
+
+            <div className={styles.collabCards}>
+              {waysToWork.map((way, idx) => (
+                <ScrollReveal key={idx} delay={0.1 * idx}>
+                  <div className={styles.collabCard}>
+                    <h3 className={styles.collabCardTitle}>{way.title}</h3>
+                    <p className={styles.collabCardDesc}>{way.description}</p>
+                    
+                    {/* Visual checkmark styling mimicking the screenshot */}
+                    <ul className={styles.collabCardList}>
+                      <li>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17L4 12"/></svg>
+                        Dedicated strategy
+                      </li>
+                      <li>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17L4 12"/></svg>
+                        Full team access
+                      </li>
+                      <li>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17L4 12"/></svg>
+                        Transparent reporting
+                      </li>
+                      <li>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17L4 12"/></svg>
+                        Slack channel
+                      </li>
+                    </ul>
                   </div>
-                  <h2 className={styles.serviceTitle}>{svc.name}</h2>
-                  <p className={styles.serviceDesc}>{svc.description}</p>
-                  <div className={styles.includedSection}>
-                    <h3 className={styles.includedTitle}>WHAT&apos;S INCLUDED</h3>
-                    <div className={styles.includedGrid}>
-                      {svc.included.map((item) => (
-                        <div key={item} className={styles.includedItem}>
-                          <span className={styles.bullet}>•</span> {item}
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 4. DARK PANEL CTA */}
+        <section className={styles.darkPanelSection}>
+          <div className={styles.darkPanelInner}>
+            <ScrollReveal>
+              <div className={styles.darkPanelBox}>
+                <div className={styles.dpTextRow}>
+                  <div className={styles.dpLeft}>
+                    <h2 className={styles.dpTitle}>From in-house to full house</h2>
+                    <MorphButton href={CAL_LINK} label="Let's talk" variant="light" external />
+                  </div>
+                  <div className={styles.dpRight}>
+                    <p>
+                      The reality is most brands don't need a bloated agency roster. They need a team that operates like an internal growth arm, without the overhead.
+                      <br/><br/>
+                      Our partners trust us to handle their heaviest lifting across everything from platform migrations to global AI campaigns.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Marquee inside the dark box */}
+                <div className={styles.dpMarquee}>
+                  <div className={styles.dpTrack}>
+                    <div className={styles.dpSlide}>
+                      {clients.map((c, i) => (
+                        <div key={i} className={styles.dpTextLogo}>
+                          {c.name}
+                        </div>
+                      ))}
+                      {/* Repeat for seamless transition */}
+                      {clients.map((c, i) => (
+                        <div key={`dup-${i}`} className={styles.dpTextLogo}>
+                          {c.name}
                         </div>
                       ))}
                     </div>
                   </div>
-                </ScrollReveal>
-              </section>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Ways to work */}
-      <section className={styles.waysSection} id="collaboration-models">
-        <div className={styles.waysInner}>
-          <ScrollReveal>
-            <h2 className={styles.waysTitle}>
-              You can work with Cascon in three different ways.
-            </h2>
-          </ScrollReveal>
-          <div className={styles.waysGrid}>
-            {waysToWork.map((way) => (
-              <ScrollReveal key={way.title}>
-                <div className={styles.wayCard}>
-                  <h3 className={styles.wayCardTitle}>{way.title}</h3>
-                  <p className={styles.wayCardDesc}>{way.description}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Collaboration CTA */}
-      <section className={styles.collabCta}>
-        <div className={styles.collabInner}>
-          <div className={styles.collabCard}>
-            <ScrollReveal>
-              <div className={styles.collabCardContent}>
-                <div className={styles.collabCardLeft}>
-                  <h2 className={styles.collabCardTitle}>Built in-house to sell in-house.</h2>
-                  <MorphButton href={CAL_LINK} label="Hire us" external variant="light" />
-                </div>
-                <div className={styles.collabCardRight}>
-                  <p className={styles.collabCardDesc}>
-                    We&apos;re currently taking on new projects for May 2026. Schedule a call to lock in your slot.
-                  </p>
                 </div>
               </div>
             </ScrollReveal>
           </div>
-          <div className={styles.collabLogoGrid}>
-             {partnerBadges.map((badge) => (
-               <Image key={badge.alt} src={badge.src} alt={badge.alt} width={120} height={40} className={styles.collabLogo} />
-             ))}
-          </div>
-        </div>
-      </section>
-    </InteriorHeroBg>
+        </section>
+
+      </div>
     </>
   );
 }

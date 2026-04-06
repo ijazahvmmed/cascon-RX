@@ -108,127 +108,156 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* ===== 2. ABOUT STATEMENT ===== */}
-      <section className={styles.aboutStatement}>
-        <ScrollReveal>
-          <div className={styles.aboutInner}>
-            <h2 className={styles.aboutTitle}>
-              <CharacterReveal text="We're building Cascon to be the agency " />
-              <strong><CharacterReveal text="that actually ships" /></strong>
-              <CharacterReveal text=", Shopify stores and AI media done properly." />
-            </h2>
-            <MorphButton href="/about" label="About us" />
-          </div>
-        </ScrollReveal>
-      </section>
-
-      {/* ===== 3. CASE STUDIES GRID ===== */}
-      <section className={styles.caseStudies}>
-        <div className={styles.caseInner}>
-          <div className={styles.caseGrid}>
-            {featuredClients.map((client) => (
-              <CaseCard
-                key={client.name}
-                name={client.name}
-                description={`${client.tags.join(' · ')}`}
-                tags={client.tags}
-                image={client.image!}
-                externalUrl={client.externalUrl!}
-              />
-            ))}
-          </div>
-          <div className={styles.caseCtaWrap}>
-            <MorphButton href="/work" label="See All Work" />
-          </div>
+      {/* ===== LIGHT SECTION WRAPPER ===== */}
+      <div className={styles.lightSectionWrapper}>
+        <div className={styles.bgContainer}>
+          <div className={`${styles.blob} ${styles.blob1}`} />
+          <div className={`${styles.blob} ${styles.blob2}`} />
+          <div className={`${styles.blob} ${styles.blob3}`} />
+          <div className={`${styles.blob} ${styles.blob4}`} />
         </div>
-      </section>
 
-      {/* ===== 4. CLIENTS MARQUEE ===== */}
-      <section className={styles.clientsMarquee}>
-        <div className={styles.marqueeInner}>
+        {/* ===== 2. ABOUT STATEMENT ===== */}
+        <section className={styles.aboutStatement}>
           <ScrollReveal>
-            <h2 className={styles.marqueeTitle}>
-              We work with brands building and scaling their business, including:
-            </h2>
-          </ScrollReveal>
-          <div className={styles.marqueeTrack}>
-            <div className={styles.marqueeSlide}>
-              {marqueeNames.map((name, i) => (
-                <span key={`${name}-${i}`} className={styles.marqueeName}>
-                  {name}
-                </span>
-              ))}
+            <div className={styles.aboutInner}>
+              <h2 className={styles.aboutTitle}>
+                <CharacterReveal text="We're building Cascon to be the agency " />
+                <strong><CharacterReveal text="that actually ships" /></strong>
+                <CharacterReveal text=", Shopify stores and AI media done properly." />
+              </h2>
+              <MorphButton href="/about" label="About us" />
             </div>
-          </div>
+          </ScrollReveal>
+        </section>
 
-          {/* Partners */}
-          <div className={styles.partnersRow}>
-            <span className={styles.partnersLabel}>OUR PARTNERS</span>
-            <div className={styles.partnerLogos}>
-              {partnerBadges.map((badge) => (
-                <Image
-                  key={badge.alt}
-                  src={badge.src}
-                  alt={badge.alt}
-                  width={160}
-                  height={32}
-                  className={styles.partnerLogo}
-                  priority
+        {/* ===== 3. CASE STUDIES GRID ===== */}
+        <section className={styles.caseStudies}>
+          <div className={styles.caseInner}>
+            <div className={styles.caseGrid}>
+              {featuredClients.map((client) => (
+                <CaseCard
+                  key={client.name}
+                  name={client.name}
+                  description={`${client.tags.join(' · ')}`}
+                  tags={client.tags}
+                  image={client.image!}
+                  externalUrl={client.externalUrl!}
                 />
               ))}
             </div>
+            <div className={styles.caseCtaWrap}>
+              <MorphButton href="/work" label="See All Work" />
+            </div>
           </div>
+        </section>
 
-          <div className={styles.clientsCta}>
-            <Link href="/clients" className={styles.clientsLink}>
-              Our clients
-            </Link>
-            <Link href="/clients" className={styles.circleBtn} aria-label="View all clients">
-              →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== 5. TESTIMONIALS ===== */}
-      <TestimonialSlider />
-
-      {/* ===== 6. SERVICES SECTION ===== */}
-      <section className={styles.servicesSection}>
-        <div className={styles.servicesInner}>
-          <ScrollReveal>
-            <div className={styles.servicesLeft}>
-              <h2 className={styles.servicesTitle}>
-                We build Shopify stores and AI media that actually perform.
+        {/* ===== 4. CLIENTS MARQUEE ===== */}
+        <section className={styles.clientsMarquee}>
+          <div className={styles.marqueeInner}>
+            <ScrollReveal>
+              <h2 className={styles.marqueeTitle}>
+                We work with brands building and scaling their business, including:
               </h2>
-              <p className={styles.servicesDesc}>
-                Because it makes sense to offer them together — most ecommerce brands need both a store that converts and content that sells. We do both under one roof.
-              </p>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={0.15}>
-            <div className={styles.servicesRight}>
-              <span className={styles.servicesLabel}>SERVICES</span>
-              <ul className={styles.servicesList}>
-                {serviceNames.map((svc, i) => (
-                  <li key={svc.id}>
-                    <Link
-                      href={`/services#${svc.id}`}
-                      className={`${styles.serviceItem} ${i === activeService ? styles.serviceItemActive : ''}`}
-                      onMouseEnter={() => setActiveService(i)}
-                    >
-                      <span className={styles.serviceNameLight}>{svc.name}</span>
-                      <span className={styles.serviceNameBold}>{svc.name}</span>
-                      <span className={styles.serviceArrow}>→</span>
-                    </Link>
-                  </li>
+            </ScrollReveal>
+            <div className={styles.marqueeTrack}>
+              <div className={styles.marqueeSlide}>
+                {marqueeNames.map((name, i) => (
+                  <span key={`${name}-${i}`} className={styles.marqueeName}>
+                    {name}
+                  </span>
                 ))}
-              </ul>
-              <MorphButton href="/services" label="All services" />
+              </div>
             </div>
-          </ScrollReveal>
-        </div>
-      </section>
+
+            {/* Partners */}
+            <div className={styles.partnersRow}>
+              <span className={styles.partnersLabel}>OUR PARTNERS</span>
+              <div className={styles.partnerLogos}>
+                {partnerBadges.map((badge) => (
+                  <Image
+                    key={badge.alt}
+                    src={badge.src}
+                    alt={badge.alt}
+                    width={160}
+                    height={32}
+                    className={styles.partnerLogo}
+                    priority
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.clientsCta}>
+              <Link href="/clients" className={styles.clientsLink}>
+                Our clients
+              </Link>
+              <Link href="/clients" className={styles.circleBtn} aria-label="View all clients">
+                →
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ===== 5. TESTIMONIALS ===== */}
+        <TestimonialSlider />
+
+        {/* ===== 6. SERVICES SECTION ===== */}
+        <section className={styles.servicesSection}>
+          <div className={styles.servicesInner}>
+            <ScrollReveal>
+              <div className={styles.servicesLeft}>
+                <h2 className={styles.servicesTitle}>
+                  We build Shopify stores and AI media that actually perform.
+                </h2>
+                <p className={styles.servicesDesc}>
+                  Because it makes sense to offer them together — most ecommerce brands need both a store that converts and content that sells. We do both under one roof.
+                </p>
+              </div>
+            </ScrollReveal>
+            <ScrollReveal delay={0.15}>
+              <div className={styles.servicesRight}>
+                <span className={styles.servicesLabel}>SERVICES</span>
+                <ul className={styles.servicesList}>
+                  {serviceNames.map((svc, i) => (
+                    <li key={svc.id}>
+                      <Link
+                        href={`/services#${svc.id}`}
+                        className={`${styles.serviceItem} ${i === activeService ? styles.serviceItemActive : ''}`}
+                        onMouseEnter={() => setActiveService(i)}
+                      >
+                        <span className={styles.serviceNameLight}>{svc.name}</span>
+                        <span className={styles.serviceNameBold}>{svc.name}</span>
+                        <span className={styles.serviceArrow}>→</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <MorphButton href="/services" label="All services" />
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* ===== 8. CAREERS CTA ===== */}
+        {/* We place careers inside lightSectionWrapper to maintain background consistency until locations */}
+        <section className={styles.careersCta}>
+          <div className={styles.careersInner}>
+            <ScrollReveal>
+              <div className={styles.careersBadge}>
+                <span className={styles.badgeDot} />
+                Open position
+              </div>
+              <h3 className={styles.careersRole}>Growth Operator</h3>
+              <div className={styles.careersLinks}>
+                <Link href="/work">Work</Link>
+                <Link href="/clients">Clients</Link>
+                <Link href="/about">About us</Link>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+      </div>
 
       {/* ===== 7. LOCATIONS ===== */}
       <section className={styles.locationsSection}>
@@ -240,7 +269,7 @@ export default function HomeClient() {
             <p className={styles.locationsDesc}>
               We work across time zones and markets, usually where the work needs to happen.
             </p>
-            <MorphButton href="/cascon" label="Read more" />
+            <MorphButton href="/cascon" label="Read more" variant="light" />
           </ScrollReveal>
           <div className={styles.mapDots}>
             <span className={styles.dot} style={{ top: '30%', left: '45%' }} />
@@ -252,31 +281,13 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* ===== 8. CAREERS CTA ===== */}
-      <section className={styles.careersCta}>
-        <div className={styles.careersInner}>
-          <ScrollReveal>
-            <div className={styles.careersBadge}>
-              <span className={styles.badgeDot} />
-              Open position
-            </div>
-            <h3 className={styles.careersRole}>Growth Operator</h3>
-            <div className={styles.careersLinks}>
-              <Link href="/work">Work</Link>
-              <Link href="/clients">Clients</Link>
-              <Link href="/about">About us</Link>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
       {/* ===== 9. COLLABORATION CTA ===== */}
       <section className={styles.collabCta}>
         <div className={styles.collabInner}>
           <ScrollReveal>
             <h2 className={styles.collabTitle}>Want to work together?</h2>
             <p className={styles.collabDesc}>We can start with a conversation.</p>
-            <MorphButton href={CAL_LINK} label="Hire us" external />
+            <MorphButton href={CAL_LINK} label="Hire us" external variant="light" />
           </ScrollReveal>
         </div>
       </section>

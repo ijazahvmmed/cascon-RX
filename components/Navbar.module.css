@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  transition: transform 0.4s var(--ease-out-quint), background 0.3s ease, box-shadow 0.3s ease, border-radius 0.3s ease, max-width 0.4s var(--ease-out-quint), left 0.4s var(--ease-out-quint);
+  transition: transform 0.4s var(--ease-out-quint), background 0.3s ease, box-shadow 0.3s ease, border-radius 0.3s ease, width 0.4s var(--ease-out-quint), left 0.4s var(--ease-out-quint), right 0.4s var(--ease-out-quint);
 }
 
 .navbar.hidden {
@@ -13,11 +13,16 @@
 
 @media (min-width: 960px) {
   .navbar.scrolled {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    left: 16px;
+    right: 16px;
+    width: calc(100% - 32px);
+    border-radius: 0 0 24px 24px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-top: none;
   }
 }
 
