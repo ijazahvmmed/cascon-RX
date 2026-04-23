@@ -29,7 +29,7 @@ export const services: Service[] = [
     name: 'AI Media Production',
     description:
       'Product photography, lifestyle shoots, and video content created with AI tools. Studio-quality output delivered in days, not weeks — at a fraction of the cost.',
-    image: 'https://player.vimeo.com/video/1177636206?background=1&autoplay=1&loop=1&muted=1&quality=auto',
+    image: '/horizontal.mp4',
     included: [
       'AI product photography',
       'Lifestyle scene generation',
@@ -97,7 +97,7 @@ export const services: Service[] = [
     name: 'Content Strategy',
     description:
       'Content planning and production for brands that want to build organic authority. Blog content, landing pages, email copy, and social media — all aligned to your growth goals.',
-    image: 'https://player.vimeo.com/video/1177636206?background=1&autoplay=1&loop=1&muted=1&quality=auto',
+    image: '/horizontal.mp4',
     included: [
       'Content audits',
       'Editorial calendars',

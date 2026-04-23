@@ -34,9 +34,12 @@ const serviceNames = services.slice(0, 5);
 
 export default function HomeClient() {
   const [activeService, setActiveService] = useState(0);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const heroRef = useRef<HTMLDivElement>(null);
   const locationRef = useRef<HTMLDivElement>(null);
+  const desktopVideoRef = useRef<HTMLVideoElement>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const heroContent = heroRef.current;
@@ -62,30 +65,76 @@ export default function HomeClient() {
     return () => ctx.revert();
   }, []);
 
+  // Video playback detection
+  useEffect(() => {
+    const handlePlaying = () => {
+      setIsVideoPlaying(true);
+    };
+
+    const desktopVideo = desktopVideoRef.current;
+    const mobileVideo = mobileVideoRef.current;
+
+    if (desktopVideo) desktopVideo.addEventListener('playing', handlePlaying);
+    if (mobileVideo) mobileVideo.addEventListener('playing', handlePlaying);
+
+    // Fail-safe: Reveal after 2.5s anyway
+    const timer = setTimeout(() => {
+      setIsVideoPlaying(true);
+    }, 2500);
+
+    return () => {
+      if (desktopVideo) desktopVideo.removeEventListener('playing', handlePlaying);
+      if (mobileVideo) mobileVideo.removeEventListener('playing', handlePlaying);
+      clearTimeout(timer);
+    };
+  }, []);
+
   return (
     <>
       {/* ===== 1. HERO ===== */}
       <section className={styles.hero}>
+        {/* Immediate Load Layer (Images) */}
+        <div 
+          className={styles.heroImage} 
+          style={{ opacity: isVideoPlaying ? 0 : 1 }}
+        >
+          <picture>
+            <source media="(min-width: 768px)" srcSet="/images/hero/Hor_image.webp" />
+            <img src="/images/hero/Ver_image.webp" alt="Hero background" className={styles.heroImg} />
+          </picture>
+        </div>
+
         {/* Desktop video */}
         <div className={styles.videoDesktop}>
-          <iframe
-            src="https://player.vimeo.com/video/1177636206?background=1&autoplay=1&loop=1&muted=1&quality=auto"
-            className={styles.videoIframe}
-            allow="autoplay; fullscreen"
-            loading="lazy"
-            title="Cascon showreel desktop"
-          />
+          <video
+            ref={desktopVideoRef}
+            className={styles.heroVideo}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            <source src="/horizontal.mp4" type="video/mp4" />
+          </video>
         </div>
+
         {/* Mobile video */}
         <div className={styles.videoMobile}>
-          <iframe
-            src="https://player.vimeo.com/video/1177636252?background=1&autoplay=1&loop=1&muted=1&quality=auto"
-            className={styles.videoIframe}
-            allow="autoplay; fullscreen"
-            loading="lazy"
-            title="Cascon showreel mobile"
-          />
+          <video
+            ref={mobileVideoRef}
+            className={styles.heroVideo}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            <source src="/vertical.mp4" type="video/mp4" />
+          </video>
         </div>
+
+
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent} ref={heroRef} style={{ opacity: 0, willChange: 'opacity, filter, transform' }}>
           <h1 className={styles.heroTitle}>
@@ -107,6 +156,7 @@ export default function HomeClient() {
           </div>
         </div>
       </section>
+
 
       {/* ===== LIGHT SECTION WRAPPER ===== */}
       <div className={styles.lightSectionWrapper}>

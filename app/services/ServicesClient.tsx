@@ -135,16 +135,7 @@ export default function ServicesClient() {
                       </div>
 
                       <div className={styles.serviceRowMedia}>
-                        {svc.image.includes('vimeo.com') ? (
-                          <iframe
-                            src={svc.image}
-                            className={styles.mediaFrame}
-                            style={{ border: 'none', width: '100%', height: '100%', objectFit: 'cover' }}
-                            allow="autoplay; fullscreen"
-                            loading="lazy"
-                            title={svc.name}
-                          />
-                        ) : svc.image.endsWith('.mp4') ? (
+                        {svc.image.endsWith('.mp4') ? (
                           <video
                             src={svc.image}
                             autoPlay

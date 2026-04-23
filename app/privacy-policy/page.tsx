@@ -90,14 +90,6 @@ export default function PrivacyPolicyPage() {
                 .
               </li>
               <li>
-                <strong>Vimeo</strong> — for hosting video content on our homepage. Vimeo
-                may set cookies when videos are loaded. See{' '}
-                <a href="https://vimeo.com/privacy" target="_blank" rel="noopener noreferrer">
-                  Vimeo&apos;s Privacy Policy
-                </a>
-                .
-              </li>
-              <li>
                 <strong>Plausible Analytics</strong> — for privacy-friendly website analytics.
                 No personal data is collected. See{' '}
                 <a href="https://plausible.io/privacy" target="_blank" rel="noopener noreferrer">
