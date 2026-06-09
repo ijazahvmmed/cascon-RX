@@ -8,6 +8,8 @@ import ScrollReveal from '@/components/ScrollReveal';
 import MorphButton from '@/components/MorphButton';
 import { CAL_LINK } from '@/lib/constants';
 import styles from './ServicesClient.module.css';
+import ShopifyServiceSection from './ShopifyServiceSection';
+import SeoAeoServiceSection from './SeoAeoServiceSection';
 
 const waysToWork = [
   {
@@ -106,59 +108,85 @@ export default function ServicesClient() {
 
             {/* Scrollable Blocks */}
             <div className={styles.serviceBlocks}>
-              {services.map((svc) => (
-                <section
-                  key={svc.id}
-                  id={svc.id}
-                  ref={(el) => { sectionRefs.current[svc.id] = el; }}
-                  className={styles.serviceRow}
-                >
-                  <ScrollReveal>
-                    <div className={styles.serviceRowInner}>
-                      <div className={styles.serviceRowText}>
-                        <h2 className={styles.serviceTitle}>{svc.name}</h2>
-                        <p className={styles.serviceDesc}>{svc.description}</p>
-                        
-                        <div className={styles.serviceExpertise}>
-                          <span className={styles.expertiseLabel}>EXPERTISE INCLUDES</span>
-                          <div className={styles.expertiseGrid}>
-                            {svc.included.map((item) => (
-                              <div key={item} className={styles.expertiseItem}>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.checkIcon}>
-                                  <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                                </svg>
-                                {item}
-                              </div>
-                            ))}
+              {services.map((svc) => {
+                if (svc.id === 'shopify') {
+                  return (
+                    <section
+                      key={svc.id}
+                      id={svc.id}
+                      ref={(el) => { sectionRefs.current[svc.id] = el; }}
+                    >
+                      <ShopifyServiceSection />
+                    </section>
+                  );
+                }
+
+                if (svc.id === 'seo-aeo') {
+                  return (
+                    <section
+                      key={svc.id}
+                      id={svc.id}
+                      ref={(el) => { sectionRefs.current[svc.id] = el; }}
+                    >
+                      <SeoAeoServiceSection />
+                    </section>
+                  );
+                }
+
+                return (
+                  <section
+                    key={svc.id}
+                    id={svc.id}
+                    ref={(el) => { sectionRefs.current[svc.id] = el; }}
+                    className={styles.serviceRow}
+                  >
+                    <ScrollReveal>
+                      <div className={styles.serviceRowInner}>
+                        <div className={styles.serviceRowText}>
+                          <h2 className={styles.serviceTitle}>{svc.name}</h2>
+                          <p className={styles.serviceDesc}>{svc.description}</p>
+                          
+                          <div className={styles.serviceExpertise}>
+                            <span className={styles.expertiseLabel}>EXPERTISE INCLUDES</span>
+                            <div className={styles.expertiseGrid}>
+                              {svc.included.map((item) => (
+                                <div key={item} className={styles.expertiseItem}>
+                                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.checkIcon}>
+                                    <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                  </svg>
+                                  {item}
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className={styles.serviceRowMedia}>
-                        {svc.image.endsWith('.mp4') ? (
-                          <video
-                            src={svc.image}
-                            autoPlay
-                            loop
-                            muted
-                            playsInline
-                            className={styles.mediaFrame}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                          />
-                        ) : (
-                          <Image
-                            src={svc.image}
-                            alt={svc.name}
-                            fill
-                            sizes="(max-width: 960px) 100vw, 50vw"
-                            className={styles.mediaFrame}
-                          />
-                        )}
+                        <div className={styles.serviceRowMedia}>
+                          {svc.image.endsWith('.mp4') ? (
+                            <video
+                              src={svc.image}
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
+                              className={styles.mediaFrame}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                          ) : (
+                            <Image
+                              src={svc.image}
+                              alt={svc.name}
+                              fill
+                              sizes="(max-width: 960px) 100vw, 50vw"
+                              className={styles.mediaFrame}
+                            />
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </ScrollReveal>
-                </section>
-              ))}
+                    </ScrollReveal>
+                  </section>
+                );
+              })}
             </div>
           </div>
         </section>
