@@ -14,6 +14,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileSubmenuOpen, setMobileSubmenuOpen] = useState(false);
   const lastScrollY = useRef(0);
 
   const handleScroll = useCallback(() => {
@@ -52,6 +53,7 @@ export default function Navbar() {
   // Close menu on route change
   useEffect(() => {
     setMenuOpen(false);
+    setMobileSubmenuOpen(false);
   }, [pathname]);
 
   const isHomePage = pathname === '/';
@@ -79,15 +81,37 @@ export default function Navbar() {
           </Link>
 
           <div className={styles.navLinks}>
-            {mainNavLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`${styles.navLink} ${pathname === link.href ? styles.active : ''}`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {mainNavLinks.map((link) => {
+              if (link.href === '/services') {
+                return (
+                  <div key={link.href} className={styles.navItemWithDropdown}>
+                    <Link
+                      href={link.href}
+                      className={`${styles.navLink} ${pathname.startsWith(link.href) ? styles.active : ''}`}
+                    >
+                      {link.label}
+                    </Link>
+                    <div className={styles.dropdownMenu}>
+                      <Link href="/services#shopify" className={styles.dropdownItem}>Shopify Development</Link>
+                      <Link href="/services#ai-media" className={styles.dropdownItem}>AI Media Production</Link>
+                      <Link href="/services#performance-marketing" className={styles.dropdownItem}>Performance Marketing</Link>
+                      <Link href="/services#automation" className={styles.dropdownItem}>Automation</Link>
+                      <Link href="/services#seo-aeo" className={styles.dropdownItem}>SEO & AEO</Link>
+                      <Link href="/services#content-strategy" className={styles.dropdownItem}>Content Strategy</Link>
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`${styles.navLink} ${pathname === link.href ? styles.active : ''}`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
 
           <div className={styles.navRight}>
@@ -119,6 +143,56 @@ export default function Navbar() {
           <div className={styles.overlayContent}>
             {mainNavLinks.map((link, i) => {
               const isActive = pathname === link.href;
+              if (link.href === '/services') {
+                return (
+                  <div key={link.href} className={styles.overlayLinkWrapperWithSub} style={{ transitionDelay: `${i * 0.05 + 0.1}s` }}>
+                    <div className={styles.mobileLinkHeader}>
+                      {isActive && <span className={styles.activeDot}>•</span>}
+                      <Link
+                        href={link.href}
+                        className={`${styles.overlayLink} ${isActive ? styles.overlayLinkActive : ''}`}
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        {link.label}
+                      </Link>
+                      <button
+                        className={styles.submenuToggle}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setMobileSubmenuOpen(!mobileSubmenuOpen);
+                        }}
+                        aria-label="Toggle services submenu"
+                      >
+                        <svg
+                          width="12"
+                          height="8"
+                          viewBox="0 0 12 8"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className={`${styles.toggleArrow} ${mobileSubmenuOpen ? styles.toggleArrowActive : ''}`}
+                        >
+                          <path
+                            d="M1.5 2L6 6.5L10.5 2"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                    <div className={`${styles.mobileSubmenu} ${mobileSubmenuOpen ? styles.mobileSubmenuOpen : ''}`}>
+                      <Link href="/services#shopify" className={styles.mobileSubmenuLink} onClick={() => setMenuOpen(false)}>Shopify Development</Link>
+                      <Link href="/services#ai-media" className={styles.mobileSubmenuLink} onClick={() => setMenuOpen(false)}>AI Media Production</Link>
+                      <Link href="/services#performance-marketing" className={styles.mobileSubmenuLink} onClick={() => setMenuOpen(false)}>Performance Marketing</Link>
+                      <Link href="/services#automation" className={styles.mobileSubmenuLink} onClick={() => setMenuOpen(false)}>Automation</Link>
+                      <Link href="/services#seo-aeo" className={styles.mobileSubmenuLink} onClick={() => setMenuOpen(false)}>SEO & AEO</Link>
+                      <Link href="/services#content-strategy" className={styles.mobileSubmenuLink} onClick={() => setMenuOpen(false)}>Content Strategy</Link>
+                    </div>
+                  </div>
+                );
+              }
               return (
                 <div key={link.href} className={styles.overlayLinkWrapper} style={{ transitionDelay: `${i * 0.05 + 0.1}s` }}>
                   {isActive && <span className={styles.activeDot}>•</span>}
