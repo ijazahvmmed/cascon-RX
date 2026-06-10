@@ -69,6 +69,19 @@
   font-size: var(--font-size-body);
   font-weight: 300;
   color: var(--color-text);
+  white-space: pre-line;
+}
+
+.phoneLink {
+  font-size: var(--font-size-sm);
+  font-weight: 300;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.phoneLink:hover {
+  color: var(--color-text);
 }
 
 .viewMap {

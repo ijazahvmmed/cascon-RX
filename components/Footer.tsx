@@ -42,15 +42,22 @@ export default function Footer() {
 
         {/* Addresses */}
         <div className={styles.addresses}>
-          <a
-            href="https://maps.app.goo.gl/96Lyq4e7ddpVSaQA6"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.address}
-          >
-            <span className={styles.addressLabel}>COVENTRY</span>
-            <span className={styles.addressText}>Coventry, West Midlands, CV1, UK</span>
-          </a>
+          <div className={styles.address}>
+            <span className={styles.addressLabel}>DUBAI</span>
+            <a
+              href="https://goo.gl/maps/CyJdFtbyL9QZ12Sk8"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.addressText}
+            >
+              Office #2220, 22nd Floor, Tower Plaza<br />
+              Sheikh Zayed Road, Dubai<br />
+              United Arab Emirates
+            </a>
+            <a href="tel:+971547475998" className={styles.phoneLink}>
+              +971 54 747 5998
+            </a>
+          </div>
           <a
             href="https://maps.app.goo.gl/UiSin4CaNRrEMMmF6"
             target="_blank"

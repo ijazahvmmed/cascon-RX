@@ -18,8 +18,8 @@ export default function NotFound() {
         <MorphButton href="/" label="Go back home" />
         <p className={styles.small}>
           Or email us:{' '}
-          <a href="mailto:hello@wecascon.com" className={styles.emailLink}>
-            hello@wecascon.com
+          <a href="mailto:info@cascondigital.com" className={styles.emailLink}>
+            info@cascondigital.com
           </a>
         </p>
       </div>

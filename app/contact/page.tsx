@@ -36,26 +36,35 @@ export default function ContactPage() {
         </div>
 
         <div className={styles.locationGrid}>
-          <a
-            href={LOCATIONS.coventry.mapUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.locationCard}
-          >
+          <div className={styles.locationCard}>
             <span className={styles.locationLabel}>{LOCATIONS.coventry.label}</span>
             <span className={styles.locationAddress}>{LOCATIONS.coventry.address}</span>
-            <span className={styles.viewMap}>View Map →</span>
-          </a>
-          <a
-            href={LOCATIONS.kochi.mapUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.locationCard}
-          >
+            {LOCATIONS.coventry.phone && (
+              <a href={`tel:${LOCATIONS.coventry.phone.replace(/\s+/g, '')}`} className={styles.phoneLink}>
+                {LOCATIONS.coventry.phone}
+              </a>
+            )}
+            <a
+              href={LOCATIONS.coventry.mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.viewMap}
+            >
+              View Map →
+            </a>
+          </div>
+          <div className={styles.locationCard}>
             <span className={styles.locationLabel}>{LOCATIONS.kochi.label}</span>
             <span className={styles.locationAddress}>{LOCATIONS.kochi.address}</span>
-            <span className={styles.viewMap}>View Map →</span>
-          </a>
+            <a
+              href={LOCATIONS.kochi.mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.viewMap}
+            >
+              View Map →
+            </a>
+          </div>
         </div>
       </div>
     </InteriorHeroBg>

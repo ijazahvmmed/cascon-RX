@@ -10,12 +10,12 @@ export const metadata: Metadata = {
 };
 
 const jobs = [
-  { category: 'Creative & UI/UX', title: 'Graphic Designer', link: 'mailto:hello@wecascon.com' },
+  { category: 'Creative & UI/UX', title: 'Graphic Designer', link: 'mailto:info@cascondigital.com' },
 ];
 
 const freelanceJobs = [
-  { category: 'Freelance / Remote', title: 'Freelance: Public Relations (PR)', link: 'mailto:hello@wecascon.com' },
-  { category: 'Freelance / Remote', title: 'Freelance: Front-end Developer', link: 'mailto:hello@wecascon.com' },
+  { category: 'Freelance / Remote', title: 'Freelance: Public Relations (PR)', link: 'mailto:info@cascondigital.com' },
+  { category: 'Freelance / Remote', title: 'Freelance: Front-end Developer', link: 'mailto:info@cascondigital.com' },
 ];
 
 const nextSteps = [
@@ -91,11 +91,11 @@ export default function CareersPage() {
               <div className={styles.officesRow}>
                 <div className={styles.officeCard}>
                   <div className={styles.officeImgWrap}>
-                    <Image src="/images/pages/careers.webp" alt="Coventry Office" fill className={styles.oImg} sizes="50vw" />
+                    <Image src="/images/pages/careers.webp" alt="Dubai Office" fill className={styles.oImg} sizes="50vw" />
                   </div>
                   <div className={styles.officeMeta}>
-                    <span className={styles.officeName}>COVENTRY</span>
-                    <span className={styles.officeAddress}>Headquarters, UK</span>
+                    <span className={styles.officeName}>DUBAI</span>
+                    <span className={styles.officeAddress}>Headquarters, UAE</span>
                   </div>
                 </div>
                 <div className={styles.officeCard}>

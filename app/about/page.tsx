@@ -38,7 +38,7 @@ const values = [
 const jobs = [
   { role: 'PR Executive', location: 'London / Remote', time: 'Fulltime' },
   { role: 'Art Director', location: 'Kochi', time: 'Fulltime' },
-  { role: 'Graphic Designer', location: 'Coventry', time: 'Fulltime' },
+  { role: 'Graphic Designer', location: 'Dubai', time: 'Fulltime' },
   { role: 'Web Developer', location: 'Remote', time: 'Fulltime' },
   { role: 'Senior UX/UI', location: 'Remote', time: 'Contract' },
   { role: 'AI Media Artist', location: 'Kochi', time: 'Fulltime' },
@@ -144,11 +144,11 @@ export default function AboutPage() {
             <ScrollReveal>
               <div className={styles.officeCard}>
                 <div className={styles.officeImgWrap}>
-                  <Image src="/images/pages/about.webp" alt="Coventry Office" fill className={styles.oImg} sizes="50vw" />
+                  <Image src="/images/pages/about.webp" alt="Dubai Office" fill className={styles.oImg} sizes="50vw" />
                 </div>
                 <div className={styles.officeMeta}>
-                  <span className={styles.officeName}>COVENTRY</span>
-                  <span className={styles.officeAddress}>Headquarters, UK<br />Est. 2023</span>
+                  <span className={styles.officeName}>DUBAI</span>
+                  <span className={styles.officeAddress}>Headquarters, UAE<br />Est. 2023</span>
                 </div>
               </div>
             </ScrollReveal>

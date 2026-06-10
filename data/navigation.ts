@@ -60,7 +60,7 @@ export const footerColumns = {
     links: [
       { href: '/cascon#companies', label: 'For companies' },
       { href: '/cascon#freelancers', label: 'For freelancers' },
-      { href: 'mailto:hello@wecascon.com', label: 'hello@wecascon.com', external: true },
+      { href: 'mailto:info@cascondigital.com', label: 'info@cascondigital.com', external: true },
     ] as NavLink[],
   },
   social: {

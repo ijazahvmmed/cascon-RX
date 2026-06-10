@@ -28,7 +28,7 @@ export default function PrivacyPolicyPage() {
         <h1 className={styles.title}>Privacy Policy</h1>
         <p className={styles.effective}>Effective Date: March 2026</p>
         <p className={styles.company}>
-          Cascon | cascon.systems | hello@wecascon.com
+          Cascon | cascon.systems | info@cascondigital.com
         </p>
 
         <div className={styles.content}>
@@ -120,7 +120,7 @@ export default function PrivacyPolicyPage() {
             <p>
               If you have any questions about this Privacy Policy or your data, contact us
               at:{' '}
-              <a href="mailto:hello@wecascon.com">hello@wecascon.com</a>
+              <a href="mailto:info@cascondigital.com">info@cascondigital.com</a>
             </p>
           </section>
         </div>

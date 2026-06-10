@@ -64,7 +64,7 @@ export default function ShopifyServiceSection() {
     },
     {
       q: 'How do you collaborate across time zones?',
-      a: 'With offices in Coventry (UK) and Kochi (India), we\'re built for global collaboration. Work progresses around the clock — you review decisions at the end of your day and wake up to tangible progress. All project communication runs through a shared Slack channel.',
+      a: 'With offices in Dubai (UAE) and Kochi (India), we\'re built for global collaboration. Work progresses around the clock — you review decisions at the end of your day and wake up to tangible progress. All project communication runs through a shared Slack channel.',
     },
     {
       q: 'How does a new Shopify store actually start getting sales?',
