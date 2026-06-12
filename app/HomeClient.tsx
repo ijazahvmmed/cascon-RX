@@ -147,7 +147,7 @@ export default function HomeClient() {
             </a>
             <a href={CAL_LINK} target="_blank" rel="noopener noreferrer" className={styles.pill}>
               <svg width="9" height="11" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.pillIcon}><path d="M5 0C2.23858 0 0 2.23858 0 5C0 8.25 5 12 5 12C5 12 10 8.25 10 5C10 2.23858 7.76142 0 5 0ZM5 7C3.89543 7 3 6.10457 3 5C3 3.89543 3.89543 3 5 3C6.10457 3 7 3.89543 7 5C7 6.10457 6.10457 7 5 7Z" fill="currentColor"/></svg>
-              KOCHI
+              BANGALORE
             </a>
             <span className={styles.pillDivider} />
             <a href={`mailto:${CONTACT_EMAIL}`} className={styles.emailLink}>

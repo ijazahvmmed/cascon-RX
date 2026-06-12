@@ -37,11 +37,11 @@ const values = [
 
 const jobs = [
   { role: 'PR Executive', location: 'London / Remote', time: 'Fulltime' },
-  { role: 'Art Director', location: 'Kochi', time: 'Fulltime' },
+  { role: 'Art Director', location: 'Bangalore', time: 'Fulltime' },
   { role: 'Graphic Designer', location: 'Dubai', time: 'Fulltime' },
   { role: 'Web Developer', location: 'Remote', time: 'Fulltime' },
   { role: 'Senior UX/UI', location: 'Remote', time: 'Contract' },
-  { role: 'AI Media Artist', location: 'Kochi', time: 'Fulltime' },
+  { role: 'AI Media Artist', location: 'Bangalore', time: 'Fulltime' },
 ];
 
 export default function AboutPage() {
@@ -155,10 +155,10 @@ export default function AboutPage() {
             <ScrollReveal delay={0.2}>
               <div className={styles.officeCard}>
                 <div className={styles.officeImgWrap}>
-                  <Image src="/images/pages/about.webp" alt="Kochi Office" fill className={styles.oImg} sizes="50vw" />
+                  <Image src="/images/pages/about.webp" alt="Bangalore Office" fill className={styles.oImg} sizes="50vw" />
                 </div>
                 <div className={styles.officeMeta}>
-                  <span className={styles.officeName}>KOCHI</span>
+                  <span className={styles.officeName}>BANGALORE</span>
                   <span className={styles.officeAddress}>Creative Hub, IN<br />Est. 2024</span>
                 </div>
               </div>

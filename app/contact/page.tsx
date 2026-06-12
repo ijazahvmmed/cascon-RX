@@ -54,10 +54,15 @@ export default function ContactPage() {
             </a>
           </div>
           <div className={styles.locationCard}>
-            <span className={styles.locationLabel}>{LOCATIONS.kochi.label}</span>
-            <span className={styles.locationAddress}>{LOCATIONS.kochi.address}</span>
+            <span className={styles.locationLabel}>{LOCATIONS.bangalore.label}</span>
+            <span className={styles.locationAddress}>{LOCATIONS.bangalore.address}</span>
+            {LOCATIONS.bangalore.phone && (
+              <a href={`tel:${LOCATIONS.bangalore.phone.replace(/\s+/g, '')}`} className={styles.phoneLink}>
+                {LOCATIONS.bangalore.phone}
+              </a>
+            )}
             <a
-              href={LOCATIONS.kochi.mapUrl}
+              href={LOCATIONS.bangalore.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.viewMap}

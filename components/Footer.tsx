@@ -58,15 +58,23 @@ export default function Footer() {
               +971 54 747 5998
             </a>
           </div>
-          <a
-            href="https://maps.app.goo.gl/UiSin4CaNRrEMMmF6"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.address}
-          >
-            <span className={styles.addressLabel}>KOCHI</span>
-            <span className={styles.addressText}>Ernakulam, Kochi, Kerala, India</span>
-          </a>
+          <div className={styles.address}>
+            <span className={styles.addressLabel}>BANGALORE</span>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=No.+33+4th+Floor+1st+Main+Ganganagar+Gramatana+HMT+Layout+CBI+Road+Bangalore+560032"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.addressText}
+            >
+              No. 33, 4th Floor, 1st Main, Ganganagar Gramatana<br />
+              HMT Layout, CBI Road<br />
+              Bangalore – 560032<br />
+              India
+            </a>
+            <a href="tel:+918281663376" className={styles.phoneLink}>
+              +91 82816 63376
+            </a>
+          </div>
         </div>
 
         {/* Footer columns */}

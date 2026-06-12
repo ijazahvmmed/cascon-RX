@@ -100,10 +100,10 @@ export default function CareersPage() {
                 </div>
                 <div className={styles.officeCard}>
                   <div className={styles.officeImgWrap}>
-                    <Image src="/images/pages/careers.webp" alt="Kochi Office" fill className={styles.oImg} sizes="50vw" />
+                    <Image src="/images/pages/careers.webp" alt="Bangalore Office" fill className={styles.oImg} sizes="50vw" />
                   </div>
                   <div className={styles.officeMeta}>
-                    <span className={styles.officeName}>KOCHI</span>
+                    <span className={styles.officeName}>BANGALORE</span>
                     <span className={styles.officeAddress}>Creative Hub, IN</span>
                   </div>
                 </div>

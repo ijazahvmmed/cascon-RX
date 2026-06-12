@@ -16,10 +16,11 @@ export const LOCATIONS = {
     mapUrl: 'https://goo.gl/maps/CyJdFtbyL9QZ12Sk8',
     phone: '+971 54 747 5998',
   },
-  kochi: {
-    label: 'KOCHI',
-    address: 'Ernakulam, Kochi, Kerala, India',
-    mapUrl: 'https://maps.app.goo.gl/UiSin4CaNRrEMMmF6',
+  bangalore: {
+    label: 'BANGALORE',
+    address: 'No. 33, 4th Floor, 1st Main, Ganganagar Gramatana\nHMT Layout, CBI Road\nBangalore – 560032\nIndia',
+    mapUrl: 'https://www.google.com/maps/search/?api=1&query=No.+33+4th+Floor+1st+Main+Ganganagar+Gramatana+HMT+Layout+CBI+Road+Bangalore+560032',
+    phone: '+91 82816 63376',
   },
 };
 
