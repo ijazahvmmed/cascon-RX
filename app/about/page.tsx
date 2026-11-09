@@ -65,7 +65,7 @@ export default function AboutPage() {
 
             <div className={styles.aboutGrid}>
               <div className={styles.aboutLeft}>
-                <span className={styles.sectionLabel}>ABOUT US</span>
+                <span className={styles.sectionLabel}>About us</span>
               </div>
               <div className={styles.aboutRight}>
                 <ScrollReveal delay={0.1}>
@@ -74,7 +74,7 @@ export default function AboutPage() {
                   </h2>
                   <div className={styles.aboutDesc}>
                     <p>
-                      We started Cascon because we kept seeing the same gap — ecommerce brands with great products but stores that didn&apos;t convert, and content that didn&apos;t look the part. We built a two-pillar agency to fix both: Shopify development engineered for revenue, and AI media production that looks better than traditional shoots.
+                      We started Cascon because we kept seeing the same gap: ecommerce brands with great products but stores that didn&apos;t convert, and content that didn&apos;t look the part. We built a two-pillar agency to fix both: Shopify development engineered for revenue, and AI media production that looks better than traditional shoots.
                     </p>
                   </div>
 

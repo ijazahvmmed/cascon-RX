@@ -141,10 +141,10 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
   text-decoration: none;
   color: var(--color-text);
   border: 1px solid rgba(0,0,0,0.1);
@@ -179,10 +179,10 @@
 }
 
 .clientsHeader {
-  font-size: 11px;
-  text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  font-size: 13px;
+  text-transform: none;
+  font-weight: 500;
+  letter-spacing: normal;
   color: var(--color-text-muted);
   margin-bottom: var(--spacing-lg);
   padding-bottom: var(--spacing-sm);

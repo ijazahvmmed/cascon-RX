@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CustomCursor from '@/components/CustomCursor';
 import PageTransition from '@/components/PageTransition';
+import MetaPixel from '@/components/MetaPixel';
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, PLAUSIBLE_DOMAIN } from '@/lib/constants';
 import './globals.css';
 
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_NAME,
-    template: `%s — ${SITE_NAME}`,
+    template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   openGraph: {
@@ -66,6 +67,7 @@ export default function RootLayout({
           <PageTransition>{children}</PageTransition>
         </main>
         <Footer />
+        <MetaPixel />
         <Script
           defer
           data-domain={PLAUSIBLE_DOMAIN}

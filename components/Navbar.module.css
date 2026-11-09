@@ -13,9 +13,7 @@
 
 @media (min-width: 960px) {
   .navbar.scrolled {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: #ffffff;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     left: 16px;
     right: 16px;
@@ -309,7 +307,6 @@
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s var(--ease-out-quint);
   z-index: 100;
-  backdrop-filter: blur(8px);
 }
 
 .navItemWithDropdown:hover .dropdownMenu {

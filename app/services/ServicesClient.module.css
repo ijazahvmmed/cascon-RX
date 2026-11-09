@@ -119,10 +119,10 @@
 
 .sidebarLabel {
   display: block;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
   color: var(--color-text-secondary);
   margin-bottom: var(--spacing-xl);
 }
@@ -190,10 +190,10 @@
 
 .expertiseLabel {
   display: block;
-  font-size: 10px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
   margin-bottom: var(--spacing-sm);
 }
 
@@ -243,10 +243,10 @@
 
 .collabLabel {
   display: block;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
   color: var(--color-text-secondary);
   margin-bottom: var(--spacing-md);
 }

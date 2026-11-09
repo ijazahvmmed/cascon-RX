@@ -39,7 +39,7 @@ export default function CasconPage() {
           <div className={styles.featureImage}>
             <Image
               src="/images/pages/cascon.webp"
-              alt="Cascon & Co. — our extended network"
+              alt="Cascon & Co., our extended network"
               fill
               sizes="(max-width: 768px) 100vw, 800px"
               priority
@@ -52,10 +52,10 @@ export default function CasconPage() {
           <ScrollReveal>
             <ContentBlock title="For companies" id="companies">
               <p>
-                Need specialist talent for a specific project? Cascon &amp; Co. is our curated network of freelancers and agencies we&apos;ve worked with and trust. We match you with the right people for the job — whether that&apos;s a Shopify developer, a 3D artist, a copywriter, or a performance marketer.
+                Need specialist talent for a specific project? Cascon &amp; Co. is our curated network of freelancers and agencies we&apos;ve worked with and trust. We match you with the right people for the job, whether that&apos;s a Shopify developer, a 3D artist, a copywriter, or a performance marketer.
               </p>
               <p>
-                You get the quality control and project management of working with Cascon, with access to a wider pool of talent. We handle coordination, quality checks, and delivery — you get results.
+                You get the quality control and project management of working with Cascon, with access to a wider pool of talent. We handle coordination, quality checks, and delivery so you get results.
               </p>
             </ContentBlock>
           </ScrollReveal>
@@ -63,7 +63,7 @@ export default function CasconPage() {
           <ScrollReveal>
             <ContentBlock title="For freelancers" id="freelancers">
               <p>
-                We&apos;re always looking for talented freelancers to join our network. If you specialize in Shopify development, AI media production, performance marketing, SEO, content, or design — we want to hear from you.
+                We&apos;re always looking for talented freelancers to join our network. If you specialize in Shopify development, AI media production, performance marketing, SEO, content, or design, we want to hear from you.
               </p>
               <p>
                 We don&apos;t micromanage. We send you briefs, you deliver great work, you get paid on time. Simple. Most of our freelance partners work with us on multiple projects over time.

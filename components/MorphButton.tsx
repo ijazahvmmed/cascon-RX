@@ -18,12 +18,6 @@ export default function MorphButton({
   variant = 'dark',
 }: MorphButtonProps) {
   const btnClass = `${styles.morphBtn} ${variant === 'light' ? styles.light : ''}`;
-  const inner = (
-    <>
-      <span className={styles.label}>{label}</span>
-      <span className={styles.icon}>→</span>
-    </>
-  );
 
   if (external || href.startsWith('http') || href.startsWith('mailto:')) {
     return (
@@ -34,14 +28,14 @@ export default function MorphButton({
         className={btnClass}
         data-cursor="Click"
       >
-        {inner}
+        <span className={styles.label}>{label}</span>
       </a>
     );
   }
 
   return (
     <Link href={href} className={btnClass} data-cursor="Click">
-      {inner}
+      <span className={styles.label}>{label}</span>
     </Link>
   );
 }

@@ -10,6 +10,21 @@ import styles from './WorkClient.module.css';
 
 const allTags = ['all', 'shopify', 'ai-media', 'ai-photography', 'content', 'cro', 'seo-aeo', 'performance-marketing', 'automation'];
 
+const formatTag = (tag: string) => {
+  const map: Record<string, string> = {
+    all: 'All',
+    shopify: 'Shopify',
+    'ai-media': 'AI Media',
+    'ai-photography': 'AI Photography',
+    content: 'Content',
+    cro: 'CRO',
+    'seo-aeo': 'SEO & AEO',
+    'performance-marketing': 'Performance',
+    automation: 'Automation',
+  };
+  return map[tag] || tag;
+};
+
 export default function WorkClient() {
   const [activeFilter, setActiveFilter] = useState('all');
 
@@ -35,7 +50,7 @@ export default function WorkClient() {
                 onClick={() => setActiveFilter(tag)}
                 aria-pressed={activeFilter === tag}
               >
-                {tag === 'all' ? 'All' : tag}
+                {formatTag(tag)}
               </button>
             ))}
           </div>
@@ -70,7 +85,7 @@ export default function WorkClient() {
                 <p className={styles.breakoutDesc}>{bagusBreakout.description}</p>
                 <div className={styles.breakoutTags}>
                   {bagusBreakout.tags.map((tag) => (
-                    <span key={tag} className={styles.breakoutTag}>{tag}</span>
+                    <span key={tag} className={styles.breakoutTag}>{formatTag(tag)}</span>
                   ))}
                 </div>
                 <a
@@ -79,14 +94,14 @@ export default function WorkClient() {
                   rel="noopener noreferrer"
                   className={styles.breakoutLink}
                 >
-                  Visit site →
+                  Visit live website
                 </a>
               </div>
             </ScrollReveal>
             <div className={styles.breakoutImage}>
               <Image
                 src={bagusBreakout.image}
-                alt={`${bagusBreakout.name} — Cascon project`}
+                alt={`${bagusBreakout.name} project`}
                 fill
                 sizes="(max-width: 768px) 100vw, 60vw"
                 className={styles.breakoutImg}
@@ -128,7 +143,7 @@ export default function WorkClient() {
                   <span className={styles.moreWorkRegion}>{item.region}</span>
                   <div className={styles.moreWorkTags}>
                     {item.tags.map((tag) => (
-                      <span key={tag} className={styles.moreWorkTag}>{tag}</span>
+                      <span key={tag} className={styles.moreWorkTag}>{formatTag(tag)}</span>
                     ))}
                   </div>
                 </div>

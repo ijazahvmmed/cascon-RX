@@ -208,7 +208,7 @@ export default function Navbar() {
             })}
             <div className={styles.overlayCta} style={{ transitionDelay: `${mainNavLinks.length * 0.05 + 0.15}s` }}>
               <Link href={CAL_LINK} target="_blank" rel="noopener noreferrer" className={styles.contactLink}>
-                Contact <span className={styles.contactArrowWrapper}>→</span>
+                Book a call
               </Link>
             </div>
           </div>

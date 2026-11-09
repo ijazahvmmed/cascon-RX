@@ -38,7 +38,7 @@ export const workCards: WorkCard[] = [
 
 export const bagusBreakout: WorkCard = {
   name: 'Bagus',
-  description: 'Artisan home decor brand — Shopify, AI photography, content, and SEO.',
+  description: 'Artisan home decor brand featuring custom Shopify build, AI photography, and SEO.',
   tags: ['shopify', 'ai-photography', 'content', 'seo-aeo'],
   image: '/images/work/bagus.jpg',
   externalUrl: 'https://www.bagus.in/',
@@ -47,7 +47,7 @@ export const bagusBreakout: WorkCard = {
 export const workCards2: WorkCard[] = [
   {
     name: 'Car Supply',
-    description: 'Automotive accessories — Shopify, AI media, CRO, and SEO.',
+    description: 'Automotive accessories store powered by Shopify, AI media, and conversion optimization.',
     tags: ['shopify', 'ai-media', 'cro', 'seo-aeo'],
     image: '/images/work/carsupply.jpg',
     externalUrl: 'https://mycarsupply.shop/',

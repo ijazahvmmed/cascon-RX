@@ -76,7 +76,7 @@ export default function CareersPage() {
                   </div>
                   <div className={styles.valueItem}>
                     <h4>Independence</h4>
-                    <p>You don&apos;t wait to be told what to do — you figure it out, do it, and ask for feedback after. We trust people to manage their output.</p>
+                    <p>You don&apos;t wait to be told what to do: you figure it out, take initiative, and ask for feedback after. We trust people to manage their output.</p>
                   </div>
                 </div>
               </ScrollReveal>

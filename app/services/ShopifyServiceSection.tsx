@@ -48,7 +48,7 @@ export default function ShopifyServiceSection() {
     },
     {
       q: 'Can you migrate my store from WooCommerce, Wix, or another platform?',
-      a: 'Yes. We handle full platform migrations including products, customer data, and order history — with minimal downtime and zero data loss.',
+      a: 'Yes. We handle full platform migrations including products, customer data, and order history, with minimal downtime and zero data loss.',
     },
     {
       q: 'Do you offer ongoing support after launch?',
@@ -60,15 +60,15 @@ export default function ShopifyServiceSection() {
     },
     {
       q: 'How do you handle multi-currency and international selling?',
-      a: 'We build multi-market stores using Shopify Markets — with automatic currency conversion, localised checkout, and multi-language support. We make your store feel local wherever your customer is.',
+      a: 'We build multi-market stores using Shopify Markets, featuring automatic currency conversion, localised checkout, and multi-language support. We make your store feel local wherever your customer is.',
     },
     {
       q: 'How do you collaborate across time zones?',
-      a: 'With offices in Dubai (UAE) and Bangalore (India), we\'re built for global collaboration. Work progresses around the clock — you review decisions at the end of your day and wake up to tangible progress. All project communication runs through a shared Slack channel.',
+      a: 'With offices in Dubai (UAE) and Bangalore (India), we\'re built for global collaboration. Work progresses around the clock: you review decisions at the end of your day and wake up to tangible progress. All project communication runs through a shared Slack channel.',
     },
     {
       q: 'How does a new Shopify store actually start getting sales?',
-      a: 'The store launch is step one. Every site we build is founded on CRO principles and has a solid technical SEO foundation. We also offer performance marketing, SEO, and email automation as add-ons — so you have a complete growth engine, not just a website.',
+      a: 'The store launch is step one. Every site we build is founded on CRO principles and has a solid technical SEO foundation. We also offer performance marketing, SEO, and email automation as add-ons, giving you a complete growth engine rather than just a website.',
     },
   ];
 
@@ -89,7 +89,7 @@ export default function ShopifyServiceSection() {
           <span className={styles.eyebrow}>Shopify Development</span>
           <h2 className={styles.titleH2}>Turn Your Product Into a High-Converting Shopify Store</h2>
           <p className={styles.subtext}>
-            Struggling with a slow store, low conversions, or a theme that&apos;s killing sales? We build and optimize Shopify stores engineered from the ground up to convert visitors into customers — and keep them coming back.
+            Struggling with a slow store, low conversions, or a theme that&apos;s killing sales? We build and optimize Shopify stores engineered from the ground up to convert visitors into customers and keep them coming back.
           </p>
           <div className={styles.heroCta}>
             <MorphButton href="https://cal.com/cascon-haw2fz/15min" label="Get a Free Audit" external />
@@ -103,7 +103,7 @@ export default function ShopifyServiceSection() {
           <div className={styles.roiLeft}>
             <div className={styles.roiLabel}>Results-Driven Shopify Builds</div>
             <p className={styles.roiBody}>
-              Our work with you is built on one thing: results. We measure our success by your revenue — not deliverables ticked off a list.
+              Our work with you is built on one thing: results. We measure our success by your revenue, not deliverables ticked off a list.
             </p>
           </div>
           <div className={styles.roiPills}>
@@ -136,10 +136,10 @@ export default function ShopifyServiceSection() {
                 The secret to a profitable Shopify store isn&apos;t a good-looking theme. It&apos;s a deliberate digital asset with a strategy behind every pixel.
               </p>
               <p>
-                While most agencies ship a modified template and call it done, we engineer a seamless buying experience — from the moment someone lands on your page to the moment they check out.
+                While most agencies ship a modified template and call it done, we engineer a seamless buying experience from the moment someone lands on your page to checkout.
               </p>
               <p>
-                We combine sharp <strong>UI design</strong> with a deep understanding of how your customer actually shops. We reduce friction, build trust, and create the conditions for conversion — turning cold traffic into loyal buyers and repeat customers.
+                We combine sharp <strong>UI design</strong> with a deep understanding of how your customer actually shops. We reduce friction, build trust, and create the conditions for conversion: turning cold traffic into loyal buyers and repeat customers.
               </p>
             </div>
           </ScrollReveal>
@@ -147,7 +147,7 @@ export default function ShopifyServiceSection() {
             <div className={styles.narrativeCol}>
               <h4>Certified Shopify Partners</h4>
               <p>
-                Our team doesn&apos;t just use Shopify — we know it inside out. As certified <strong>Shopify Partners</strong>, we bring real platform depth to every build. That means your store isn&apos;t just visually polished. It&apos;s technically solid, fast, scalable, and built to grow alongside your brand.
+                Our team doesn&apos;t just use Shopify; we know it inside out. As certified <strong>Shopify Partners</strong>, we bring real platform depth to every build. That means your store isn&apos;t just visually polished. It&apos;s technically solid, fast, scalable, and built to grow alongside your brand.
               </p>
             </div>
           </ScrollReveal>
@@ -160,7 +160,7 @@ export default function ShopifyServiceSection() {
           <span className={styles.eyebrow}>What You Get</span>
           <h3 className={styles.titleH3}>What&apos;s Included in a Cascon Shopify Build?</h3>
           <p className={styles.processIntro}>
-            When you work with Cascon, you get a full-service build — everything from strategy to post-launch support.
+            When you work with Cascon, you get a full-service build covering everything from strategy to post-launch support.
           </p>
         </ScrollReveal>
 
@@ -249,7 +249,7 @@ export default function ShopifyServiceSection() {
               <div className={styles.pricingFeatures}>
                 {[
                   'Multi-market Shopify setup',
-                  'Full custom theme — designed and built by Cascon',
+                  'Full custom theme, designed and built by Cascon',
                   'Checkout optimisation',
                   'POS integration',
                   'Unlimited app integrations',
@@ -287,7 +287,7 @@ export default function ShopifyServiceSection() {
             <div className={styles.diffCard}>
               <h4>Strategic, Conversion-Led Design</h4>
               <p>
-                A beautiful store is just the starting point. Every project begins with a proper discovery — your brand, your audience, your funnel. We map the full user journey and build a shopping experience that removes friction and drives decisions. The result is a store that looks great and actually sells.
+                A beautiful store is just the starting point. Every project begins with a proper discovery: your brand, your audience, and your funnel. We map the full user journey and build a shopping experience that removes friction and drives decisions. The result is a store that looks great and actually sells.
               </p>
             </div>
           </ScrollReveal>
@@ -303,7 +303,7 @@ export default function ShopifyServiceSection() {
             <div className={styles.diffCard}>
               <h4>A Real Growth Partnership</h4>
               <p>
-                We don&apos;t hand over a store and disappear. You get a dedicated account manager, full team training, and ongoing access to our team as your brand scales. We&apos;re not a vendor — we&apos;re your growth team.
+                We don&apos;t hand over a store and disappear. You get a dedicated account manager, full team training, and ongoing access to our team as your brand scales. We&apos;re not just another vendor; we&apos;re your growth team.
               </p>
             </div>
           </ScrollReveal>

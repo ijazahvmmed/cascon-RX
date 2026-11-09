@@ -145,7 +145,9 @@ export default function TestimonialSlider() {
             onClick={prevSlide}
             aria-label="Previous testimonial"
           >
-            ←
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M15 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </button>
           
           <div className={styles.dots}>
@@ -164,7 +166,9 @@ export default function TestimonialSlider() {
             onClick={next}
             aria-label="Next testimonial"
           >
-            →
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </button>
         </div>
       </div>

@@ -43,7 +43,7 @@ export default function Footer() {
         {/* Addresses */}
         <div className={styles.addresses}>
           <div className={styles.address}>
-            <span className={styles.addressLabel}>DUBAI</span>
+            <span className={styles.addressLabel}>Dubai</span>
             <a
               href="https://goo.gl/maps/CyJdFtbyL9QZ12Sk8"
               target="_blank"
@@ -59,7 +59,7 @@ export default function Footer() {
             </a>
           </div>
           <div className={styles.address}>
-            <span className={styles.addressLabel}>BANGALORE</span>
+            <span className={styles.addressLabel}>Bangalore</span>
             <a
               href="https://www.google.com/maps/search/?api=1&query=No.+33+4th+Floor+1st+Main+Ganganagar+Gramatana+HMT+Layout+CBI+Road+Bangalore+560032"
               target="_blank"
@@ -68,7 +68,7 @@ export default function Footer() {
             >
               No. 33, 4th Floor, 1st Main, Ganganagar Gramatana<br />
               HMT Layout, CBI Road<br />
-              Bangalore – 560032<br />
+              Bangalore 560032<br />
               India
             </a>
             <a href="tel:+918281663376" className={styles.phoneLink}>

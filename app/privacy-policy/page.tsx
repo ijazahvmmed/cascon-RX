@@ -6,14 +6,14 @@ export const metadata: Metadata = {
   description:
     'Privacy Policy for Cascon. Learn how we collect, use, and protect your information.',
   openGraph: {
-    title: 'Privacy Policy — Cascon',
+    title: 'Privacy Policy | Cascon',
     description: 'Privacy Policy for Cascon. Learn how we collect, use, and protect your information.',
     type: 'website',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Privacy Policy — Cascon',
+    title: 'Privacy Policy | Cascon',
     images: ['/og-image.png'],
   },
   alternates: {
@@ -45,7 +45,7 @@ export default function PrivacyPolicyPage() {
               <li>
                 <strong>Usage data</strong> collected through Plausible Analytics, which is
                 privacy-first and cookieless. This includes page views, referral sources,
-                browser type, and country — all without identifying individual users.
+                browser type, and country, all without identifying individual users.
               </li>
             </ul>
           </section>
@@ -82,7 +82,7 @@ export default function PrivacyPolicyPage() {
             <p>We use the following third-party services:</p>
             <ul>
               <li>
-                <strong>Cal.com</strong> — for scheduling meetings. When you book a call,
+                <strong>Cal.com</strong>: for scheduling meetings. When you book a call,
                 Cal.com may collect your name and email address. See{' '}
                 <a href="https://cal.com/privacy" target="_blank" rel="noopener noreferrer">
                   Cal.com&apos;s Privacy Policy
@@ -90,7 +90,7 @@ export default function PrivacyPolicyPage() {
                 .
               </li>
               <li>
-                <strong>Plausible Analytics</strong> — for privacy-friendly website analytics.
+                <strong>Plausible Analytics</strong>: for privacy-friendly website analytics.
                 No personal data is collected. See{' '}
                 <a href="https://plausible.io/privacy" target="_blank" rel="noopener noreferrer">
                   Plausible&apos;s Privacy Policy

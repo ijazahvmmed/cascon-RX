@@ -28,7 +28,7 @@ export const services: Service[] = [
     id: 'ai-media',
     name: 'AI Media Production',
     description:
-      'Product photography, lifestyle shoots, and video content created with AI tools. Studio-quality output delivered in days, not weeks — at a fraction of the cost.',
+      'Product photography, lifestyle shoots, and video content created with AI tools. Studio-quality output delivered in days rather than weeks, at a fraction of the cost.',
     image: '/horizontal.mp4',
     included: [
       'AI product photography',
@@ -45,7 +45,7 @@ export const services: Service[] = [
     id: 'performance-marketing',
     name: 'Performance Marketing',
     description:
-      'Paid media campaigns across Meta, Google, and TikTok — built around your unit economics, not vanity metrics. We optimize for revenue, not impressions.',
+      'Paid media campaigns across Meta, Google, and TikTok, built around your unit economics rather than vanity metrics. We optimize for revenue, not impressions.',
     image: '/images/services/performance-marketing.webp',
     included: [
       'Meta Ads management',
@@ -62,7 +62,7 @@ export const services: Service[] = [
     id: 'automation',
     name: 'Automation',
     description:
-      'Workflow automation for ecommerce operations. From inventory syncing to customer comms — we reduce manual work so your team can focus on growth.',
+      'Workflow automation for ecommerce operations. From inventory syncing to customer comms, we reduce manual work so your team can focus on growth.',
     image: '/images/services/automation.webp',
     included: [
       'Email automation (Klaviyo)',
@@ -96,7 +96,7 @@ export const services: Service[] = [
     id: 'content-strategy',
     name: 'Content Strategy',
     description:
-      'Content planning and production for brands that want to build organic authority. Blog content, landing pages, email copy, and social media — all aligned to your growth goals.',
+      'Content planning and production for brands that want to build organic authority. Blog content, landing pages, email copy, and social media, all aligned to your growth goals.',
     image: '/horizontal.mp4',
     included: [
       'Content audits',

@@ -2,11 +2,11 @@ import type { Metadata } from 'next';
 import HomeClient from './HomeClient';
 
 export const metadata: Metadata = {
-  title: 'Cascon — Shopify Agency & AI Media Studio',
+  title: 'Cascon | Shopify Agency & AI Media Studio',
   description:
     'Cascon is a Shopify agency and AI media studio built to help brands sell more and look better doing it.',
   openGraph: {
-    title: 'Cascon — Shopify Agency & AI Media Studio',
+    title: 'Cascon | Shopify Agency & AI Media Studio',
     description:
       'Cascon is a Shopify agency and AI media studio built to help brands sell more and look better doing it.',
     type: 'website',
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Cascon — Shopify Agency & AI Media Studio',
+    title: 'Cascon | Shopify Agency & AI Media Studio',
     images: ['/og-image.png'],
   },
   alternates: {

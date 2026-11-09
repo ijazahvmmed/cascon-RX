@@ -39,15 +39,15 @@ export default function SeoAeoServiceSection() {
   const faqs = [
     {
       q: 'How long does SEO take to show results?',
-      a: 'SEO is a long-term asset, not a quick fix. You may see early positive movement in rankings within 3–4 months, but meaningful impact on traffic, leads, and sales typically happens between 6–12 months. Our programme structures are designed around this timeline — not shorter windows that set unrealistic expectations.',
+      a: 'SEO is a long-term asset, not a quick fix. You may see early positive movement in rankings within 3–4 months, but meaningful impact on traffic, leads, and sales typically happens between 6–12 months. Our programme structures are designed around this timeline, avoiding shorter windows that set unrealistic expectations.',
     },
     {
       q: 'What\'s the difference between the E-commerce and Local SEO plans?',
-      a: 'E-commerce SEO is built around product and category keywords — often hundreds or thousands of long-tail terms. Local SEO is focused on dominating a core set of high-intent service keywords in a specific geographic area. Different business models, different strategies.',
+      a: 'E-commerce SEO is built around product and category keywords across hundreds or thousands of long-tail terms. Local SEO is focused on dominating a core set of high-intent service keywords in a specific geographic area. Different business models, different strategies.',
     },
     {
       q: 'Do you guarantee a #1 ranking?',
-      a: 'No ethical agency can guarantee a specific ranking — Google\'s algorithm is complex, constantly updated, and proprietary. What we do guarantee is a transparent, data-driven process using industry best practices to meaningfully improve your visibility, attract qualified traffic, and increase rankings for the terms that matter to your business.',
+      a: 'No ethical agency can guarantee a specific ranking because Google\'s algorithm is complex, constantly updated, and proprietary. What we do guarantee is a transparent, data-driven process using industry best practices to meaningfully improve your visibility, attract qualified traffic, and increase rankings for the terms that matter to your business.',
     },
     {
       q: 'What is AEO and why does it matter?',
@@ -59,11 +59,11 @@ export default function SeoAeoServiceSection() {
     },
     {
       q: 'When should I go with the Custom/Enterprise plan?',
-      a: 'When you need to target multiple cities, regions, or countries — or you\'re in a highly competitive national market — or your site has hundreds or thousands of pages requiring advanced technical SEO — or you want a full AEO strategy layered on top of traditional SEO.',
+      a: 'When you need to target multiple cities, regions, or countries; operate in a highly competitive national market; manage hundreds or thousands of pages requiring advanced technical SEO; or implement a full AEO strategy layered on top of traditional SEO.',
     },
     {
       q: 'What do you need from us to get started?',
-      a: 'Three things: (1) access to your website backend (Shopify, WordPress, etc.), (2) access to Google Analytics and Search Console — we can help set these up if needed, and (3) a kickoff call to understand your business goals, audience, and competitive landscape.',
+      a: 'Three things: (1) access to your website backend (Shopify, WordPress, etc.), (2) access to Google Analytics and Search Console (we can help set these up if needed), and (3) a kickoff call to understand your business goals, audience, and competitive landscape.',
     },
   ];
 
@@ -86,7 +86,7 @@ export default function SeoAeoServiceSection() {
           <span className={styles.eyebrow}>SEO & AEO</span>
           <h2 className={styles.titleH2}>Rank Higher. Get Found. Grow Revenue.</h2>
           <p className={styles.subtext}>
-            Invisible online while your competitors take all the clicks? If you&apos;re not appearing on the first page of Google — and increasingly in AI search tools like ChatGPT and Perplexity — you&apos;re leaving serious revenue on the table. We build data-driven SEO and AEO strategies that put you in front of the right people and turn that traffic into real business.
+            Invisible online while your competitors take all the clicks? If you&apos;re not appearing on the first page of Google, and increasingly in AI search tools like ChatGPT and Perplexity, you&apos;re leaving serious revenue on the table. We build data-driven SEO and AEO strategies that put you in front of the right people and turn that traffic into real business.
           </p>
           <div className={styles.heroCta}>
             <MorphButton href="https://cal.com/cascon-haw2fz/15min" label="Get a Free Audit" external />
@@ -100,7 +100,7 @@ export default function SeoAeoServiceSection() {
           <div className={styles.roiLeft}>
             <div className={styles.roiLabel}>Profit-Driven SEO</div>
             <p className={styles.roiBody}>
-              Our approach to SEO is simple: we care about your bottom line. We don&apos;t chase rankings for their own sake — we build a long-term organic asset that generates compounding returns. The goal isn&apos;t just more traffic. It&apos;s the right traffic — people actively searching for what you sell, ready to buy.
+              Our approach to SEO is simple: we care about your bottom line. We don&apos;t chase rankings for their own sake: we build a long-term organic asset that generates compounding returns. The goal isn&apos;t just more traffic; it&apos;s the right traffic from people actively searching for what you sell, ready to buy.
             </p>
             <div className={styles.checklistGrid}>
               {checklistItems.map((item, idx) => (
@@ -130,13 +130,13 @@ export default function SeoAeoServiceSection() {
                 Long-term SEO success doesn&apos;t come from tricks or quick fixes. It comes from building a website that both search engines and real users genuinely trust.
               </p>
               <p>
-                Our methodology combines <strong>Technical Excellence</strong> — ensuring your site is crawlable, fast, and structurally sound — with <strong>Strategic Content Creation</strong> that positions you as the definitive answer to your customers&apos; most important questions.
+                Our methodology combines <strong>Technical Excellence</strong> (ensuring your site is crawlable, fast, and structurally sound) with <strong>Strategic Content Creation</strong> that positions you as the definitive answer to your customers&apos; most important questions.
               </p>
               <p>
                 That&apos;s how you build genuine authority. And genuine authority is what earns you lasting first-page rankings.
               </p>
               <p>
-                Beyond traditional SEO, we also optimise for <strong>AI Engine Optimisation (AEO)</strong> — the emerging discipline of ensuring your brand is cited and recommended by AI tools like ChatGPT, Perplexity, and Google&apos;s AI Overviews. This is where search is heading, and we&apos;re already building for it.
+                Beyond traditional SEO, we also optimise for <strong>AI Engine Optimisation (AEO)</strong>: the emerging discipline of ensuring your brand is cited and recommended by AI tools like ChatGPT, Perplexity, and Google&apos;s AI Overviews. This is where search is heading, and we&apos;re already building for it.
               </p>
             </div>
           </ScrollReveal>
@@ -144,7 +144,7 @@ export default function SeoAeoServiceSection() {
             <div className={styles.narrativeCol}>
               <h4>Certified Search Marketing Professionals</h4>
               <p>
-                Our team lives and breathes search. We work daily across Google Analytics 4, Google Search Console, Ahrefs, SEMrush, and the emerging AI citation landscape. Every strategy is built on current data, tested hypotheses, and transparent reporting — not guesswork.
+                Our team lives and breathes search. We work daily across Google Analytics 4, Google Search Console, Ahrefs, SEMrush, and the emerging AI citation landscape. Every strategy is built on current data, tested hypotheses, and transparent reporting rather than guesswork.
               </p>
             </div>
           </ScrollReveal>
@@ -291,7 +291,7 @@ export default function SeoAeoServiceSection() {
                   'Advanced content strategy',
                   'Advanced technical SEO',
                   'Premium link building',
-                  'AI Engine Optimisation (AEO) — structured for ChatGPT, Perplexity, and Google AI Overviews',
+                  'AI Engine Optimisation (AEO), structured for ChatGPT, Perplexity, and Google AI Overviews',
                   'Dedicated senior SEO strategist',
                   'Advanced competitor intelligence reporting',
                   'Year-long analysis and ongoing content optimisation',
@@ -324,7 +324,7 @@ export default function SeoAeoServiceSection() {
             <div className={styles.diffCard}>
               <h4>Holistic Strategy, Not a Checklist</h4>
               <p>
-                We don&apos;t treat SEO as a list of tasks. We integrate technical optimisation, content strategy, link building, and AEO into a single cohesive engine — where every element compounds on the others. That&apos;s how organic traffic becomes a real business asset.
+                We don&apos;t treat SEO as a list of tasks. We integrate technical optimisation, content strategy, link building, and AEO into a single cohesive engine where every element compounds on the others. That&apos;s how organic traffic becomes a real business asset.
               </p>
             </div>
           </ScrollReveal>
@@ -340,7 +340,7 @@ export default function SeoAeoServiceSection() {
             <div className={styles.diffCard}>
               <h4>Focused on Business Growth, Not Just Rankings</h4>
               <p>
-                Rankings are a means to an end. Our real goal is growing your business — more leads, more calls, more sales. We track the metrics that actually matter, and we tie every SEO decision back to revenue.
+                Rankings are a means to an end. Our real goal is growing your business: more leads, more calls, and more sales. We track the metrics that actually matter, and we tie every SEO decision back to revenue.
               </p>
             </div>
           </ScrollReveal>

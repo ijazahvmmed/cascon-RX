@@ -189,7 +189,6 @@ export default function HomeClient() {
                 <CaseCard
                   key={client.name}
                   name={client.name}
-                  description={`${client.tags.join(' · ')}`}
                   tags={client.tags}
                   image={client.image!}
                   externalUrl={client.externalUrl!}
@@ -240,10 +239,7 @@ export default function HomeClient() {
 
             <div className={styles.clientsCta}>
               <Link href="/clients" className={styles.clientsLink}>
-                Our clients
-              </Link>
-              <Link href="/clients" className={styles.circleBtn} aria-label="View all clients">
-                →
+                View all clients
               </Link>
             </div>
           </div>
@@ -261,13 +257,13 @@ export default function HomeClient() {
                   We build Shopify stores and AI media that actually perform.
                 </h2>
                 <p className={styles.servicesDesc}>
-                  Because it makes sense to offer them together — most ecommerce brands need both a store that converts and content that sells. We do both under one roof.
+                  Because it makes sense to offer them together: most ecommerce brands need both a store that converts and content that sells. We do both under one roof.
                 </p>
               </div>
             </ScrollReveal>
             <ScrollReveal delay={0.15}>
               <div className={styles.servicesRight}>
-                <span className={styles.servicesLabel}>SERVICES</span>
+                <span className={styles.servicesLabel}>Services</span>
                 <ul className={styles.servicesList}>
                   {serviceNames.map((svc, i) => (
                     <li key={svc.id}>
@@ -278,7 +274,6 @@ export default function HomeClient() {
                       >
                         <span className={styles.serviceNameLight}>{svc.name}</span>
                         <span className={styles.serviceNameBold}>{svc.name}</span>
-                        <span className={styles.serviceArrow}>→</span>
                       </Link>
                     </li>
                   ))}

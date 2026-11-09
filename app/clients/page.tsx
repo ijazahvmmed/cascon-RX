@@ -9,14 +9,14 @@ export const metadata: Metadata = {
   description:
     'We work with brands from launch to scale, to worldwide fame. From D2C innovators to global B2B mainstays.',
   openGraph: {
-    title: 'Clients — Cascon',
+    title: 'Clients | Cascon',
     description: 'We work with brands from launch to scale, to worldwide fame.',
     type: 'website',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Clients — Cascon',
+    title: 'Clients | Cascon',
     images: ['/og-image.png'],
   },
   alternates: {
@@ -95,7 +95,7 @@ export default function ClientsPage() {
                 <h2 className={styles.sectionTitle}>{section.title}</h2>
                 <p className={styles.sectionDescription}>{section.description}</p>
                 <Link href={section.workLink} className={styles.workLink}>
-                  work <span aria-hidden="true">→</span>
+                  See project
                 </Link>
               </ScrollReveal>
             </div>

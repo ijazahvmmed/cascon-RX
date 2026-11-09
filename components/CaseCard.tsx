@@ -11,6 +11,20 @@ interface CaseCardProps {
   externalUrl: string;
 }
 
+const formatTag = (tag: string) => {
+  const map: Record<string, string> = {
+    shopify: 'Shopify',
+    'ai-media': 'AI Media',
+    'ai-photography': 'AI Photography',
+    content: 'Content',
+    cro: 'CRO',
+    'seo-aeo': 'SEO & AEO',
+    'performance-marketing': 'Performance',
+    automation: 'Automation',
+  };
+  return map[tag] || tag;
+};
+
 export default function CaseCard({ name, description, tags, image, externalUrl }: CaseCardProps) {
   return (
     <a
@@ -24,7 +38,7 @@ export default function CaseCard({ name, description, tags, image, externalUrl }
       <div className={styles.imageWrapper}>
         <Image
           src={image}
-          alt={`${name} — Cascon project`}
+          alt={`${name} project`}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"
           className={styles.image}
@@ -36,7 +50,7 @@ export default function CaseCard({ name, description, tags, image, externalUrl }
         <div className={styles.tags}>
           {tags.map((tag) => (
             <span key={tag} className={styles.tag}>
-              {tag}
+              {formatTag(tag)}
             </span>
           ))}
         </div>

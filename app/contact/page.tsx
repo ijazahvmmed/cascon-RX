@@ -7,14 +7,14 @@ export const metadata: Metadata = {
   title: 'Contact',
   description: 'Get in touch with Cascon. We respond within 24 hours.',
   openGraph: {
-    title: 'Contact — Cascon',
+    title: 'Contact | Cascon',
     description: 'Get in touch with Cascon. We respond within 24 hours.',
     type: 'website',
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Contact — Cascon',
+    title: 'Contact | Cascon',
     images: ['/og-image.png'],
   },
   alternates: {
@@ -50,7 +50,7 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               className={styles.viewMap}
             >
-              View Map →
+              View on Google Maps
             </a>
           </div>
           <div className={styles.locationCard}>
@@ -67,7 +67,7 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               className={styles.viewMap}
             >
-              View Map →
+              View on Google Maps
             </a>
           </div>
         </div>
