@@ -1,0 +1,157 @@
+{
+  "clients": {
+    "hanbee": {
+      "src": "/images/clients/hanbee.png",
+      "source": "https://hanbeekids.in/cdn/shop/files/IMG_4911s.png?v=1772960028&width=480",
+      "bytes": 54933
+    },
+    "rewise": {
+      "src": "/images/clients/rewise.png",
+      "source": "https://myrewise.shop/cdn/shop/files/rewise.png?v=1772963324&width=480",
+      "bytes": 21777
+    },
+    "finewares": {
+      "src": "/images/clients/finewares.png",
+      "source": "https://finewares.in/cdn/shop/files/Group_1484578434.png?v=1778050145&width=480",
+      "bytes": 10915
+    },
+    "citysky": {
+      "src": "/images/clients/citysky.png",
+      "source": "https://www.cityskyhomes.com/images/logo.png",
+      "bytes": 6960
+    },
+    "clipston": {
+      "src": "/images/clients/clipston.png",
+      "source": "https://clipstonelevator.com/images/logo.png",
+      "bytes": 9075
+    },
+    "vibezon": {
+      "src": "/images/clients/vibezon.png",
+      "source": "https://vibezon.com/cdn/shop/files/invert_black.png?v=1768925200&width=480",
+      "bytes": 31453
+    },
+    "slept": {
+      "src": "/images/clients/slept.svg",
+      "source": "https://wearslept.com/cdn/shop/files/Group_1484578415.svg?v=1790003639&width=480",
+      "bytes": 4705
+    },
+    "pureline": {
+      "src": "/images/clients/pureline.png",
+      "source": "https://purelinefiberglass.com/images/logo.png",
+      "bytes": 2964
+    },
+    "bagus": {
+      "src": "/images/clients/bagus.png",
+      "source": "https://www.bagus.in/cdn/shop/files/Bagus-final-logo_High-resolution-Photoroom.png?v=1763549298&width=480",
+      "bytes": 69485
+    },
+    "carsupply": {
+      "src": "/images/clients/carsupply.png",
+      "source": "https://mycarsupply.shop/cdn/shop/files/Group_48095689.png?v=1771756179&width=480",
+      "bytes": 3865
+    },
+    "jerso": {
+      "src": "/images/clients/jerso.png",
+      "source": "https://jerso.in/cdn/shop/files/jersologo27.png?v=1758918579&width=480",
+      "bytes": 11370
+    },
+    "reborn": {
+      "src": "/images/clients/reborn.png",
+      "source": "https://thereborncompany.com/cdn/shop/files/reborn_name_logo.png?v=1735136484&width=480",
+      "bytes": 14377
+    },
+    "benair": {
+      "src": "/images/clients/benair.png",
+      "source": "https://www.benairgroup.com/assets/img/logo.png",
+      "bytes": 447107
+    },
+    "lumy": {
+      "src": "/images/clients/lumy.png",
+      "source": "https://www.lumydates.com/cdn/shop/files/210984627_padded_logo.png?v=1752561476&width=480",
+      "bytes": 19385
+    }
+  },
+  "work": {
+    "citysky": {
+      "src": "/images/work/citysky.webp",
+      "source": "https://www.cityskyhomes.com/images/hero-home-landscape.webp",
+      "bytes": 679824
+    },
+    "finewares": {
+      "src": "/images/work/finewares.png",
+      "source": "https://finewares.in/cdn/shop/files/hf_20260518_085318_2ba0b93a-92ea-4393-8cfe-e358722d9641.png?v=1779094925&width=1400",
+      "bytes": 1599359
+    },
+    "slept": {
+      "src": "/images/work/slept.png",
+      "source": "https://wearslept.com/cdn/shop/files/hf_20261019_173455_d4a51362-d9e2-4630-9e5c-67acd5e18d9b.png?v=1792434330&width=1400",
+      "bytes": 4424437
+    },
+    "lumy": {
+      "src": "/images/work/lumy.png",
+      "source": "https://www.lumydates.com/cdn/shop/files/cover.png?v=1752610248&width=1400",
+      "bytes": 2057010
+    }
+  },
+  "tools": {
+    "claude": {
+      "src": "/images/tools/claude.svg",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/claude.svg",
+      "bytes": 1921
+    },
+    "googleanalytics": {
+      "src": "/images/tools/googleanalytics.svg",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/googleanalytics.svg",
+      "bytes": 738
+    },
+    "shopify": {
+      "src": "/images/tools/shopify.svg",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/shopify.svg",
+      "bytes": 1234
+    },
+    "figma": {
+      "src": "/images/tools/figma.svg",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/figma.svg",
+      "bytes": 1093
+    },
+    "meta": {
+      "src": "/images/tools/meta.svg",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/meta.svg",
+      "bytes": 1324
+    },
+    "openai": {
+      "src": "/images/tools/openai.svg",
+      "source": "https://developers.openai.com/",
+      "bytes": 2479
+    },
+    "razorpay": {
+      "src": "/images/tools/razorpay.svg",
+      "source": "https://razorpay.com/assets/razorpay-logo.svg",
+      "bytes": 3564
+    }
+  },
+  "aiProviders": {
+    "ChatGPT": {
+      "src": "/images/tools/openai.svg",
+      "source": "https://developers.openai.com/",
+      "bytes": 2479
+    },
+    "Claude": {
+      "src": "/images/tools/claude.svg",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/claude.svg",
+      "bytes": 1921
+    },
+    "Gemini": {
+      "src": "/images/ai/gemini.svg",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/googlegemini.svg"
+    },
+    "Grok": {
+      "src": "/images/ai/grok.svg",
+      "source": "https://unpkg.com/@lobehub/icons-static-svg@1.102.0/icons/grok.svg"
+    },
+    "Perplexity": {
+      "src": "/images/ai/perplexity.svg",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/perplexity.svg"
+    }
+  }
+}

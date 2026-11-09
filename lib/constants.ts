@@ -1,9 +1,9 @@
-export const SITE_URL = 'https://cascon.systems';
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.cascondigital.com').replace(/\/$/, '');
 export const SITE_NAME = 'Cascon';
-export const SITE_DESCRIPTION = 'Cascon is a Shopify agency and AI media studio built to help brands sell more and look better doing it.';
+export const SITE_DESCRIPTION = 'Cascon is a Shopify agency and AI media studio in Bangalore and Dubai. We build ecommerce stores and create content, marketing and search foundations for brands in India and the UAE.';
 export const CONTACT_EMAIL = 'info@cascondigital.com';
 export const CAL_LINK = 'https://cal.com/cascon-haw2fz/15min';
-export const PLAUSIBLE_DOMAIN = 'cascon.systems';
+export const PLAUSIBLE_DOMAIN = 'www.cascondigital.com';
 export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || '1444150007832418';
 
 export const SOCIAL = {
@@ -29,3 +29,5 @@ export const VIMEO = {
   desktop: '1177636206',
   mobile: '1177636252',
 };
+
+export const WHATSAPP_URL = `https://wa.me/${LOCATIONS.bangalore.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hi Cascon, I would like to discuss a project.')}`;

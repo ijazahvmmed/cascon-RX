@@ -1,28 +1,2 @@
-import type { Metadata } from 'next';
 import MorphButton from '@/components/MorphButton';
-import styles from './not-found.module.css';
-
-export const metadata: Metadata = {
-  title: '404',
-};
-
-export default function NotFound() {
-  return (
-    <div className={styles.page}>
-      <div className={styles.blobs} />
-      <div className={styles.content}>
-        <h1 className={styles.title}>404</h1>
-        <p className={styles.message}>
-          This page doesn&apos;t exist. Probably a good thing.
-        </p>
-        <MorphButton href="/" label="Go back home" />
-        <p className={styles.small}>
-          Or email us:{' '}
-          <a href="mailto:info@cascondigital.com" className={styles.emailLink}>
-            info@cascondigital.com
-          </a>
-        </p>
-      </div>
-    </div>
-  );
-}
+export default function NotFound() { return <div className="not-found"><span className="eyebrow">A small detour</span><h1>404.</h1><p>We couldn’t find that page. Let’s get you back to the good stuff.</p><MorphButton href="/" label="Back home" /></div>; }

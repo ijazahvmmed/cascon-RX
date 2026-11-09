@@ -1,0 +1,25 @@
+.reveal-line{overflow:clip;padding-bottom:.075em;margin-bottom:-.075em}
+.reveal-word{vertical-align:top}
+.home-hero .hero-poster,.home-hero .hero-video{top:-5%;height:110%}
+.case-image img,.ribbon-image img{transition:transform .76s cubic-bezier(.22,1,.36,1)}
+.case-card:hover .case-image img,.case-card:focus-visible .case-image img{transform:scale(1.055)}
+.case-open{width:34px;height:34px;font-size:16px;transform:translateY(8px) rotate(-35deg);transition:opacity .2s ease-out,transform .34s cubic-bezier(.22,1,.36,1)}
+.case-card:hover .case-open,.case-card:focus-visible .case-open{transform:translateY(0) rotate(0deg)}
+.case-info h3{transition:opacity .2s ease-out}.case-card:hover .case-info h3{opacity:.6}
+.pill-button{transition:background .3s ease-out,color .3s ease-out,border-color .3s ease-out}
+.pill-button>span{transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.pill-button:hover>span,.pill-button:focus-visible>span{transform:translateX(4px)}
+.home-services li a{transition:opacity .2s ease-out}
+.home-services .service-link{display:inline-flex;justify-content:flex-start;font-size:clamp(28px,2.5vw,36px);font-weight:300;line-height:1.2;letter-spacing:-.025em;padding-block:4px}
+.home-services .service-link__label{display:grid}
+.home-services .service-link__text,.home-services .service-link__measure{grid-area:1/1;font-size:inherit;opacity:1;transform:none}
+.home-services .service-link__text{font-weight:300;transition:font-weight .2s ease-out}
+.home-services .service-link__measure{font-weight:600;visibility:hidden;pointer-events:none}
+.home-services .service-link:hover .service-link__text,.home-services .service-link:focus-visible .service-link__text{font-weight:600;opacity:1;transform:none}
+@media(max-width:640px){.home-services .service-link{font-size:28px}}
+@media(hover:hover){.home-services ul:has(a:hover) a:not(:hover){opacity:.4}.ribbon-image:hover img{transform:scale(1.055)}}
+.faq-list summary{transition:color .2s ease-out}.faq-list summary:hover{color:#535353}
+.footer-signature{display:flex;align-items:center;justify-content:space-between;gap:30px;padding-bottom:35px;margin-bottom:35px;border-bottom:1px solid #0a0a0a26}
+.footer-signature>span{font-size:12px;font-weight:300;line-height:1.5;color:#535353;text-align:right}
+@media(max-width:640px){.footer-signature{gap:20px;padding-bottom:25px;margin-bottom:30px}.footer-signature>span{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.reveal-line{overflow:visible}.case-image,.wide-image,.service-visual,.feature-image{clip-path:none!important;opacity:1!important}.home-hero .hero-poster{top:0;height:100%;transform:none!important}.case-image img,.ribbon-image img{transition:none;transform:none!important}}

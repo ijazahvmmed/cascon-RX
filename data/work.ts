@@ -18,7 +18,7 @@ export const workCards: WorkCard[] = [
     description: "Men's fashion brand built on Shopify with AI media and CRO.",
     tags: ['shopify', 'ai-media', 'cro'],
     image: '/images/work/vibezon.jpg',
-    externalUrl: 'https://www.thevibezon.com/',
+    externalUrl: 'https://vibezon.com/',
   },
   {
     name: 'Rewise',
@@ -57,7 +57,7 @@ export const workCards2: WorkCard[] = [
     description: 'Shopify store with AI product photography.',
     tags: ['shopify', 'ai-photography'],
     image: '/images/work/hanbee.jpg',
-    externalUrl: 'https://myhanbee.myshopify.com/',
+    externalUrl: 'https://hanbeekids.in/',
   },
 ];
 
@@ -69,5 +69,12 @@ export const moreWork: MoreWorkItem[] = [
   { name: 'Clipston Engineering', tags: ['performance-marketing'], region: 'UAE' },
   { name: 'Benair HVAC', tags: ['performance-marketing', 'content'], region: 'UAE' },
   { name: 'Pureline Fiberglass', tags: ['performance-marketing'], region: 'UAE' },
-  { name: 'Antigravity', tags: ['automation'], region: 'INDIA' },
 ];
+
+export const newWorkCards: WorkCard[] = [
+  { name: 'Finewares', description: 'Shopify development, AI photography, content and SEO & AEO for a cookware brand.', tags: ['shopify', 'ai-photography', 'content', 'seo-aeo'], image: '/images/work/finewares.png', externalUrl: 'https://finewares.in/' },
+  { name: 'Slept Club', description: 'Shopify, AI photography, content and search foundations for thoughtfully designed sleep essentials.', tags: ['shopify', 'ai-photography', 'content', 'seo-aeo'], image: '/images/work/slept.png', externalUrl: 'https://wearslept.com/' },
+  { name: 'Lumy Dates', description: 'Shopify development, AI photography, content and SEO & AEO for a premium dates and gifting brand.', tags: ['shopify', 'ai-photography', 'content', 'seo-aeo'], image: '/images/work/lumy.png', externalUrl: 'https://www.lumydates.com/' },
+  { name: 'Citysky Builders', description: 'A property website with AI photography and content for a home builder in Kerala.', tags: ['web-design', 'ai-photography', 'content'], image: '/images/work/citysky.webp', externalUrl: 'https://www.cityskyhomes.com/' },
+];
+export const allWorkCards: WorkCard[] = [...newWorkCards, bagusBreakout, ...workCards, ...workCards2];

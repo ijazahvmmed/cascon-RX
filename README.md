@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cascon
 
-## Getting Started
+Next.js website for Cascon, a Shopify agency and AI media studio in Bangalore and Dubai.
 
-First, run the development server:
+## Local development
 
-```bash
+```sh
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. For production validation:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm run build
+npm start
+node scripts/check-site.mjs
+node scripts/check-pixel.cjs
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The screenshot-led design decisions and supplied source tokens are in DESIGN.md. Typography uses the bundled variable Geist font. GSAP SplitText and ScrollTrigger share a frame loop with Lenis, with native reduced-motion and touch behavior.
 
-## Learn More
+The primary domain is https://www.cascondigital.com. NEXT_PUBLIC_SITE_URL can override it for an intentional domain change. NEXT_PUBLIC_META_PIXEL_ID overrides the existing pixel ID. Meta tracking is suppressed on localhost to keep development visits out of production measurement.
 
-To learn more about Next.js, take a look at the following resources:
+See docs/seo-and-tracking.md for crawler routes, measurement semantics and production verification steps.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The contact panel uses the existing India phone number and business email from lib/constants.ts. Client logos are stored locally; sources are recorded in docs/brand-assets.json. Fourteen identities use genuine logo assets; Pinoy Grocers, Mehndi Online and Clipston Engineering retain name labels because their exact identities could not be verified. Platform logos identify tools, without asserting certification or partnership.

@@ -28,7 +28,7 @@ export const services: Service[] = [
     id: 'ai-media',
     name: 'AI Media Production',
     description:
-      'Product photography, lifestyle shoots, and video content created with AI tools. Studio-quality output delivered in days rather than weeks, at a fraction of the cost.',
+      'Product photography, lifestyle shoots, and video content created with AI tools. A shared visual direction and review process keep the output aligned with your products and brand.',
     image: '/horizontal.mp4',
     included: [
       'AI product photography',
@@ -79,7 +79,7 @@ export const services: Service[] = [
     id: 'seo-aeo',
     name: 'SEO & AEO',
     description:
-      'Search engine optimization and AI engine optimization. We help brands rank on Google and get cited by AI tools like ChatGPT and Perplexity.',
+      'Search engine optimization and AI engine optimization. We improve crawlability, page content and structured data so search and answer engines can understand your products and services.',
     image: '/videos/seo.mp4',
     included: [
       'Technical SEO audits',

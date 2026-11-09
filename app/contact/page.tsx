@@ -1,77 +1,8 @@
-import type { Metadata } from 'next';
-import { CONTACT_EMAIL, LOCATIONS } from '@/lib/constants';
-import InteriorHeroBg from '@/components/InteriorHeroBg';
-import styles from './contact.module.css';
-
-export const metadata: Metadata = {
-  title: 'Contact',
-  description: 'Get in touch with Cascon. We respond within 24 hours.',
-  openGraph: {
-    title: 'Contact | Cascon',
-    description: 'Get in touch with Cascon. We respond within 24 hours.',
-    type: 'website',
-    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Contact | Cascon',
-    images: ['/og-image.png'],
-  },
-  alternates: {
-    canonical: 'https://cascon.systems/contact',
-  },
-};
-
+import { CONTACT_EMAIL, LOCATIONS, CAL_LINK, WHATSAPP_URL } from '@/lib/constants';
+import { pageMetadata, breadcrumbSchema } from '@/lib/seo';
+import JsonLd from '@/components/JsonLd';
+import Icon from '@/components/Icon';
+export const metadata = pageMetadata('/contact', 'Contact our Shopify Agency in Bangalore & Dubai', 'Discuss Shopify development, AI media, CRO or ecommerce marketing with Cascon. Contact our Bangalore or Dubai team, email us or book an introductory call.');
 export default function ContactPage() {
-  return (
-    <InteriorHeroBg variant="peach">
-      <div className={styles.inner}>
-        <h1 className={styles.title}>Get in touch</h1>
-
-        <div className={styles.emailSection}>
-          <a href={`mailto:${CONTACT_EMAIL}`} className={styles.emailLink}>
-            {CONTACT_EMAIL}
-          </a>
-          <span className={styles.responseTime}>Average response: &lt; 24h</span>
-        </div>
-
-        <div className={styles.locationGrid}>
-          <div className={styles.locationCard}>
-            <span className={styles.locationLabel}>{LOCATIONS.coventry.label}</span>
-            <span className={styles.locationAddress}>{LOCATIONS.coventry.address}</span>
-            {LOCATIONS.coventry.phone && (
-              <a href={`tel:${LOCATIONS.coventry.phone.replace(/\s+/g, '')}`} className={styles.phoneLink}>
-                {LOCATIONS.coventry.phone}
-              </a>
-            )}
-            <a
-              href={LOCATIONS.coventry.mapUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.viewMap}
-            >
-              View on Google Maps
-            </a>
-          </div>
-          <div className={styles.locationCard}>
-            <span className={styles.locationLabel}>{LOCATIONS.bangalore.label}</span>
-            <span className={styles.locationAddress}>{LOCATIONS.bangalore.address}</span>
-            {LOCATIONS.bangalore.phone && (
-              <a href={`tel:${LOCATIONS.bangalore.phone.replace(/\s+/g, '')}`} className={styles.phoneLink}>
-                {LOCATIONS.bangalore.phone}
-              </a>
-            )}
-            <a
-              href={LOCATIONS.bangalore.mapUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.viewMap}
-            >
-              View on Google Maps
-            </a>
-          </div>
-        </div>
-      </div>
-    </InteriorHeroBg>
-  );
+  return <div className="interior-gradient"><header className="contact-hero shell"><span className="eyebrow">A conversation is a good start</span><h1>You have a vision.<br />Let’s give it a home.</h1><a className="contact-email" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a><p>Tell us about your brand, your store and what you want to do next.</p><div className="contact-page-actions"><a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="pill-button"><Icon name="whatsapp" />WhatsApp us</a><a href={CAL_LINK} target="_blank" rel="noopener noreferrer" className="pill-button" >Book an introductory call <Icon name="arrow-up-right" /></a></div></header><div className="contact-locations shell">{Object.values(LOCATIONS).reverse().map(location => <section className="contact-location" key={location.label} id={location.label.toLowerCase()}><span className="eyebrow">{location.label === 'Bangalore' ? 'India' : 'United Arab Emirates'}</span><h2>{location.label}.</h2><address><a href={location.mapUrl} target="_blank" rel="noopener noreferrer">{location.address}</a><a href={`tel:${location.phone.replace(/\s/g,'')}`}>{location.phone}</a><a href={location.mapUrl} target="_blank" rel="noopener noreferrer" className="small-pill">View on map ↗</a></address></section>)}</div><JsonLd data={breadcrumbSchema('Contact','/contact')} /></div>;
 }

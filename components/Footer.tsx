@@ -1,115 +1,15 @@
-'use client';
-
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { footerColumns } from '@/data/navigation';
-import { CONTACT_EMAIL } from '@/lib/constants';
-import type { NavLink } from '@/data/navigation';
-import styles from './Footer.module.css';
+import BrandLogo from './BrandLogo';
+import { footerColumns, type NavLink } from '@/data/navigation';
+import { CONTACT_EMAIL, LOCATIONS, CAL_LINK } from '@/lib/constants';
 
 function FooterLink({ link }: { link: NavLink }) {
-  if (link.external || link.href.startsWith('mailto:') || link.href.startsWith('http')) {
-    return (
-      <a href={link.href} target={link.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener noreferrer" className={styles.footerLink}>
-        {link.label}
-      </a>
-    );
-  }
-  return (
-    <Link href={link.href} className={styles.footerLink}>
-      {link.label}
-    </Link>
-  );
+  return link.external ? <a href={link.href} target={link.href.startsWith('mailto:') ? undefined : '_blank'} rel="noopener noreferrer">{link.label}</a> : <Link href={link.href}>{link.label}</Link>;
 }
-
 export default function Footer() {
-  const pathname = usePathname();
-  const isHome = pathname === '/';
-
-  return (
-    <footer className={`${styles.footer} ${isHome ? styles.homeVariant : ''}`}>
-      <div className={styles.footerInner}>
-        {/* Top message */}
-        <div className={styles.topMessage}>
-          <p>
-            They say no one reads the footer. If you&apos;re here, you might as well say{' '}
-            <a href={`mailto:${CONTACT_EMAIL}`} className={styles.hiLink}>
-              hi
-            </a>
-            .
-          </p>
-        </div>
-
-        {/* Addresses */}
-        <div className={styles.addresses}>
-          <div className={styles.address}>
-            <span className={styles.addressLabel}>Dubai</span>
-            <a
-              href="https://goo.gl/maps/CyJdFtbyL9QZ12Sk8"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.addressText}
-            >
-              Office #2220, 22nd Floor, Tower Plaza<br />
-              Sheikh Zayed Road, Dubai<br />
-              United Arab Emirates
-            </a>
-            <a href="tel:+971547475998" className={styles.phoneLink}>
-              +971 54 747 5998
-            </a>
-          </div>
-          <div className={styles.address}>
-            <span className={styles.addressLabel}>Bangalore</span>
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=No.+33+4th+Floor+1st+Main+Ganganagar+Gramatana+HMT+Layout+CBI+Road+Bangalore+560032"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.addressText}
-            >
-              No. 33, 4th Floor, 1st Main, Ganganagar Gramatana<br />
-              HMT Layout, CBI Road<br />
-              Bangalore 560032<br />
-              India
-            </a>
-            <a href="tel:+918281663376" className={styles.phoneLink}>
-              +91 82816 63376
-            </a>
-          </div>
-        </div>
-
-        {/* Footer columns */}
-        <div className={styles.columns}>
-          {Object.values(footerColumns).map((col) => (
-            <div key={col.title} className={styles.column}>
-              <h4 className={styles.columnTitle}>{col.title}</h4>
-              <ul className={styles.columnLinks}>
-                {col.links.map((link) => (
-                  <li key={link.label}>
-                    <FooterLink link={link} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        {/* Footer bottom */}
-        <div className={styles.bottom}>
-          <div className={styles.bottomLeft}>
-            <a href={`mailto:${CONTACT_EMAIL}`} className={styles.bottomEmail}>
-              {CONTACT_EMAIL}
-            </a>
-          </div>
-          <div className={styles.bottomCenter}>
-            <Link href="/privacy-policy" className={styles.bottomLink}>
-              Privacy Policy
-            </Link>
-          </div>
-          <div className={styles.bottomRight}>
-            <span className={styles.copyright}>&copy; 2026 Cascon. All rights reserved.</span>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
+  return <footer>
+    <div className="footer-connect"><div className="shell"><div className="next-links">{[{ href: '/work', label: 'Work' }, { href: '/clients', label: 'Clients' }, { href: '/about', label: 'About us' }].map(link => <Link key={link.href} href={link.href}>{link.label}<span aria-hidden="true">→</span></Link>)}</div><div className="collab-row"><div><h2>Something in mind?</h2><p>Let’s make it happen.</p></div><a href={CAL_LINK} target="_blank" rel="noopener noreferrer" className="pill-button pill-outline">Work with us <span aria-hidden="true">↗</span></a></div></div></div>
+    <div className="footer-offices shell"><h2>You made it<br />all the way here.<br />Let’s talk.</h2>{Object.entries(LOCATIONS).map(([key, location]) => <address key={key}><h3>{location.label}</h3><a href={location.mapUrl} target="_blank" rel="noopener noreferrer">{location.address}</a><a href={`tel:${location.phone.replace(/\s/g, '')}`}>{location.phone}</a><Link href={`/contact#${location.label.toLowerCase()}`} className="small-pill">Contact ↗</Link></address>)}</div>
+    <div className="footer-base"><div className="footer-signature"><BrandLogo /><span>Shopify. Creative. Connected.<br />Bangalore · Dubai</span></div><div className="footer-columns">{Object.values(footerColumns).map(column => <div key={column.title}><h3>{column.title}<span aria-hidden="true">↗</span></h3><ul>{column.links.map(link => <li key={link.label}><FooterLink link={link} /></li>)}</ul></div>)}</div><div className="footer-bottom"><div><span>New business</span><a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a></div><div><span>Find us</span><span>Bangalore · Dubai</span></div><Link href="/privacy-policy">Privacy policy</Link><a href="/llms.txt">Information for AI</a><span>© {new Date().getFullYear()} Cascon.<br />All rights reserved.</span></div></div>
+  </footer>;
 }

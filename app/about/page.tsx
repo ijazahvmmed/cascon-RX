@@ -1,213 +1,22 @@
-import type { Metadata } from 'next';
 import Image from 'next/image';
-
+import PageIntro from '@/components/PageIntro';
 import ScrollReveal from '@/components/ScrollReveal';
 import MorphButton from '@/components/MorphButton';
-import { CAL_LINK } from '@/lib/constants';
-import { clients } from '@/data/clients';
-import styles from './about.module.css';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'About',
-  description: 'Cascon is a global brand agency working with exciting companies.',
-};
-
+export const metadata = pageMetadata('/about', 'About our Shopify & Creative Agency', 'Meet Cascon, a Shopify agency and AI media studio in Bangalore and Dubai. We bring store development, creative production and ecommerce marketing together.');
 const values = [
-  {
-    title: 'Do it like its yours', // Matches screenshot typo deliberately or just 'Do it like it\'s yours'
-    desc: 'Take ownership. We treat every store and asset like it belongs to us. No cutting corners, no half-baked solutions.'
-  },
-  {
-    title: 'Impact over fancy',
-    desc: 'If it doesn\'t drive conversions or elevate the brand, it\'s just noise. We build for revenue, not just for Dribbble.'
-  },
-  {
-    title: '4 in 1',
-    desc: 'Strategy, UI/UX, Development, and AI Media. You don\'t need four agencies when you have one that excels at all four.'
-  },
-  {
-    title: 'From in-house to full-house',
-    desc: 'We integrate deeply with your team. We don\'t act like external contractors; we act as your dedicated growth arm.'
-  },
-  {
-    title: 'Shaped by tech',
-    desc: 'We leverage AI for media generation and the latest headless stacks for Shopify. We stay ahead so you stay ahead.'
-  }
+  ['Treat it like our own.', 'We take responsibility for the details, from a mobile product page to the final campaign asset. Clear briefs and careful reviews keep the work moving.'],
+  ['Make the useful beautiful.', 'Good design should help people understand your products and find their next step. We bring the brand and the buying journey together.'],
+  ['Think across the whole journey.', 'Strategy, design, development and content work better together. We connect the work so your team has fewer handoffs to manage.'],
+  ['Stay curious. Keep improving.', 'We use new tools where they solve a real problem, then measure and refine the work against the goals we agreed with you.'],
 ];
-
-const jobs = [
-  { role: 'PR Executive', location: 'London / Remote', time: 'Fulltime' },
-  { role: 'Art Director', location: 'Bangalore', time: 'Fulltime' },
-  { role: 'Graphic Designer', location: 'Dubai', time: 'Fulltime' },
-  { role: 'Web Developer', location: 'Remote', time: 'Fulltime' },
-  { role: 'Senior UX/UI', location: 'Remote', time: 'Contract' },
-  { role: 'AI Media Artist', location: 'Bangalore', time: 'Fulltime' },
-];
-
 export default function AboutPage() {
-  return (
-    <>
-      <div className={styles.lightSectionWrapper}>
-        <div className={styles.bgContainer}>
-          <div className={`${styles.blob} ${styles.blob1}`} />
-          <div className={`${styles.blob} ${styles.blob2}`} />
-          <div className={`${styles.blob} ${styles.blob3}`} />
-        </div>
-
-        {/* 1. HERO & ABOUT US */}
-        <section className={styles.heroSection}>
-          <div className={styles.heroInner}>
-            <ScrollReveal>
-              <h1 className={styles.heroTitle}>
-                We&apos;re building a <strong>benchmark agency</strong> to make the creative industry even more creative
-              </h1>
-            </ScrollReveal>
-
-            <div className={styles.aboutGrid}>
-              <div className={styles.aboutLeft}>
-                <span className={styles.sectionLabel}>About us</span>
-              </div>
-              <div className={styles.aboutRight}>
-                <ScrollReveal delay={0.1}>
-                  <h2 className={styles.aboutHeadline}>
-                    Cascon is a global brand agency working with some of the most exciting, fastest-growing companies in the world.
-                  </h2>
-                  <div className={styles.aboutDesc}>
-                    <p>
-                      We started Cascon because we kept seeing the same gap: ecommerce brands with great products but stores that didn&apos;t convert, and content that didn&apos;t look the part. We built a two-pillar agency to fix both: Shopify development engineered for revenue, and AI media production that looks better than traditional shoots.
-                    </p>
-                  </div>
-
-                  <div className={styles.featuresGrid}>
-                    <div className={styles.featureItem}>
-                      <h4>Partners</h4>
-                      <p>Shopify partners obsessed with engineering stores that scale, load fast, and convert predictably.</p>
-                    </div>
-                    <div className={styles.featureItem}>
-                      <h4>End-to-End</h4>
-                      <p>Strategy, UI/UX design, custom development, and seamless AI workflow integration.</p>
-                    </div>
-                    <div className={styles.featureItem}>
-                      <h4>Animators</h4>
-                      <p>Premium 3D product styling and conceptual animations delivered effortlessly without global shoots.</p>
-                    </div>
-                    <div className={styles.featureItem}>
-                      <h4>Culture</h4>
-                      <p>A lean, global network of elite developers and visual creators operating without red tape.</p>
-                    </div>
-                  </div>
-                </ScrollReveal>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 2. GALLERY MARQUEE */}
-        <section className={styles.galleryStrip}>
-          <div className={styles.galleryTrack}>
-            <div className={styles.gallerySlide}>
-              {[...clients, ...clients].map((client, idx) => {
-                if (!client.image) return null;
-                return (
-                  <div key={`${client.name}-${idx}`} className={styles.galleryImgWrap}>
-                    <Image src={client.image} alt={client.name} fill className={styles.gImg} />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        {/* 3. VALUES */}
-        <section className={styles.valuesSection}>
-          <div className={styles.valuesGrid}>
-            <div className={styles.valuesLeft}>
-              <span className={styles.sectionLabel}>VALUES</span>
-              <h2 className={styles.valuesTitle}>This is how we operate</h2>
-            </div>
-            <div className={styles.valuesRight}>
-              {values.map((v, i) => (
-                <ScrollReveal key={i}>
-                  <div className={styles.valueRow}>
-                    <h3 className={styles.valueName}>{v.title}</h3>
-                    <p className={styles.valueDesc}>{v.desc}</p>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 4. OFFICES */}
-        <section className={styles.officesSection}>
-          <div className={styles.officesGrid}>
-            <ScrollReveal>
-              <div className={styles.officeCard}>
-                <div className={styles.officeImgWrap}>
-                  <Image src="/images/pages/about.webp" alt="Dubai Office" fill className={styles.oImg} sizes="50vw" />
-                </div>
-                <div className={styles.officeMeta}>
-                  <span className={styles.officeName}>DUBAI</span>
-                  <span className={styles.officeAddress}>Headquarters, UAE<br />Est. 2023</span>
-                </div>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={0.2}>
-              <div className={styles.officeCard}>
-                <div className={styles.officeImgWrap}>
-                  <Image src="/images/pages/about.webp" alt="Bangalore Office" fill className={styles.oImg} sizes="50vw" />
-                </div>
-                <div className={styles.officeMeta}>
-                  <span className={styles.officeName}>BANGALORE</span>
-                  <span className={styles.officeAddress}>Creative Hub, IN<br />Est. 2024</span>
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
-      </div>
-
-      {/* 5. CAREERS / DARK MAP */}
-      <section className={styles.careersMapSection}>
-        <div className={styles.careersMapInner}>
-          <ScrollReveal>
-            <span className={styles.mapSmallLabel}>JOIN THE JOURNEY</span>
-            <h2 className={styles.mapTitle}>
-              You can find Cascon here. And here.<br />And here. And here. And here.
-            </h2>
-            <p className={styles.mapDesc}>
-              We are always on the lookout for elite talent everywhere.<br />Discover the right position for you.
-            </p>
-            <div className={styles.mapBtnRow}>
-              <MorphButton href={CAL_LINK} label="See all roles" variant="light" external />
-            </div>
-          </ScrollReveal>
-
-          <div className={styles.jobsGrid}>
-            {jobs.map((job, idx) => (
-              <ScrollReveal key={idx} delay={idx * 0.05}>
-                <div className={styles.jobCard}>
-                  <h4 className={styles.jobTitle}>{job.role}</h4>
-                  <div className={styles.jobMeta}>
-                    <span>{job.location}</span>
-                    <span>{job.time}</span>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-
-          {/* Abstract map dots background */}
-          <div className={styles.mapDots}>
-            <span className={styles.dot} style={{ top: '20%', left: '45%' }} />
-            <span className={styles.dot} style={{ top: '35%', left: '75%' }} />
-            <span className={styles.dot} style={{ top: '50%', left: '30%' }} />
-            <span className={styles.dot} style={{ top: '65%', left: '60%' }} />
-            <span className={styles.dot} style={{ top: '80%', left: '40%' }} />
-            <span className={styles.dot} style={{ top: '25%', left: '15%' }} />
-          </div>
-        </div>
-      </section>
-    </>
-  );
+  return <div className="interior-gradient">
+    <PageIntro label="About us" path="/about" title={<>Built for brands<br />with somewhere to go.</>} description="Cascon brings Shopify development and creative production together. From Bangalore and Dubai, we work with ecommerce teams that want a considered store, distinctive content and a clear plan for growth." />
+    <div className="shell"><div className="wide-image"><Image src="/images/work/bagus.jpg" alt="Bagus Shopify and creative project by Cascon" fill sizes="92vw" priority /></div>
+    <section className="editorial-row"><span className="eyebrow">A connected approach</span><div><h2>One team.<br />The bigger picture.</h2><p style={{ marginTop: 30 }}>A store is one part of your brand’s experience. Product imagery, useful information, acquisition and everyday operations all shape what happens before and after a customer buys.</p><p>We work across Shopify development, conversion rate optimization, AI media, paid marketing, SEO, AEO and automation. You can bring us in for a focused project or connect several services around a shared brief.</p><MorphButton href="/services" label="What we do" /></div></section>
+    <section className="editorial-row"><div><span className="eyebrow">Our way of working</span><h2>A little care<br />goes a long way.</h2></div><div>{values.map(([title, description]) => <ScrollReveal key={title}><div className="value-item"><h3>{title}</h3><p>{description}</p></div></ScrollReveal>)}</div></section>
+    <section className="editorial-row"><span className="eyebrow">Bangalore · Dubai</span><div><h2>Close to your team.<br />Wherever you are.</h2><p style={{ marginTop: 30 }}>Our locations in India and the UAE connect us with brands across markets. We agree on milestones, communication and responsibilities at the start, so you always know where the project stands.</p><MorphButton href="/contact" label="Let’s talk" /></div></section></div>
+  </div>;
 }

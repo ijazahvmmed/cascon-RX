@@ -9,7 +9,6 @@ export const mainNavLinks: NavLink[] = [
   { href: '/services', label: 'Services' },
   { href: '/clients', label: 'Clients' },
   { href: '/about', label: 'About' },
-  { href: '/careers', label: 'Careers' },
   { href: '/cascon', label: 'Cascon & Co.' },
 ];
 
@@ -18,20 +17,20 @@ export const footerColumns = {
     title: 'Company',
     links: [
       { href: '/', label: 'Home' },
+      { href: '/#faq', label: 'FAQs' },
       { href: '/about', label: 'About' },
-      { href: '/careers', label: 'Careers' },
-      { href: 'https://cal.com/cascon-haw2fz/15min', label: 'Contact', external: true },
+      { href: '/contact', label: 'Contact' },
     ] as NavLink[],
   },
   work: {
     title: 'Work',
     links: [
-      { href: 'https://www.thevibezon.com/', label: 'Vibezon', external: true },
-      { href: 'https://myrewise.shop/', label: 'Rewise', external: true },
-      { href: 'https://www.bagus.in/', label: 'Bagus', external: true },
-      { href: 'https://mycarsupply.shop/', label: 'Car Supply', external: true },
-      { href: 'https://thereborncompany.com/', label: 'Reborn Co', external: true },
-      { href: 'https://myhanbee.myshopify.com/', label: 'Hanbee', external: true },
+      { href: '/work#finewares', label: 'Finewares' },
+      { href: '/work#slept-club', label: 'Slept Club' },
+      { href: '/work#lumy-dates', label: 'Lumy Dates' },
+      { href: '/work#citysky-builders', label: 'Citysky Builders' },
+      { href: '/work#bagus', label: 'Bagus' },
+      { href: '/work', label: 'All projects' },
     ] as NavLink[],
   },
   clients: {
@@ -59,7 +58,6 @@ export const footerColumns = {
     title: 'Cascon & Co.',
     links: [
       { href: '/cascon#companies', label: 'For companies' },
-      { href: '/cascon#freelancers', label: 'For freelancers' },
       { href: 'mailto:info@cascondigital.com', label: 'info@cascondigital.com', external: true },
     ] as NavLink[],
   },

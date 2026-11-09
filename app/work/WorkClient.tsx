@@ -1,157 +1,36 @@
 'use client';
-
-import { useState } from 'react';
-import { workCards, bagusBreakout, workCards2, moreWork } from '@/data/work';
+import { useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
+import Link from 'next/link';
+import { allWorkCards, moreWork } from '@/data/work';
 import CaseCard from '@/components/CaseCard';
-import InteriorHeroBg from '@/components/InteriorHeroBg';
-import ScrollReveal from '@/components/ScrollReveal';
-import Image from 'next/image';
-import styles from './WorkClient.module.css';
+import ServiceTag from '@/components/ServiceTag';
+import { formatTag } from '@/lib/tags';
+import { projectId, serviceHref } from '@/lib/links';
 
-const allTags = ['all', 'shopify', 'ai-media', 'ai-photography', 'content', 'cro', 'seo-aeo', 'performance-marketing', 'automation'];
-
-const formatTag = (tag: string) => {
-  const map: Record<string, string> = {
-    all: 'All',
-    shopify: 'Shopify',
-    'ai-media': 'AI Media',
-    'ai-photography': 'AI Photography',
-    content: 'Content',
-    cro: 'CRO',
-    'seo-aeo': 'SEO & AEO',
-    'performance-marketing': 'Performance',
-    automation: 'Automation',
-  };
-  return map[tag] || tag;
-};
-
+const tags = ['all', 'shopify', 'web-design', 'ai-media', 'ai-photography', 'content', 'cro', 'seo-aeo', 'performance-marketing', 'automation'];
 export default function WorkClient() {
-  const [activeFilter, setActiveFilter] = useState('all');
-
-  const filterCards = (tags: string[]) => {
-    if (activeFilter === 'all') return true;
-    return tags.includes(activeFilter);
-  };
-
-  return (
-    <>
-      {/* Hero */}
-      <InteriorHeroBg variant="purple">
-        <div className={styles.heroInner}>
-          <h1 className={styles.heroTitle}>We build. We grow.</h1>
-          <p className={styles.heroSubline}>
-            Selected projects across Shopify, AI media, performance marketing, and more.
-          </p>
-          <div className={styles.filters}>
-            {allTags.map((tag) => (
-              <button
-                key={tag}
-                className={`${styles.filterBtn} ${activeFilter === tag ? styles.filterActive : ''}`}
-                onClick={() => setActiveFilter(tag)}
-                aria-pressed={activeFilter === tag}
-              >
-                {formatTag(tag)}
-              </button>
-            ))}
-          </div>
-        </div>
-      </InteriorHeroBg>
-
-      {/* Work grid row 1 */}
-      <section className={styles.workSection}>
-        <div className={styles.workInner}>
-          <div className={styles.workGrid}>
-            {workCards.filter((c) => filterCards(c.tags)).map((card) => (
-              <CaseCard
-                key={card.name}
-                name={card.name}
-                description={card.description}
-                tags={card.tags}
-                image={card.image}
-                externalUrl={card.externalUrl}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Bagus breakout */}
-      {filterCards(bagusBreakout.tags) && (
-        <section className={styles.breakout}>
-          <div className={styles.breakoutInner}>
-            <ScrollReveal>
-              <div className={styles.breakoutContent}>
-                <h2 className={styles.breakoutTitle}>{bagusBreakout.name}</h2>
-                <p className={styles.breakoutDesc}>{bagusBreakout.description}</p>
-                <div className={styles.breakoutTags}>
-                  {bagusBreakout.tags.map((tag) => (
-                    <span key={tag} className={styles.breakoutTag}>{formatTag(tag)}</span>
-                  ))}
-                </div>
-                <a
-                  href={bagusBreakout.externalUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.breakoutLink}
-                >
-                  Visit live website
-                </a>
-              </div>
-            </ScrollReveal>
-            <div className={styles.breakoutImage}>
-              <Image
-                src={bagusBreakout.image}
-                alt={`${bagusBreakout.name} project`}
-                fill
-                sizes="(max-width: 768px) 100vw, 60vw"
-                className={styles.breakoutImg}
-              />
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Work grid row 2 */}
-      <section className={styles.workSection}>
-        <div className={styles.workInner}>
-          <div className={styles.workGrid2}>
-            {workCards2.filter((c) => filterCards(c.tags)).map((card) => (
-              <CaseCard
-                key={card.name}
-                name={card.name}
-                description={card.description}
-                tags={card.tags}
-                image={card.image}
-                externalUrl={card.externalUrl}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* More work */}
-      <section className={styles.moreWork}>
-        <div className={styles.moreWorkInner}>
-          <ScrollReveal>
-            <h2 className={styles.moreWorkTitle}>More work</h2>
-          </ScrollReveal>
-          <div className={styles.moreWorkGrid}>
-            {moreWork.filter((m) => filterCards(m.tags)).map((item) => (
-              <ScrollReveal key={item.name}>
-                <div className={styles.moreWorkItem}>
-                  <h3 className={styles.moreWorkName}>{item.name}</h3>
-                  <span className={styles.moreWorkRegion}>{item.region}</span>
-                  <div className={styles.moreWorkTags}>
-                    {item.tags.map((tag) => (
-                      <span key={tag} className={styles.moreWorkTag}>{formatTag(tag)}</span>
-                    ))}
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-    </>
-  );
+  const [active, setActive] = useState('all');
+  useEffect(() => {
+    const reset = (event: MouseEvent) => {
+      const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href^="/work#"]') : null;
+      if (link) {
+        // Restore the target before Next and Lenis resolve the same-page anchor.
+        flushSync(() => setActive('all'));
+      }
+    };
+    document.addEventListener('click', reset, true);
+    return () => document.removeEventListener('click', reset, true);
+  }, []);
+  const visible = allWorkCards.filter(work => active === 'all' || work.tags.includes(active));
+  const more = moreWork.filter(work => active === 'all' || work.tags.includes(active));
+  const count = visible.length + more.length;
+  return <div className="shell work-area">
+    <div className="work-filters" role="group" aria-label="Filter work by service">{tags.map(tag => <button key={tag} aria-pressed={active === tag} onClick={() => setActive(tag)}>{formatTag(tag)}</button>)}</div>
+    <p className="work-status" role="status">{count} {count === 1 ? 'project' : 'projects'} · {formatTag(active)}</p>
+    <h2 className="sr-only">Selected projects</h2>
+    <div className="case-grid">{visible.map(item => <CaseCard key={item.name} {...item} />)}</div>
+    {!count && <div className="work-empty"><h2>Let’s make the next one.</h2><p>We haven’t published a project in this category yet.</p><Link href={serviceHref(active)}>Explore {formatTag(active).toLowerCase()} services <span aria-hidden="true">→</span></Link></div>}
+    {more.length > 0 && <section className="more-work"><h2>And there’s more.</h2><div className="more-work-grid">{more.map(item => <article key={item.name} className="more-work-item" id={projectId(item.name)}><h3>{item.name}</h3><span>{item.region}</span><ul className="case-tags">{item.tags.map(tag => <li key={tag}><ServiceTag tag={tag} /></li>)}</ul></article>)}</div></section>}
+  </div>;
 }

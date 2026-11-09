@@ -1,60 +1,14 @@
-'use client';
-
 import Image from 'next/image';
-import styles from './CaseCard.module.css';
+import { projectId } from '@/lib/links';
+import Icon from './Icon';
+import ServiceTag from './ServiceTag';
 
-interface CaseCardProps {
-  name: string;
-  description?: string;
-  tags: string[];
-  image: string;
-  externalUrl: string;
-}
-
-const formatTag = (tag: string) => {
-  const map: Record<string, string> = {
-    shopify: 'Shopify',
-    'ai-media': 'AI Media',
-    'ai-photography': 'AI Photography',
-    content: 'Content',
-    cro: 'CRO',
-    'seo-aeo': 'SEO & AEO',
-    'performance-marketing': 'Performance',
-    automation: 'Automation',
-  };
-  return map[tag] || tag;
-};
-
-export default function CaseCard({ name, description, tags, image, externalUrl }: CaseCardProps) {
-  return (
-    <a
-      href={externalUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={styles.card}
-      data-cursor="View"
-      data-tags={tags.join(',')}
-    >
-      <div className={styles.imageWrapper}>
-        <Image
-          src={image}
-          alt={`${name} project`}
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className={styles.image}
-        />
-      </div>
-      <div className={styles.info}>
-        <h3 className={styles.name}>{name}</h3>
-        {description && <p className={styles.description}>{description}</p>}
-        <div className={styles.tags}>
-          {tags.map((tag) => (
-            <span key={tag} className={styles.tag}>
-              {formatTag(tag)}
-            </span>
-          ))}
-        </div>
-      </div>
+export default function CaseCard({ name, description, tags, image, externalUrl }: { name: string; description?: string; tags: string[]; image: string; externalUrl: string }) {
+  return <article className="case-card" id={projectId(name)}>
+    <a href={externalUrl} target="_blank" rel="noopener noreferrer" data-project={name} className="case-project-link">
+      <div className="case-image"><Image src={image} alt={`${name} website project in Cascon’s portfolio`} fill sizes="(max-width: 640px) 92vw, (max-width: 960px) 46vw, 43vw" /><span className="case-open"><Icon name="arrow-up-right" /></span></div>
+      <div className="case-info"><h3>{name}</h3>{description && <p>{description}</p>}</div>
     </a>
-  );
+    <ul className="case-tags" aria-label={`Explore services for ${name}`}>{tags.map(tag => <li key={tag}><ServiceTag tag={tag} /></li>)}</ul>
+  </article>;
 }
