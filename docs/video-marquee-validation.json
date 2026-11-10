@@ -1,0 +1,26 @@
+{
+  "reference": "https://cascon-sepia.vercel.app",
+  "preview": "http://localhost:3000/#studio-title",
+  "originalFilms": 27,
+  "assets": 54,
+  "assetBytes": 16690892,
+  "unchangedMediaHashes": true,
+  "checks": {
+    "lint": "passed",
+    "typescript": "passed",
+    "productionBuild": "passed with disk cache disabled; original next.config.mjs restored",
+    "canonicalRoutes": 22,
+    "internalDestinations": 82,
+    "imageVariants": 46,
+    "videoStreaming": "27/27 HTTP 206, video/mp4",
+    "fullLoop": "27 keyboard advances return to identical card geometry",
+    "responsive": "390px mobile viewport, no document overflow",
+    "reducedMotion": "zero transforms, zero autoplaying videos, 27 native video controls",
+    "offscreen": "zero playing videos",
+    "returnToSection": "8 visible videos resume, zero media errors"
+  },
+  "screenshots": {
+    "desktop": "cascon-original-video-marquee.png",
+    "mobile": "cascon-video-marquee-mobile.png"
+  }
+}

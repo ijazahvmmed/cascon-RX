@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 const base = process.argv[2] || 'http://localhost:3000';
 const canonical = 'https://www.cascondigital.com';
-const paths = ['', '/work', '/services', '/clients', '/about', '/cascon', '/contact', '/privacy-policy'];
+const manifest = JSON.parse(await readFile(new URL('../data/sitemap-manifest.json',import.meta.url),'utf8'));
+const paths = manifest.entries.map(entry => entry.path);
 const titles = new Set();
 const imageUrls = new Set();
 const documents = new Map();
@@ -23,7 +25,15 @@ for (const path of paths) {
   assert.ok(/<meta name="description" content="[^"]{30,}/.test(document), path + ' description missing');
   assert.ok(!/href="\/careers"|See all roles|Join our network/i.test(document), path + ' still links to hiring');
   const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
-  assert.ok(schemas.some(s => s['@type'] === 'Organization'));
+  const organizations = schemas.filter(s => s['@type'] === 'Organization');
+  assert.equal(organizations.length,1);
+  assert.equal(organizations[0]['@id'],canonical+'/#organization');
+  assert.ok(!schemas.some(s=>['Review','AggregateRating','Person'].includes(s['@type'])));
+  assert.ok(!document.includes('name="robots" content="noindex'),path+' unexpectedly noindex');
+  if(path.startsWith('/services/')) { const service=schemas.find(s=>s['@type']==='Service');assert.ok(service);assert.equal(service.url,canonical+path);assert.equal(service.provider['@id'],canonical+'/#organization');assert.ok(document.includes('aria-label="Breadcrumb"')); }
+  if(path.startsWith('/insights/')) {const article=schemas.find(s=>s['@type']==='Article');assert.ok(article);assert.equal(article.author['@id'],canonical+'/#organization');}
+  if(path.startsWith('/work/')) assert.ok(schemas.some(s=>s['@type']==='CreativeWork'));
+
   if (path === '' || path === '/services') {
     const faq = schemas.find(s => s['@type'] === 'FAQPage');
     assert.equal(faq.mainEntity.length, 6);
@@ -53,6 +63,7 @@ const robot = await (await fetch(base+'/robots.txt')).text();
 assert.ok(robot.includes('OAI-SearchBot') && robot.includes(canonical+'/sitemap.xml'));
 const sitemap = await (await fetch(base+'/sitemap.xml')).text();
 assert.equal((sitemap.match(/<loc>/g)||[]).length, paths.length);
+for(const path of paths) assert.ok(sitemap.includes('<loc>'+canonical+path+'</loc>'),'Missing sitemap route '+path);
 assert.ok(!sitemap.includes('/careers') && !sitemap.includes('cascon.systems'));
 for (const path of ['/llms.txt','/llms-full.txt']) {
   const response = await fetch(base+path);
@@ -69,3 +80,13 @@ console.log('PASS robots, sitemap, AI documents, careers redirect and 404');
 for (const src of imageUrls) { const image = await fetch(new URL(src, base)); assert.equal(image.status,200,src); assert.ok(image.headers.get('content-type')?.startsWith('image/'),src); assert.ok((await image.arrayBuffer()).byteLength > 100,src+' is a placeholder'); }
 const og = await fetch(base+'/opengraph-image'); assert.equal(og.status,200); assert.ok(og.headers.get('content-type').startsWith('image/png'));
 console.log('PASS',imageUrls.size,'responsive image variants and social preview');
+
+for (const path of ['/services/not-a-service','/work/not-a-project','/insights/not-a-guide']) assert.equal((await fetch(base+path)).status,404,path);
+const reachable = new Set(['/']);
+const queue = ['/'];
+while(queue.length) {
+ const path=queue.shift(), document=documents.get(path);
+ for(const match of (document || '').matchAll(/<a[^>]+href="([^"]+)"/g)) {const url=new URL(match[1].replaceAll('&amp;','&'),new URL(path,base));if(url.origin!==new URL(base).origin || !documents.has(url.pathname) || reachable.has(url.pathname))continue;reachable.add(url.pathname);queue.push(url.pathname);}
+}
+for(const path of paths)assert.ok(reachable.has(path||'/'),'Orphaned route '+path);
+console.log('PASS sitemap completeness, unknown dynamic-route 404s and crawl discovery from home');

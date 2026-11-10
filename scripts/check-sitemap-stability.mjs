@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
+const before=await readFile('data/sitemap-manifest.json','utf8');
+const full=process.argv.includes('--full-build');
+if(full&&!process.env.npm_execpath)throw Error('Run the full build check through npm run test:sitemap:stability -- --full-build');
+const command=full?[process.env.npm_execpath,'run','build']:['scripts/build-sitemap.mjs'];
+const run=spawnSync(process.execPath,command,{cwd:process.cwd(),windowsHide:true,stdio:'inherit',env:process.env});
+assert.equal(run.status,0,'Sitemap rebuild validation must pass');
+assert.equal(await readFile('data/sitemap-manifest.json','utf8'),before,'Unchanged content must preserve identical sitemap history and lastmod dates');
+console.log('PASS unchanged production rebuild preserves every lastmod and manifest byte');

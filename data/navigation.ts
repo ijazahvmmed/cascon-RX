@@ -18,6 +18,7 @@ export const footerColumns = {
     links: [
       { href: '/', label: 'Home' },
       { href: '/#faq', label: 'FAQs' },
+      { href: '/insights', label: 'Insights' },
       { href: '/about', label: 'About' },
       { href: '/contact', label: 'Contact' },
     ] as NavLink[],
@@ -25,11 +26,11 @@ export const footerColumns = {
   work: {
     title: 'Work',
     links: [
-      { href: '/work#finewares', label: 'Finewares' },
-      { href: '/work#slept-club', label: 'Slept Club' },
-      { href: '/work#lumy-dates', label: 'Lumy Dates' },
-      { href: '/work#citysky-builders', label: 'Citysky Builders' },
-      { href: '/work#bagus', label: 'Bagus' },
+      { href: '/work/finewares', label: 'Finewares' },
+      { href: '/work/slept-club', label: 'Slept Club' },
+      { href: '/work/lumy-dates', label: 'Lumy Dates' },
+      { href: '/work/citysky-builders', label: 'Citysky Builders' },
+      { href: '/work/bagus', label: 'Bagus' },
       { href: '/work', label: 'All projects' },
     ] as NavLink[],
   },
@@ -46,7 +47,7 @@ export const footerColumns = {
     title: 'Services',
     links: [
       { href: '/services#collaboration-models', label: 'Collaboration models' },
-      { href: '/services#shopify', label: 'Shopify' },
+      { href: '/services/shopify-development', label: 'Shopify' },
       { href: '/services#ai-media', label: 'AI Media' },
       { href: '/services#performance-marketing', label: 'Performance Marketing' },
       { href: '/services#automation', label: 'Automation' },

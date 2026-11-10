@@ -8,26 +8,7 @@
 .faq-list details p{font-size:15px;line-height:1.65;max-width:1000px;padding:0 40px 26px 0;color:#535353}
 .faq-list details[open] p{animation:faq-answer .3s ease-out both}
 @keyframes faq-answer{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.ask-ai{position:relative;display:inline-block;text-align:left}
-.ask-ai>summary{display:flex;align-items:center;justify-content:center;gap:10px;list-style:none;cursor:pointer;padding:8px 12px;color:#548de1;border-radius:100px;font-size:14px;font-weight:500;line-height:1.4;letter-spacing:.025em;text-transform:uppercase;transition:background .2s ease-out}
-.ask-ai>summary::-webkit-details-marker{display:none}.ask-ai>summary:hover,.ask-ai[open]>summary{background:#548de10d}
-.ai-spark{width:20px;height:20px}.ai-chevron{width:10px;height:7px;margin-left:3px;transition:transform .2s ease-out}.ask-ai[open] .ai-chevron{transform:rotate(180deg)}
-.ask-ai__panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:350px;max-width:calc(100vw - 40px);max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain;padding:24px;background:#fff;border:1px solid #dedede;border-radius:14px;color:#0a0a0a;z-index:10}
-.ask-ai__panel>p{font-size:20px;letter-spacing:-.025em;color:#0a0a0a;line-height:1.2;margin-bottom:10px}
-.ask-ai__close{position:absolute;right:12px;top:12px;width:32px;height:32px;font-size:22px;line-height:1;color:#737373}.ask-ai__close:hover{color:#0a0a0a}
-.ask-ai__intro,.ask-ai__note{display:block;font-size:12px;font-weight:300;line-height:1.5;color:#535353}
-.ask-ai__copy{display:flex;align-items:center;justify-content:space-between;width:100%;margin:18px 0 14px;padding:10px 14px;border:1px solid #0a0a0a;border-radius:100px;background:#0a0a0a;color:#fff;font-size:12px;transition:background .2s ease-out}.ask-ai__copy:hover{background:#353535}
-.ask-ai__providers{display:grid;grid-template-columns:1fr;gap:3px;margin-bottom:16px}
-.ask-ai__providers>a{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:14px;font-weight:400;transition:font-weight .2s ease-out}.ask-ai__providers>a:hover{font-weight:600}
-.ai-provider-mark{display:grid;place-items:center;width:30px;height:30px;flex-shrink:0}
-.ai-provider-arrow{margin-left:auto;color:#737373;font-size:12px}.ask-ai__note{font-size:10px;border-top:1px solid #eee;padding-top:13px}
-.ask-ai__fallback{margin-top:14px}.ask-ai__fallback label{display:block;font-size:12px;margin-bottom:7px}.ask-ai__fallback textarea{width:100%;min-height:120px;font-size:12px;line-height:1.5;padding:10px;border:1px solid #dedede;border-radius:6px;resize:vertical}
+.ask-ai-trigger{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:8px 12px;color:#548de1;border-radius:100px;font-size:14px;font-weight:500;line-height:1.4;letter-spacing:.025em;text-transform:uppercase;transition:background .2s ease-out}.ask-ai-trigger:hover,.ask-ai-trigger:focus-visible{background:#548de10d}.ask-ai-trigger>svg{width:20px;height:20px}.ask-ai-trigger>svg:last-child{width:13px;height:13px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-@media(max-width:640px){.faq-section{padding-block:80px}.faq-heading{margin-bottom:40px}.faq-heading h2{font-size:28px;max-width:300px;margin-bottom:14px}.ask-ai>summary{font-size:12px}.faq-list summary{font-size:17px;padding:20px 0;gap:18px}.faq-list details p{font-size:14px;padding-right:15px}.ask-ai__panel{position:fixed;top:auto;bottom:20px;left:20px;right:20px;width:auto;max-width:none;max-height:calc(100dvh - 100px);transform:none;padding:24px 20px}}
-@media(prefers-reduced-motion:reduce){.faq-list details[open] p{animation:none}.ask-ai *{transition:none!important}}
-
-.ai-provider-logo{width:22px;height:22px;object-fit:contain;filter:grayscale(1)}
-.ask-ai__close{display:grid;place-items:center}.ask-ai__close svg{width:16px;height:16px}
-.ask-ai__copy>svg{width:16px;height:16px;flex-shrink:0}.ai-provider-arrow{width:14px;height:14px;flex-shrink:0}
-
-body:has(.ask-ai[open]) .contact-fab{visibility:hidden;pointer-events:none}
+@media(max-width:640px){.faq-section{padding-block:80px}.faq-heading{margin-bottom:40px}.faq-heading h2{font-size:28px;max-width:300px;margin-bottom:14px}.ask-ai-trigger{font-size:12px}.faq-list summary{font-size:17px;padding:20px 0;gap:18px}.faq-list details p{font-size:14px;padding-right:15px}}
+@media(prefers-reduced-motion:reduce){.faq-list details[open] p{animation:none}.ask-ai-trigger{transition:none}}

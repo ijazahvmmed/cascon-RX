@@ -6,18 +6,18 @@ import { FB_PIXEL_ID, pageview, trackEvent, trackCustomEvent } from '@/lib/fpixe
 import { CAL_LINK } from '@/lib/constants';
 import { services } from '@/data/services';
 
-export default function MetaPixel() {
+export default function MetaPixel({ isProduction = true }: { isProduction?: boolean } = {}) {
   const pathname = usePathname();
   const [ready, setReady] = useState(false);
   const [enabled, setEnabled] = useState(false);
-  useEffect(() => { setEnabled(!['localhost', '127.0.0.1', '[::1]'].includes(window.location.hostname)); }, []);
+  useEffect(() => { setEnabled(isProduction && !['localhost', '127.0.0.1', '[::1]'].includes(window.location.hostname)); }, [isProduction]);
   const lastPage = useRef<string | null>(null);
   useEffect(() => {
     if (!ready || lastPage.current === pathname) return;
     lastPage.current = pathname;
     pageview();
-    if (pathname === '/services' || pathname === '/work') {
-      trackEvent('ViewContent', { content_name: pathname === '/services' ? 'Cascon services' : 'Cascon selected work', content_category: pathname === '/services' ? 'Services' : 'Portfolio' });
+    if (pathname === '/services' || pathname.startsWith('/services/') || pathname === '/work' || pathname.startsWith('/work/')) {
+      trackEvent('ViewContent', { content_name: pathname, content_category: pathname.startsWith('/services') ? 'Services' : 'Portfolio' });
     }
   }, [pathname, ready]);
   useEffect(() => {

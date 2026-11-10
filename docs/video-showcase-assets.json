@@ -1,0 +1,329 @@
+{
+  "source": "https://cascon-sepia.vercel.app",
+  "assets": [
+    {
+      "path": "/videos/ai/ai-azure-noir.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-azure-noir.jpg",
+      "bytes": 26398,
+      "sha256": "b9eca219c89c74e1fba911c6e5527af3f7af4d179608df8c72168a93e25c3fa9"
+    },
+    {
+      "path": "/videos/ai/ai-azure-noir.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-azure-noir.mp4",
+      "bytes": 395422,
+      "sha256": "3563596369f0020f7e54385202e7fe0a482c6b151ca0075555cd81bd1bd4a2e9"
+    },
+    {
+      "path": "/videos/ai/ai-chocolate-dates.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-chocolate-dates.jpg",
+      "bytes": 16319,
+      "sha256": "5e09db10ff44631482b4b6e58fdd0d332137af40c8852ba9344f8c11b0bc6bf5"
+    },
+    {
+      "path": "/videos/ai/ai-chocolate-dates.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-chocolate-dates.mp4",
+      "bytes": 244668,
+      "sha256": "64df83cd90a66b18f2fa9a130f972cdb5e3e1919a726cfd518bf15d198c13ebd"
+    },
+    {
+      "path": "/videos/ai/ai-citrus-water.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-citrus-water.jpg",
+      "bytes": 27262,
+      "sha256": "6aa631fe1a34255cc2faa11987b2e34a51e4958b506f22e401f57638468e0e47"
+    },
+    {
+      "path": "/videos/ai/ai-citrus-water.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-citrus-water.mp4",
+      "bytes": 519551,
+      "sha256": "b96870a5782e392474869e31127ea1ccaf7dd00f5f449406c4a20a94ffa95b7a"
+    },
+    {
+      "path": "/videos/ai/ai-coastal-knit.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-coastal-knit.jpg",
+      "bytes": 15375,
+      "sha256": "bc7ab629cd76109163d2b8c60b581e6a59f5e77a74c8f75bfdb6570e7bd8ee04"
+    },
+    {
+      "path": "/videos/ai/ai-coastal-knit.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-coastal-knit.mp4",
+      "bytes": 475953,
+      "sha256": "67381bbbc8c680f09a861d6bdb38995147c31069778b489628ed2e57c76e283a"
+    },
+    {
+      "path": "/videos/ai/ai-elevator-arrival.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-elevator-arrival.jpg",
+      "bytes": 19031,
+      "sha256": "8125c78cc64792429b01c90c219a48e77d3c9988e73ad2806538ab181a4c6f48"
+    },
+    {
+      "path": "/videos/ai/ai-elevator-arrival.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-elevator-arrival.mp4",
+      "bytes": 602236,
+      "sha256": "7c5339600fe334ba2d8fb2e556f033256bfdc811b029fedc8818a0d9f689e495"
+    },
+    {
+      "path": "/videos/ai/ai-elevator-story.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-elevator-story.jpg",
+      "bytes": 20643,
+      "sha256": "4e414906b78eafa405db43fa07625b0c5cc92ba1c66f52ce1cd1e112ea69fc64"
+    },
+    {
+      "path": "/videos/ai/ai-elevator-story.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-elevator-story.mp4",
+      "bytes": 374552,
+      "sha256": "01e8e9332f1f48ee39b5c9abb4f2d2abe7338c81b3e662251a00e1a4a52ae4dc"
+    },
+    {
+      "path": "/videos/ai/ai-executive-commute.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-executive-commute.jpg",
+      "bytes": 26782,
+      "sha256": "8c02be76c70eea655a6c31fa684e7456ea95beb82f5c4b0f463477cc0a97484a"
+    },
+    {
+      "path": "/videos/ai/ai-executive-commute.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-executive-commute.mp4",
+      "bytes": 573833,
+      "sha256": "20bc7f91f23fd3b889e34456bfc0c6bd99f0c858d2e895daad450b6c5997955b"
+    },
+    {
+      "path": "/videos/ai/ai-festive-decor.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-festive-decor.jpg",
+      "bytes": 43261,
+      "sha256": "bc5e34dccb5838a55ec26f82791af7cf4f9a600b028ab7d7084379777ed7207e"
+    },
+    {
+      "path": "/videos/ai/ai-festive-decor.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-festive-decor.mp4",
+      "bytes": 645946,
+      "sha256": "b082faf7e9ecf27af105d1022bbf480577bd67b19eeb86cd9e9f32599db70ce6"
+    },
+    {
+      "path": "/videos/ai/ai-festive-greeting.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-festive-greeting.jpg",
+      "bytes": 30818,
+      "sha256": "a3dcecf0fa1bce5ea00d713d75fd5160300117f8f42cab2ccff9314028ce9631"
+    },
+    {
+      "path": "/videos/ai/ai-festive-greeting.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-festive-greeting.mp4",
+      "bytes": 461436,
+      "sha256": "d7a0f87cdff76de6dd8428324ad87fda676296e9a32ff1df70a7e97177478c33"
+    },
+    {
+      "path": "/videos/ai/ai-home-reading.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-home-reading.jpg",
+      "bytes": 27958,
+      "sha256": "184a4a5200b6dfa7f7ae9cf1a1a10de8a0ff588f32616aecb8022cce7d69db53"
+    },
+    {
+      "path": "/videos/ai/ai-home-reading.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-home-reading.mp4",
+      "bytes": 71264,
+      "sha256": "95df18947403c7a292555730aff351a25a59f9454fb940c144c528465c15ac06"
+    },
+    {
+      "path": "/videos/ai/ai-linen-portrait.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-linen-portrait.jpg",
+      "bytes": 40673,
+      "sha256": "246482f48c75258998492c13b66fccbe10908f9d787f491007905413b8eee190"
+    },
+    {
+      "path": "/videos/ai/ai-linen-portrait.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-linen-portrait.mp4",
+      "bytes": 804483,
+      "sha256": "df66b5048f76261050e371af3876063e192ec444204cac9c6e2616e31ddbc66f"
+    },
+    {
+      "path": "/videos/ai/ai-lumi-fleur.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-lumi-fleur.jpg",
+      "bytes": 19274,
+      "sha256": "9a08532c77c6cbfcd054eea2ee795448c750dd033ea4820e9d39ca24f738c86a"
+    },
+    {
+      "path": "/videos/ai/ai-lumi-fleur.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-lumi-fleur.mp4",
+      "bytes": 298179,
+      "sha256": "ddf3d74e529ac4fd02b1006ecf777fdd194f3393806bc326fcd4461e38fef819"
+    },
+    {
+      "path": "/videos/ai/ai-mascot.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-mascot.jpg",
+      "bytes": 33855,
+      "sha256": "e75694581cd1aa664461f074e71c1547a542854a89de63fd0b7788bf8764fa57"
+    },
+    {
+      "path": "/videos/ai/ai-mascot.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-mascot.mp4",
+      "bytes": 816273,
+      "sha256": "fb27e81fc2ae0faac4933ef92a16cc28a047c4809df0242ff6f9c5e954940ec3"
+    },
+    {
+      "path": "/videos/ai/ai-menswear.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-menswear.jpg",
+      "bytes": 42349,
+      "sha256": "c5b004f3b2c75c0bb9a0c57fd72d1469cc0f0b9e7c01f110b2233ae05e1b8d74"
+    },
+    {
+      "path": "/videos/ai/ai-menswear.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-menswear.mp4",
+      "bytes": 1021774,
+      "sha256": "9996ae1d1245c738fda1d867a62bd1149205df7ece28d80c9eed0a9e5b341715"
+    },
+    {
+      "path": "/videos/ai/ai-mineral-water.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-mineral-water.jpg",
+      "bytes": 41516,
+      "sha256": "737800c32ea051b7b18ff3801b83312708d60ea7849699fdd645d35829f3e0a0"
+    },
+    {
+      "path": "/videos/ai/ai-mineral-water.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-mineral-water.mp4",
+      "bytes": 487243,
+      "sha256": "c19e04e8a8dee55ff20177f83daae98e9755faa30e312374152012bf328e906e"
+    },
+    {
+      "path": "/videos/ai/ai-navy-shirt.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-navy-shirt.jpg",
+      "bytes": 28876,
+      "sha256": "24c5a3a7a82523d3c9faefdd688499fc938b105aff1b716688ed19add8bb55f8"
+    },
+    {
+      "path": "/videos/ai/ai-navy-shirt.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-navy-shirt.mp4",
+      "bytes": 416806,
+      "sha256": "2de932ff93192d1b5985928937932e2d83d5eb95e0917c0c2dff0df19dfbbaee"
+    },
+    {
+      "path": "/videos/ai/ai-perfume.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-perfume.jpg",
+      "bytes": 29088,
+      "sha256": "841a127d18e17792353a513ae46cc3c448e8b21c4a31afa44a55b2975a10aab2"
+    },
+    {
+      "path": "/videos/ai/ai-perfume.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-perfume.mp4",
+      "bytes": 326649,
+      "sha256": "292ebceaaa6184a802e7e575972cfc9662589b43fca2626e9d17e561836fa664"
+    },
+    {
+      "path": "/videos/ai/ai-premium-dates.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-premium-dates.jpg",
+      "bytes": 31109,
+      "sha256": "cea0bfea8d5d7a639d4cb8f6f955aeaac5963b0f1a903528af8a1183ef0fba9b"
+    },
+    {
+      "path": "/videos/ai/ai-premium-dates.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-premium-dates.mp4",
+      "bytes": 266654,
+      "sha256": "8b3a1212450486e58278abbc837f30641636388b143e117949263080fefd5111"
+    },
+    {
+      "path": "/videos/ai/ai-property-offer.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-property-offer.jpg",
+      "bytes": 27094,
+      "sha256": "8e487bf648ee90662098a9a6618f1dc15c68487f84100e8b1179625437b97fad"
+    },
+    {
+      "path": "/videos/ai/ai-property-offer.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-property-offer.mp4",
+      "bytes": 906023,
+      "sha256": "946c5351b31428537b8538e28ead96a53fb8851b32f114396926dcac95c93c53"
+    },
+    {
+      "path": "/videos/ai/ai-resort-shirt.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-resort-shirt.jpg",
+      "bytes": 38666,
+      "sha256": "cb79fafdcf9f48b9d89ad13097a3196471060838cc963a329f0a6c34a9ed6002"
+    },
+    {
+      "path": "/videos/ai/ai-resort-shirt.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-resort-shirt.mp4",
+      "bytes": 1489648,
+      "sha256": "e9e4def7c1906a7f8c7b81d6ca7fc27b3756ba3ebab187626e14872b71ddc381"
+    },
+    {
+      "path": "/videos/ai/ai-satin-pillow.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-satin-pillow.jpg",
+      "bytes": 22735,
+      "sha256": "9e368bfb2493648624bba8885dddc92f3e6ac933f6f87bbf0fffb004710cc8d5"
+    },
+    {
+      "path": "/videos/ai/ai-satin-pillow.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-satin-pillow.mp4",
+      "bytes": 633479,
+      "sha256": "13fa0f3b52d6d23da6ec8b715fb25bbd055c2ae8c92ac20c4b51977333984732"
+    },
+    {
+      "path": "/videos/ai/ai-seaside-menswear.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-seaside-menswear.jpg",
+      "bytes": 40032,
+      "sha256": "df23ad54c2d8bc16bb1b3032012e629d4618b5b097fb485055be389de7f8a093"
+    },
+    {
+      "path": "/videos/ai/ai-seaside-menswear.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-seaside-menswear.mp4",
+      "bytes": 555894,
+      "sha256": "cd4f06eb4e3ec4a5d0a3ddf2b5e528256d2e7189300c14a3c2a9aa3d634c79aa"
+    },
+    {
+      "path": "/videos/ai/ai-sleep-wellness.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-sleep-wellness.jpg",
+      "bytes": 20723,
+      "sha256": "ccca57bbee17df9f3ccb127cf12f6013ffd004222c2f0ba9f375af6f4155db45"
+    },
+    {
+      "path": "/videos/ai/ai-sleep-wellness.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-sleep-wellness.mp4",
+      "bytes": 1072629,
+      "sha256": "16941330a54368024ba18f828bd8bc90ba5fec89923567a2ab9e3fbf246cc5cc"
+    },
+    {
+      "path": "/videos/ai/ai-striped-shirt.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-striped-shirt.jpg",
+      "bytes": 68835,
+      "sha256": "18cb70418170e3994e061f8127cc918c00e6e89d2a12d56c3437929e26528926"
+    },
+    {
+      "path": "/videos/ai/ai-striped-shirt.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-striped-shirt.mp4",
+      "bytes": 451489,
+      "sha256": "fd64e46fece3824d200d1ba095944efe92de432981d65fd6b3d927a19b9d2863"
+    },
+    {
+      "path": "/videos/ai/ai-studio-streetwear.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-studio-streetwear.jpg",
+      "bytes": 29794,
+      "sha256": "aa7f7a5b8852dc1f441533a0e214259be80e69e81406fd0d360a9cf84f3a56bf"
+    },
+    {
+      "path": "/videos/ai/ai-studio-streetwear.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-studio-streetwear.mp4",
+      "bytes": 455159,
+      "sha256": "1e3a58e3c9dba426eb01f63db5a143a7b7221b3a853bef91f1b5618bfd0c9e4a"
+    },
+    {
+      "path": "/videos/ai/ai-tennis-club.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-tennis-club.jpg",
+      "bytes": 26933,
+      "sha256": "49cd085de70c7b918cba519e3e46bcddd08071e9d6a54b032719f7ddda9024e1"
+    },
+    {
+      "path": "/videos/ai/ai-tennis-club.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-tennis-club.mp4",
+      "bytes": 754652,
+      "sha256": "9b1ff78aa61c42a187833287ce43ae946429ab0d8b6a97d4f1fba870f5f4f051"
+    },
+    {
+      "path": "/videos/ai/ai-yacht-edit.jpg",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-yacht-edit.jpg",
+      "bytes": 49995,
+      "sha256": "4c0f55e3d602e93722824b59eba69186c09ce596d4f44d44dbd93d4a37be678a"
+    },
+    {
+      "path": "/videos/ai/ai-yacht-edit.mp4",
+      "source": "https://cascon-sepia.vercel.app/videos/ai/ai-yacht-edit.mp4",
+      "bytes": 723603,
+      "sha256": "2c0d60d81e6ca43ef8d742c7e4a1f95d1948d672265627d596881a14a4420c44"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const vm = require('node:vm');
+const ts = require('typescript');
+const root = path.resolve(__dirname, '..');
+function load(file, transform = text => text) {
+  const source = transform(fs.readFileSync(path.join(root, file), 'utf8'));
+  const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText;
+  const context = { exports: {}, URL, Set };
+  vm.runInNewContext(compiled, context, { filename: file });
+  return context.exports;
+}
+const store = load('lib/assistant.ts');
+assert.equal(store.getServerAssistantRequest(), null);
+store.requestAssistant('ai', 'faq');
+const early = store.getAssistantRequest();
+assert.equal(early.view, 'ai');
+assert.equal(early.placement, 'faq');
+assert.strictEqual(store.getAssistantRequest(), early, 'Snapshot identity must stay stable between requests');
+let updates = 0;
+const unsubscribe = store.subscribeToAssistant(() => updates++);
+assert.strictEqual(store.getAssistantRequest(), early, 'Request survives until a late-mounted dialog subscribes');
+store.requestAssistant('ai', 'faq');
+assert.equal(updates, 1);
+assert.notStrictEqual(store.getAssistantRequest(), early, 'Repeated clicks create a new request');
+store.requestAssistant('contact', 'floating_button');
+assert.equal(updates, 2);
+assert.equal(store.getAssistantRequest().view, 'contact');
+unsubscribe();
+store.requestAssistant('ai', 'faq');
+assert.equal(updates, 2, 'Unmounted subscribers are not notified');
+assert.equal(store.getServerAssistantRequest(), null, 'Server snapshot stays empty');
+const ai = load('data/ai.ts', text => text.replace(/import \{ SITE_URL \} from [^;]+;/, "const SITE_URL = 'https://www.cascondigital.com';"));
+assert.equal(ai.aiProviders.length, 5);
+const expectedHosts = ['chatgpt.com', 'claude.ai', 'gemini.google.com', 'grok.com', 'www.perplexity.ai'];
+ai.aiProviders.forEach((provider, index) => {
+  const url = new URL(provider.href);
+  assert.equal(url.protocol, 'https:');
+  assert.equal(url.hostname, expectedHosts[index]);
+  assert.equal(url.searchParams.get('q'), ai.aiQuestion, provider.name + ' must receive the complete decoded question');
+  assert.ok(!url.href.includes('localhost'));
+});
+console.log('PASS queued pre-hydration requests, repeat opens, stable snapshots, subscription cleanup and five prepared AI links');

@@ -1,0 +1,126 @@
+{
+  "checkedAt": "2026-11-10T07:08:05.936Z",
+  "pages": [
+    {
+      "url": "https://www.cascondigital.com/",
+      "status": 200,
+      "final": "https://www.cascondigital.com/",
+      "title": "Shopify Agency in India &amp; AI Media Studio | Cascon",
+      "h1": "Cascon is a Shopify agency working across design, AI media, marketing and ecommerce growth.",
+      "canonical": "https://www.cascondigital.com",
+      "bytes": 149331
+    },
+    {
+      "url": "https://www.cascondigital.com/services",
+      "status": 200,
+      "final": "https://www.cascondigital.com/services",
+      "title": "Shopify Development, CRO, AI Media &amp; SEO Services | Cascon",
+      "h1": "From the first impression.To the next order.",
+      "canonical": "https://www.cascondigital.com/services",
+      "bytes": 94894
+    },
+    {
+      "url": "https://www.cascondigital.com/work",
+      "status": 200,
+      "final": "https://www.cascondigital.com/work",
+      "title": "Shopify Store, Website &amp; AI Media Projects | Cascon",
+      "h1": "Good work.Made to work.",
+      "canonical": "https://www.cascondigital.com/work",
+      "bytes": 92834
+    },
+    {
+      "url": "https://www.cascondigital.com/about",
+      "status": 200,
+      "final": "https://www.cascondigital.com/about",
+      "title": "About our Shopify &amp; Creative Agency | Cascon",
+      "h1": "Built for brandswith somewhere to go.",
+      "canonical": "https://www.cascondigital.com/about",
+      "bytes": 47331
+    },
+    {
+      "url": "https://www.cascondigital.com/robots.txt",
+      "status": 200,
+      "final": "https://www.cascondigital.com/robots.txt",
+      "bytes": 283
+    },
+    {
+      "url": "https://cascondigital.com/",
+      "status": 200,
+      "final": "https://www.cascondigital.com/",
+      "title": "Shopify Agency in India &amp; AI Media Studio | Cascon",
+      "h1": "Cascon is a Shopify agency working across design, AI media, marketing and ecommerce growth.",
+      "canonical": "https://www.cascondigital.com",
+      "bytes": 149331
+    }
+  ],
+  "redirectChecks": [
+    {
+      "initial": "http://www.cascondigital.com/services/",
+      "chain": [
+        {
+          "url": "http://www.cascondigital.com/services/",
+          "status": 308,
+          "location": "https://www.cascondigital.com/services/"
+        },
+        {
+          "url": "https://www.cascondigital.com/services/",
+          "status": 308,
+          "location": "/services"
+        },
+        {
+          "url": "https://www.cascondigital.com/services",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "canonical": "https://www.cascondigital.com/services",
+      "robots": null
+    },
+    {
+      "initial": "https://cascondigital.com/services",
+      "chain": [
+        {
+          "url": "https://cascondigital.com/services",
+          "status": 302,
+          "location": "https://www.cascondigital.com/services"
+        },
+        {
+          "url": "https://www.cascondigital.com/services",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "canonical": "https://www.cascondigital.com/services",
+      "robots": null
+    },
+    {
+      "initial": "https://www.cascondigital.com/services/",
+      "chain": [
+        {
+          "url": "https://www.cascondigital.com/services/",
+          "status": 308,
+          "location": "/services"
+        },
+        {
+          "url": "https://www.cascondigital.com/services",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "canonical": "https://www.cascondigital.com/services",
+      "robots": null
+    },
+    {
+      "initial": "https://www.cascondigital.com/services?utm_source=seo-audit",
+      "chain": [
+        {
+          "url": "https://www.cascondigital.com/services?utm_source=seo-audit",
+          "status": 200,
+          "location": null
+        }
+      ],
+      "canonical": "https://www.cascondigital.com/services",
+      "robots": null
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+import { commercialServices } from '@/data/commercial-services';
+import { insights } from '@/data/insights';
 import { SITE_URL, CONTACT_EMAIL } from '@/lib/constants';
 import { services } from '@/data/services';
 import { allWorkCards } from '@/data/work';
@@ -24,6 +26,12 @@ UAE phone: +971 54 747 5998
 
 ## Services
 ${services.map(s => `- [${s.name}](${SITE_URL}/services#${s.id}): ${s.description}`).join('\n')}
+
+## Detailed services
+${commercialServices.map(s => `- [${s.name}](${SITE_URL}/services/${s.slug}): ${s.description}`).join('\n')}
+
+## Practical guides
+${insights.map(a => `- [${a.title}](${SITE_URL}/insights/${a.slug})`).join('\n')}
 
 ## Locations
 - Bangalore: No. 33, 4th Floor, 1st Main, Ganganagar Gramatana, HMT Layout, CBI Road, Bangalore 560032, India.

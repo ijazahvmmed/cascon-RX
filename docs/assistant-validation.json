@@ -1,0 +1,24 @@
+{
+  "preview": "http://localhost:3000/#faq",
+  "checks": {
+    "productionBuild": "passed",
+    "lint": "passed",
+    "typescript": "passed",
+    "siteRoutes": 22,
+    "internalDestinations": 82,
+    "responsiveImages": 43,
+    "sitemap": "22 canonical URLs with accurate dates and valid XML",
+    "assistantRegression": "queued requests before hydration, repeat opens, snapshot identity and subscription cleanup passed",
+    "preparedLinks": "5/5 HTTPS links decode to the full displayed question; normal same-context anchors",
+    "desktop": "floating contact panel, AI view, back navigation and WhatsApp primary CTA verified",
+    "faq": "opens shared AI dialog; heading focus and Escape return to FAQ verified",
+    "mobile": "390px viewport, no horizontal document overflow; WhatsApp stays visible when question preview expands",
+    "pixelAndPolicy": "passed"
+  },
+  "providerNavigation": "External AI links were inspected, not opened with a live query.",
+  "nativeAppTesting": "Physical iOS/Android installed-app handoffs were not tested. Provider app-link and browser preferences determine native versus web handling; Gemini may use its prepared web route.",
+  "screenshots": {
+    "contact": "cascon-contact-ai-options.png",
+    "aiChooser": "cascon-assistant-mobile.png"
+  }
+}

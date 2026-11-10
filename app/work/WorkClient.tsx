@@ -29,7 +29,7 @@ export default function WorkClient() {
     <div className="work-filters" role="group" aria-label="Filter work by service">{tags.map(tag => <button key={tag} aria-pressed={active === tag} onClick={() => setActive(tag)}>{formatTag(tag)}</button>)}</div>
     <p className="work-status" role="status">{count} {count === 1 ? 'project' : 'projects'} · {formatTag(active)}</p>
     <h2 className="sr-only">Selected projects</h2>
-    <div className="case-grid">{visible.map(item => <CaseCard key={item.name} {...item} />)}</div>
+    <div className="case-grid">{visible.map(item => <CaseCard key={item.name} {...item} sizes="(max-width: 640px) 90vw, 45vw" />)}</div>
     {!count && <div className="work-empty"><h2>Let’s make the next one.</h2><p>We haven’t published a project in this category yet.</p><Link href={serviceHref(active)}>Explore {formatTag(active).toLowerCase()} services <span aria-hidden="true">→</span></Link></div>}
     {more.length > 0 && <section className="more-work"><h2>And there’s more.</h2><div className="more-work-grid">{more.map(item => <article key={item.name} className="more-work-item" id={projectId(item.name)}><h3>{item.name}</h3><span>{item.region}</span><ul className="case-tags">{item.tags.map(tag => <li key={tag}><ServiceTag tag={tag} /></li>)}</ul></article>)}</div></section>}
   </div>;

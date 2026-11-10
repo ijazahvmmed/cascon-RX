@@ -1,0 +1,27 @@
+{
+  "preview": "http://localhost:3000",
+  "productionDeployment": false,
+  "checks": {
+    "productionBuild": "passed",
+    "siteRoutes": 22,
+    "internalDestinationsAndAnchors": 82,
+    "responsiveImageVariants": 43,
+    "sitemap": "22 canonical URLs with lastmod; valid XML",
+    "pixelPolicyAndSitemapLogic": "passed",
+    "videoByteRanges": "27/27 HTTP 206, video/mp4",
+    "desktopHoverMenu": "opens on hover, closes on pointer exit; Escape checked",
+    "mobileNavigation": "service groups open in existing menu",
+    "mobileCarousel": "previous wraps 1/8 to 8/8",
+    "desktopCarousel": "next changes 1/8 to 2/8",
+    "videoPlayback": "Original 27-film portfolio; onscreen films autoplay, offscreen films pause",
+    "mobileOverflow": "375px document width equals viewport content width"
+  },
+  "screenshots": {
+    "menu": "cascon-services-menu.png",
+    "video": "cascon-original-video-marquee.png",
+    "mobileLogos": "cascon-mobile-logos.png"
+  },
+  "limitations": [
+    "No unverified platform partnership is claimed."
+  ]
+}

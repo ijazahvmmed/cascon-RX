@@ -28,3 +28,7 @@ export function breadcrumbSchema(name: string, path: string) {
     { '@type': 'ListItem', position: 2, name, item: `${SITE_URL}${path}` },
   ] };
 }
+
+export function webPageSchema(path: string, name: string, description: string, mainEntity?: object) {
+ return { '@context':'https://schema.org','@type':'WebPage','@id':SITE_URL+path+'#webpage',url:SITE_URL+path,name,description,inLanguage:'en-IN',isPartOf:{'@id':SITE_URL+'/#website'},about:{'@id':SITE_URL+'/#organization'},...(mainEntity ? { mainEntity } : {}) };
+}

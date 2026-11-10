@@ -1,0 +1,169 @@
+{
+  "checkedAt": "2026-11-10T12:58:49.470Z",
+  "base": "http://127.0.0.1:55629",
+  "sitemapUrl": "http://127.0.0.1:55629/sitemap.xml",
+  "canonicalSitemapUrl": "https://www.cascondigital.com/sitemap.xml",
+  "sitemapStatus": 200,
+  "xmlValid": true,
+  "urlCount": 22,
+  "lastmodCount": 22,
+  "robotsStatus": 200,
+  "pages": [
+    {
+      "path": "",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/about",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/about",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/cascon",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/cascon",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/clients",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/clients",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/contact",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/contact",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/insights",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/insights",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/insights/shopify-cro-audit-methodology",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/insights/shopify-cro-audit-methodology",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/insights/woocommerce-to-shopify-migration-checklist",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/insights/woocommerce-to-shopify-migration-checklist",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/privacy-policy",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/privacy-policy",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/services",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/services",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/services/ai-product-photography",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/services/ai-product-photography",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/services/ai-video-production",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/services/ai-video-production",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/services/shopify-cro",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/services/shopify-cro",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/services/shopify-development",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/services/shopify-development",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/services/shopify-redesign",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/services/shopify-redesign",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/services/woocommerce-to-shopify",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/services/woocommerce-to-shopify",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/work",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/work",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/work/bagus",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/work/bagus",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/work/citysky-builders",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/work/citysky-builders",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/work/finewares",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/work/finewares",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/work/lumy-dates",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/work/lumy-dates",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/work/slept-club",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/work/slept-club",
+      "indexable": true,
+      "reason": null
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}

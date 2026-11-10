@@ -1,0 +1,97 @@
+{
+  "mobile320px": [
+    {
+      "content": 305,
+      "h1": "Shopify Development Agency in India",
+      "path": "/services/shopify-development",
+      "viewport": 305
+    },
+    {
+      "content": 305,
+      "h1": "Shopify Conversion Rate Optimization Services",
+      "path": "/services/shopify-cro",
+      "viewport": 305
+    },
+    {
+      "content": 305,
+      "h1": "Shopify Store Redesign Services",
+      "path": "/services/shopify-redesign",
+      "viewport": 305
+    },
+    {
+      "content": 305,
+      "h1": "WooCommerce to Shopify Migration Services",
+      "path": "/services/woocommerce-to-shopify",
+      "viewport": 305
+    },
+    {
+      "content": 305,
+      "h1": "AI Product Photography for Ecommerce Brands",
+      "path": "/services/ai-product-photography",
+      "viewport": 305
+    },
+    {
+      "content": 305,
+      "h1": "AI Product Video & Ecommerce Creative Production",
+      "path": "/services/ai-video-production",
+      "viewport": 305
+    },
+    {
+      "content": 305,
+      "h1": "Finewares.",
+      "path": "/work/finewares",
+      "viewport": 305
+    },
+    {
+      "content": 305,
+      "h1": "Slept Club.",
+      "path": "/work/slept-club",
+      "viewport": 305
+    },
+    {
+      "content": 305,
+      "h1": "Lumy Dates.",
+      "path": "/work/lumy-dates",
+      "viewport": 305
+    },
+    {
+      "content": 305,
+      "h1": "Citysky Builders.",
+      "path": "/work/citysky-builders",
+      "viewport": 305
+    },
+    {
+      "content": 305,
+      "h1": "Bagus.",
+      "path": "/work/bagus",
+      "viewport": 305
+    },
+    {
+      "content": 305,
+      "h1": "Useful before the next step.",
+      "path": "/insights",
+      "viewport": 305
+    },
+    {
+      "content": 305,
+      "h1": "A practical Shopify CRO audit: evidence before fixes",
+      "path": "/insights/shopify-cro-audit-methodology",
+      "viewport": 305
+    },
+    {
+      "content": 305,
+      "h1": "WooCommerce to Shopify: a migration readiness checklist",
+      "path": "/insights/woocommerce-to-shopify-migration-checklist",
+      "viewport": 305
+    }
+  ],
+  "reducedMotion": {
+    "validated": true,
+    "splitWords": 0,
+    "lenisDisabled": true
+  },
+  "fieldPerformance": {
+    "measured": false,
+    "reason": "No field reporting access; local browser inspection is not a Core Web Vitals benchmark."
+  }
+}

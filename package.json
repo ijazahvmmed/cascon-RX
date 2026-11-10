@@ -6,7 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint app components data lib --ext .ts,.tsx --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test:site": "node scripts/check-site.mjs",
+    "test:pixel": "node scripts/check-pixel.cjs",
+    "test:policy": "node scripts/check-policy.cjs",
+    "postbuild": "node scripts/build-sitemap.mjs",
+    "test:sitemap": "node scripts/validate-sitemap.mjs",
+    "test:sitemap:logic": "node scripts/check-sitemap-logic.mjs",
+    "test:sitemap:stability": "node scripts/check-sitemap-stability.mjs",
+    "test:assistant": "node scripts/check-assistant.cjs"
   },
   "dependencies": {
     "gsap": "^3.14.2",
@@ -21,6 +30,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "^15.5.29",
+    "fast-xml-parser": "^5.12.0",
     "typescript": "^5"
   },
   "overrides": {

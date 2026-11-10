@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
-import { SITE_URL } from '@/lib/constants';
-export default function sitemap(): MetadataRoute.Sitemap {
-  return ['', '/about', '/work', '/services', '/clients', '/cascon', '/contact', '/privacy-policy'].map(path => ({ url: `${SITE_URL}${path}` }));
-}
+import { INDEXABLE } from '@/lib/indexing';
+import { getSitemapEntries } from '@/lib/sitemap';
+// Native Next.js XML serialization; the build validates the content manifest against real responses.
+export const dynamic = 'force-dynamic';
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> { return INDEXABLE ? getSitemapEntries() : []; }

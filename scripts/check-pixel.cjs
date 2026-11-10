@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const ts = require('typescript');
 const code = ts.transpileModule(fs.readFileSync('components/MetaPixel.tsx','utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2020 } }).outputText;
-function harness(host) {
+function harness(host,production=true) {
   let slots=[], cursor=0, pending=[], dirty=false, output, path='/', events=[], handlers=new Map();
   const hooks = {
     useState(initial) { const id=cursor++; if (!(id in slots)) slots[id]=initial; return [slots[id], value=>{ if(slots[id]!==value){slots[id]=value;dirty=true;} }]; },
@@ -21,7 +21,7 @@ function harness(host) {
   };
   const context={exports:{},require:name=>{assert.ok(modules[name],name);return modules[name];},window:{location:{hostname:host}},document:{addEventListener:(name,handler)=>handlers.set(name,handler),removeEventListener:name=>handlers.delete(name)},Element,HTMLDetailsElement:Details};
   vm.runInNewContext(code,context);
-  function render(){do{dirty=false;cursor=0;output=context.exports.default();const effects=pending;pending=[];effects.forEach(f=>f());}while(dirty);return output;}
+  function render(){do{dirty=false;cursor=0;output=context.exports.default({isProduction:production});const effects=pending;pending=[];effects.forEach(f=>f());}while(dirty);return output;}
   return {render, ready(){output.props.onReady();render();}, route(value){path=value;render();}, click(href,dataset){handlers.get('click')({target:new Element(href,dataset)});}, toggle(open){handlers.get('toggle')({target:new Details(open)});},events};
 }
 const local=harness('localhost');assert.equal(local.render(),null);assert.equal(local.events.length,0);
@@ -35,3 +35,7 @@ assert.ok(site.events.some(e=>e[1]==='Contact' && e[2]?.contact_method==='whatsa
 assert.ok(!eventNames.some(n=>['Lead','Schedule','Purchase'].includes(n)));
 assert.ok(!JSON.stringify(site.events).includes('private@example.com'));
 console.log('PASS pixel initialization, route deduplication, local suppression, contact intent, service interest, portfolio clicks and FAQ events');
+
+site.route('/services/shopify-cro');site.render();site.render();assert.equal(site.events.filter(e=>e[1]==='PageView').length,3);assert.equal(site.events.filter(e=>e[1]==='ViewContent').length,3);console.log('PASS detailed service route measurement without duplicate pageviews');
+
+const preview=harness('cascon-preview.vercel.app',false);assert.equal(preview.render(),null);assert.equal(preview.events.length,0);console.log('PASS preview suppression of advertising initialization');

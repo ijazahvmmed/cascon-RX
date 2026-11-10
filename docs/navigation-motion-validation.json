@@ -1,0 +1,26 @@
+{
+  "preview": "http://localhost:3000/services/shopify-development",
+  "productionBuild": "passed",
+  "lint": "passed",
+  "typescript": "passed",
+  "siteChecks": {
+    "routes": 22,
+    "internalDestinations": 82,
+    "imageVariants": 46,
+    "sitemap": "passed"
+  },
+  "interactionChecks": {
+    "desktopHover": "GSAP opacity, position, clip and stagger verified during entrance",
+    "desktopReentry": "Exit remained mounted and inert; re-entry resumed from intermediate opacity",
+    "desktopLinks": "Hovered label reached x=4px and font-weight=550",
+    "escape": "Closes desktop menu and returns focus to disclosure",
+    "navigation": "Selected Shopify CRO; reached /services/shopify-cro",
+    "mobileSubmenu": "Expanded to natural height; close remained mounted and inert; rapid re-open succeeded",
+    "mobileOverlay": "Rapid close/re-open preserved expanded submenu state",
+    "reducedMotion": "Immediate mobile collapse and full-menu dismissal; desktop closes hidden and inert"
+  },
+  "screenshots": {
+    "mobile": "services-motion-mobile.png"
+  },
+  "implementation": "Desktop and mobile overlay use persistent reversible timelines. Mobile accordion tweens from its current height; closing panels become inert. Routes and service content are preserved."
+}

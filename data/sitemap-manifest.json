@@ -1,0 +1,257 @@
+{
+  "version": 1,
+  "origin": "https://www.cascondigital.com",
+  "entries": [
+    {
+      "path": "",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/about",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/cascon",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/clients",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/contact",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/insights",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/insights/shopify-cro-audit-methodology",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/insights/woocommerce-to-shopify-migration-checklist",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/privacy-policy",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/services",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/services/ai-product-photography",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/services/ai-video-production",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/services/shopify-cro",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/services/shopify-development",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/services/shopify-redesign",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/services/woocommerce-to-shopify",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/work",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/work/bagus",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/work/citysky-builders",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/work/finewares",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/work/lumy-dates",
+      "lastModified": "2026-11-10"
+    },
+    {
+      "path": "/work/slept-club",
+      "lastModified": "2026-11-10"
+    }
+  ],
+  "history": {
+    "/cascon": {
+      "fingerprint": "ae70be670c10c7d04385e225bee36b561fae8cdf92916eabc9ba2c52b88bdd59",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:19:24.342Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "components/PageIntro.tsx"
+    },
+    "/about": {
+      "fingerprint": "130922cd1394e25407c40ace8f71911569af4d2c8ef7bb644bdd1083f4d91c58",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:19:24.342Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "components/PageIntro.tsx"
+    },
+    "": {
+      "fingerprint": "68c6229da57328170ccf3ddeaa61bc8b6a0aff5e095bde7a1ba79c754eb580e6",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T12:48:01.151Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "components/AskAI.tsx"
+    },
+    "/clients": {
+      "fingerprint": "c6dbf754ba5345d0632c7332e24f42058d18db14983e3b38e29e8b9afa61a231",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:27:28.105Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "lib/content.ts"
+    },
+    "/privacy-policy": {
+      "fingerprint": "a879d8fc4fba30cc5667b7255a2d405b2414cf19c9b20bd2f8abfef90aa88023",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:20:36.909Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "app/privacy-policy/page.tsx"
+    },
+    "/contact": {
+      "fingerprint": "87c3a109c92e971fcb6efa88bde7ba328d3852be7576cdaf9c811d91c68e4542",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:19:24.332Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "lib/seo.ts"
+    },
+    "/insights": {
+      "fingerprint": "7750ed0c35490c9a151ecb224f6302718e7989824ce2f08c18784c41cf97bc1e",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:19:24.332Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "lib/seo.ts"
+    },
+    "/work": {
+      "fingerprint": "a40996290b61fdc552305b8fdebf01c628c6462a9cf90d812567ea1aadd6c3bd",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:27:28.105Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "lib/content.ts"
+    },
+    "/services": {
+      "fingerprint": "c7898632926e4ffaf88223439a64f57f774e9414c2335436bfc39e7fafa76385",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T12:48:01.151Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "components/AskAI.tsx"
+    },
+    "/insights/shopify-cro-audit-methodology": {
+      "fingerprint": "60a7d184855636bf8c3f77aafcd2e3f8c10aaa7689fa1fedc9d0a2e55a7e0c95",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:40:03.621Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "data/commercial-services.ts"
+    },
+    "/insights/woocommerce-to-shopify-migration-checklist": {
+      "fingerprint": "1b688befddbc03011a6a38c087f3f692739b8eeac88ba627cc0a6dd72ff1a70a",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:40:03.621Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "data/commercial-services.ts"
+    },
+    "/services/ai-product-photography": {
+      "fingerprint": "4efa337e75c2c2bc4bd1305db343459cfcbb273bc27aa4dfef608679bc82e67d",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:40:03.621Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "data/commercial-services.ts"
+    },
+    "/services/ai-video-production": {
+      "fingerprint": "897ac116afb271075dcfaef391f9fa75f84f84711a59caa1519b15ede05850cb",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:40:03.621Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "data/commercial-services.ts"
+    },
+    "/services/shopify-cro": {
+      "fingerprint": "fc507dc5bed6ee6402919acd9678be900c4c7d476e0492473bdd59a5cd21f452",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:40:03.621Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "data/commercial-services.ts"
+    },
+    "/services/shopify-development": {
+      "fingerprint": "6c4b701158da2cc965f2ef0053f4a5b9f3d3c7ba67a6ee14734e334f8a137b3a",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:40:03.621Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "data/commercial-services.ts"
+    },
+    "/services/shopify-redesign": {
+      "fingerprint": "a4f5f9518107da683d1e30933eaae8b73fa7b60c0fa35739418089b64ba3f387",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:40:03.621Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "data/commercial-services.ts"
+    },
+    "/services/woocommerce-to-shopify": {
+      "fingerprint": "8890d14f5595e74429ceae3822435641b02ce54671fd99319508a2c67784d3ef",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:40:03.621Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "data/commercial-services.ts"
+    },
+    "/work/bagus": {
+      "fingerprint": "7d2d624c3ae5369057e9795bee3dbeafa5fbe82d462bdd9a4c2c4fc1e3b77795",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:40:03.621Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "data/commercial-services.ts"
+    },
+    "/work/citysky-builders": {
+      "fingerprint": "c77e505003ef896423686527d78cd0f4e2521f0346165c3ac159cbeacdb3349b",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:40:03.621Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "data/commercial-services.ts"
+    },
+    "/work/finewares": {
+      "fingerprint": "141d2c33f6406b11b2fe71ea21d805d55699d9621ca4ef0279683ae0dff6d2d6",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:40:03.621Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "data/commercial-services.ts"
+    },
+    "/work/lumy-dates": {
+      "fingerprint": "9775eb3090e2f7205a1999e6d6b8cd7cd5e5c689d4b92e849fda3ecd5bb245c6",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:40:03.621Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "data/commercial-services.ts"
+    },
+    "/work/slept-club": {
+      "fingerprint": "723c75156a98791ae0e7d60f9df2662db3030be2d051fa3c3993e13c86c7a3b8",
+      "lastModified": "2026-11-10",
+      "sourceModifiedAt": "2026-11-10T07:40:03.621Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "data/commercial-services.ts"
+    }
+  },
+  "excluded": [
+    {
+      "path": "/careers",
+      "reason": "redirect",
+      "status": 308
+    }
+  ]
+}

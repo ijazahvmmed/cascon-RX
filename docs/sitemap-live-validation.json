@@ -1,0 +1,206 @@
+{
+  "checkedAt": "2026-11-10T08:15:09.203Z",
+  "base": "https://www.cascondigital.com",
+  "sitemapUrl": "https://www.cascondigital.com/sitemap.xml",
+  "canonicalSitemapUrl": "https://www.cascondigital.com/sitemap.xml",
+  "sitemapStatus": 200,
+  "xmlValid": true,
+  "urlCount": 8,
+  "lastmodCount": 0,
+  "robotsStatus": 200,
+  "pages": [
+    {
+      "path": "",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/about",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/about",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/work",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/work",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/services",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/services",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/clients",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/clients",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/cascon",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/cascon",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/contact",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/contact",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/privacy-policy",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/privacy-policy",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/insights",
+      "status": 404,
+      "canonical": null,
+      "indexable": false,
+      "reason": "non-200"
+    },
+    {
+      "path": "/insights/shopify-cro-audit-methodology",
+      "status": 404,
+      "canonical": null,
+      "indexable": false,
+      "reason": "non-200"
+    },
+    {
+      "path": "/insights/woocommerce-to-shopify-migration-checklist",
+      "status": 404,
+      "canonical": null,
+      "indexable": false,
+      "reason": "non-200"
+    },
+    {
+      "path": "/services/ai-product-photography",
+      "status": 404,
+      "canonical": null,
+      "indexable": false,
+      "reason": "non-200"
+    },
+    {
+      "path": "/services/ai-video-production",
+      "status": 404,
+      "canonical": null,
+      "indexable": false,
+      "reason": "non-200"
+    },
+    {
+      "path": "/services/shopify-cro",
+      "status": 404,
+      "canonical": null,
+      "indexable": false,
+      "reason": "non-200"
+    },
+    {
+      "path": "/services/shopify-development",
+      "status": 404,
+      "canonical": null,
+      "indexable": false,
+      "reason": "non-200"
+    },
+    {
+      "path": "/services/shopify-redesign",
+      "status": 404,
+      "canonical": null,
+      "indexable": false,
+      "reason": "non-200"
+    },
+    {
+      "path": "/services/woocommerce-to-shopify",
+      "status": 404,
+      "canonical": null,
+      "indexable": false,
+      "reason": "non-200"
+    },
+    {
+      "path": "/work/bagus",
+      "status": 404,
+      "canonical": null,
+      "indexable": false,
+      "reason": "non-200"
+    },
+    {
+      "path": "/work/citysky-builders",
+      "status": 404,
+      "canonical": null,
+      "indexable": false,
+      "reason": "non-200"
+    },
+    {
+      "path": "/work/finewares",
+      "status": 404,
+      "canonical": null,
+      "indexable": false,
+      "reason": "non-200"
+    },
+    {
+      "path": "/work/lumy-dates",
+      "status": 404,
+      "canonical": null,
+      "indexable": false,
+      "reason": "non-200"
+    },
+    {
+      "path": "/work/slept-club",
+      "status": 404,
+      "canonical": null,
+      "indexable": false,
+      "reason": "non-200"
+    }
+  ],
+  "errors": [
+    "Missing lastmod: https://www.cascondigital.com",
+    "Missing lastmod: https://www.cascondigital.com/about",
+    "Missing lastmod: https://www.cascondigital.com/work",
+    "Missing lastmod: https://www.cascondigital.com/services",
+    "Missing lastmod: https://www.cascondigital.com/clients",
+    "Missing lastmod: https://www.cascondigital.com/cascon",
+    "Missing lastmod: https://www.cascondigital.com/contact",
+    "Missing lastmod: https://www.cascondigital.com/privacy-policy",
+    "Expected canonical page absent from published sitemap: /insights",
+    "Expected canonical page absent from published sitemap: /insights/shopify-cro-audit-methodology",
+    "Expected canonical page absent from published sitemap: /insights/woocommerce-to-shopify-migration-checklist",
+    "Expected canonical page absent from published sitemap: /services/ai-product-photography",
+    "Expected canonical page absent from published sitemap: /services/ai-video-production",
+    "Expected canonical page absent from published sitemap: /services/shopify-cro",
+    "Expected canonical page absent from published sitemap: /services/shopify-development",
+    "Expected canonical page absent from published sitemap: /services/shopify-redesign",
+    "Expected canonical page absent from published sitemap: /services/woocommerce-to-shopify",
+    "Expected canonical page absent from published sitemap: /work/bagus",
+    "Expected canonical page absent from published sitemap: /work/citysky-builders",
+    "Expected canonical page absent from published sitemap: /work/finewares",
+    "Expected canonical page absent from published sitemap: /work/lumy-dates",
+    "Expected canonical page absent from published sitemap: /work/slept-club",
+    "/insights is not a canonical/indexable 200 page: non-200 (404)",
+    "/insights/shopify-cro-audit-methodology is not a canonical/indexable 200 page: non-200 (404)",
+    "/insights/woocommerce-to-shopify-migration-checklist is not a canonical/indexable 200 page: non-200 (404)",
+    "/services/ai-product-photography is not a canonical/indexable 200 page: non-200 (404)",
+    "/services/ai-video-production is not a canonical/indexable 200 page: non-200 (404)",
+    "/services/shopify-cro is not a canonical/indexable 200 page: non-200 (404)",
+    "/services/shopify-development is not a canonical/indexable 200 page: non-200 (404)",
+    "/services/shopify-redesign is not a canonical/indexable 200 page: non-200 (404)",
+    "/services/woocommerce-to-shopify is not a canonical/indexable 200 page: non-200 (404)",
+    "/work/bagus is not a canonical/indexable 200 page: non-200 (404)",
+    "/work/citysky-builders is not a canonical/indexable 200 page: non-200 (404)",
+    "/work/finewares is not a canonical/indexable 200 page: non-200 (404)",
+    "/work/lumy-dates is not a canonical/indexable 200 page: non-200 (404)",
+    "/work/slept-club is not a canonical/indexable 200 page: non-200 (404)"
+  ],
+  "warnings": []
+}
