@@ -19,7 +19,11 @@ export const organizationSchema = {
     { '@type': 'PostalAddress', streetAddress: 'No. 33, 4th Floor, 1st Main, Ganganagar Gramatana, HMT Layout, CBI Road', addressLocality: 'Bangalore', postalCode: '560032', addressCountry: 'IN' },
     { '@type': 'PostalAddress', streetAddress: 'Office #2220, 22nd Floor, Tower Plaza, Sheikh Zayed Road', addressLocality: 'Dubai', addressCountry: 'AE' },
   ],
-  contactPoint: [{ '@type': 'ContactPoint', telephone: '+91-82816-63376', contactType: 'sales', areaServed: 'IN', availableLanguage: 'English' }],
+  contactPoint: [
+    { '@type': 'ContactPoint', telephone: '+91-82816-63376', contactType: 'sales', areaServed: 'IN', availableLanguage: 'English' },
+    { '@type': 'ContactPoint', telephone: '+971-54-747-5998', contactType: 'sales', areaServed: 'AE', availableLanguage: 'English' },
+  ],
+  department: [{ '@id': `${SITE_URL}/shopify-agency/bangalore#business` }, { '@id': `${SITE_URL}/shopify-agency/dubai#business` }],
 };
 
 export function breadcrumbSchema(name: string, path: string) {

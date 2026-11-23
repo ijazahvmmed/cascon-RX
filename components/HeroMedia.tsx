@@ -27,7 +27,7 @@ export default function HeroMedia() {
     return () => { observer.disconnect(); document.removeEventListener('visibilitychange', visibility); el.pause(); };
   }, [enabled]);
   return <>
-    <picture className="hero-poster"><source media="(max-width: 640px)" srcSet="/images/hero/Ver_image.webp" />{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/images/hero/Hor_image.webp" alt="Creative product imagery by Cascon's AI media studio" fetchPriority="high" /></picture>
+    <picture className="hero-poster"><source media="(max-width: 640px)" type="image/webp" srcSet="/images/hero/Ver_image-720.webp 720w, /images/hero/Ver_image-768.webp 768w" sizes="100vw" />{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/images/hero/Hor_image-1920.webp" srcSet="/images/hero/Hor_image-1280.webp 1280w, /images/hero/Hor_image-1920.webp 1920w" sizes="100vw" alt="Creative product imagery by Cascon's AI media studio" fetchPriority="high" /></picture>
     {enabled && <video ref={video} className={`hero-video ${playing ? 'is-playing' : ''}`} muted loop playsInline preload="metadata" aria-hidden="true" onPlaying={() => setPlaying(true)} />}
   </>;
 }

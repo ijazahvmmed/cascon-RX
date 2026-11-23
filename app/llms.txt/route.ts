@@ -1,4 +1,5 @@
 import { commercialServices } from '@/data/commercial-services';
+import { cityPages } from '@/data/locations';
 import { insights } from '@/data/insights';
 import { SITE_URL, CONTACT_EMAIL } from '@/lib/constants';
 import { services } from '@/data/services';
@@ -29,6 +30,9 @@ ${services.map(s => `- [${s.name}](${SITE_URL}/services#${s.id}): ${s.descriptio
 
 ## Detailed services
 ${commercialServices.map(s => `- [${s.name}](${SITE_URL}/services/${s.slug}): ${s.description}`).join('\n')}
+
+## Locations
+${cityPages.map(c => `- [${c.title}](${SITE_URL}/shopify-agency/${c.slug}): ${c.description}`).join('\n')}
 
 ## Practical guides
 ${insights.map(a => `- [${a.title}](${SITE_URL}/insights/${a.slug})`).join('\n')}

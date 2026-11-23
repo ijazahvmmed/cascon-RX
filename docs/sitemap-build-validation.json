@@ -1,12 +1,12 @@
 {
-  "checkedAt": "2026-11-23T11:24:52.605Z",
-  "base": "http://127.0.0.1:61946",
-  "sitemapUrl": "http://127.0.0.1:61946/sitemap.xml",
+  "checkedAt": "2026-11-23T13:09:24.832Z",
+  "base": "http://127.0.0.1:62122",
+  "sitemapUrl": "http://127.0.0.1:62122/sitemap.xml",
   "canonicalSitemapUrl": "https://www.cascondigital.com/sitemap.xml",
   "sitemapStatus": 200,
   "xmlValid": true,
-  "urlCount": 22,
-  "lastmodCount": 22,
+  "urlCount": 25,
+  "lastmodCount": 25,
   "robotsStatus": 200,
   "pages": [
     {
@@ -118,6 +118,27 @@
       "path": "/services/woocommerce-to-shopify",
       "status": 200,
       "canonical": "https://www.cascondigital.com/services/woocommerce-to-shopify",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/shopify-agency/bangalore",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/shopify-agency/bangalore",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/shopify-agency/dubai",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/shopify-agency/dubai",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/shopify-agency/kerala",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/shopify-agency/kerala",
       "indexable": true,
       "reason": null
     },

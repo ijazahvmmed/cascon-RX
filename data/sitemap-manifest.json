@@ -67,6 +67,18 @@
       "lastModified": "2026-11-23"
     },
     {
+      "path": "/shopify-agency/bangalore",
+      "lastModified": "2026-11-23"
+    },
+    {
+      "path": "/shopify-agency/dubai",
+      "lastModified": "2026-11-23"
+    },
+    {
+      "path": "/shopify-agency/kerala",
+      "lastModified": "2026-11-23"
+    },
+    {
       "path": "/work",
       "lastModified": "2026-11-23"
     },
@@ -93,158 +105,179 @@
   ],
   "history": {
     "/cascon": {
-      "fingerprint": "41d2494fe48a96642ae2b8025796bcad7cd7ab2e9a1477826d7e54b9703ee538",
+      "fingerprint": "18a7f188c2562620b79edba74fe6bf6eed43e011c4bafa74977566e966a081e6",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:23:49.881Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "app/cascon/page.tsx"
+      "dateSource": "lib/seo.ts"
     },
     "/about": {
-      "fingerprint": "8724d9ff58915464ae8b1e72f88041c4fb4016a56695e80f0918ec81086a2686",
+      "fingerprint": "2c3566ffeb1beade2567350e8a3e8f38d26b97d59aa4d1d5d0f79ecea25a2f9b",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:22:50.607Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "lib/seo.ts"
     },
     "": {
-      "fingerprint": "7a721671188b31ca41bef7f05b5f838f629f15fb30d1dc190e5e1e1825a8615e",
+      "fingerprint": "84304a0f9664fb185f2a1ba52f5dbd49d5403c32e7ceb72f5885893eae9eb2a6",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:22:59.408Z",
+      "sourceModifiedAt": "2026-11-23T13:06:47.438Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "data/commercial-services.ts"
+      "dateSource": "components/HeroMedia.tsx"
     },
     "/clients": {
-      "fingerprint": "4fae218b3c39aca97a0836fe7b9ed2c4c03d5dc35d7886a550d959292162a9fe",
+      "fingerprint": "01ef62526c310164081342dc15157d3067b2ca5f0fc3feb1807757e466b21548",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:22:50.607Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "lib/seo.ts"
     },
     "/privacy-policy": {
-      "fingerprint": "f43841a9388c04bbf4daa7e5fb4dfafc40ae62f0c9d874f5922b19976a5bffcc",
+      "fingerprint": "892aaaa8c5b2bbe3aea9e5ca02d13a0732ddde424537c9be151731b40be10182",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:22:50.607Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "lib/seo.ts"
     },
     "/contact": {
-      "fingerprint": "510fbd0b05f03216352bb26aae9ed4dfd0097d919c77e04695362fec5504db21",
+      "fingerprint": "9d9758d8f795d3c8d81b0b865827154b883a19cf4f8fbea91d21045c986d2864",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:24:28.097Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "app/contact/page.tsx"
+      "dateSource": "lib/seo.ts"
     },
     "/insights": {
-      "fingerprint": "672fc06731d174ea328c10eb7595d83649dc9f7034725d794a5e3898797458ad",
+      "fingerprint": "575ec3411e8910c325076873c2a310f5b4bca6dfd419c70784bcac9c3127d1ad",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:22:50.607Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "data/insights.ts"
+      "dateSource": "lib/seo.ts"
     },
     "/work": {
-      "fingerprint": "68efb86db0d344162dffde33a4067805a03a9b7b7a352d6178abf69dd3a1ce36",
+      "fingerprint": "79356f599c2da65f6fdb9ddff1241d9681d3c25bab3672922f9d7450f80c2602",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:22:50.607Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "lib/seo.ts"
     },
     "/services": {
-      "fingerprint": "0b378d06b094d7045709960fa3ebd6335d1fa76de8775d362d264cea576afc4c",
+      "fingerprint": "880d3f654bf3590e053cc16dae7e3b1d246b287d226b045c9ac5e049e2d6f745",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:23:50.005Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "app/services/page.tsx"
+      "dateSource": "lib/seo.ts"
     },
     "/insights/shopify-cro-audit-methodology": {
-      "fingerprint": "3c117bced8d695598dee2c97de86048fb807ac12768d3aa6675fec28928b2329",
+      "fingerprint": "0bc6bbdae5500db39a353627b4b516313fd60bcecd019b1eed09850ffe6719dc",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:22:59.408Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "data/commercial-services.ts"
+      "dateSource": "lib/seo.ts"
     },
     "/insights/woocommerce-to-shopify-migration-checklist": {
-      "fingerprint": "d02b5eb9d9b7520235d672cd3ba56c4dc033791556a8e53ae0480bb6d15dd7e6",
+      "fingerprint": "72129cb708336d9d814bc55fd6790b09d317bd89d5bd6ed2bcd91027558f2c9d",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:22:59.408Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "data/commercial-services.ts"
+      "dateSource": "lib/seo.ts"
     },
     "/services/ai-product-photography": {
-      "fingerprint": "03264c67b2fa52471d75a5b68accabf0e31d794b9be4d706aa273e169126b2c2",
+      "fingerprint": "2942cb2290ed4b8c14985bce8c8b3f7396e40bbe2c1b78c1e9d36a432ce69a69",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:22:59.408Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "data/commercial-services.ts"
+      "dateSource": "lib/seo.ts"
     },
     "/services/ai-video-production": {
-      "fingerprint": "da1e66cf8c78369d12490540edfcd0712b8c3669ab63d266fb7c811f9f157192",
+      "fingerprint": "46789a91b32a54e250394fe477c1ee2d75815f120217c71b5c67b23fc7f096ff",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:22:59.408Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "data/commercial-services.ts"
+      "dateSource": "lib/seo.ts"
     },
     "/services/shopify-cro": {
-      "fingerprint": "d35fb4c38518cba25b27e9c4d248312cb4e16376ca3e9919845eaedcbb77b53a",
+      "fingerprint": "80b2cc190f5e58d436fd3822b923c6de52f5e255166d42365c7c1947ce1ec530",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:22:59.408Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "data/commercial-services.ts"
+      "dateSource": "lib/seo.ts"
     },
     "/services/shopify-development": {
-      "fingerprint": "a7dae7e2d25c3b99d6c57e84032ad534e92fff122f8038d49915bb195e11b2c4",
+      "fingerprint": "5e10d3a4b6573092a6cd6f290c316219c11defd710fff026d78ed8009868abdd",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:22:59.408Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "data/commercial-services.ts"
+      "dateSource": "lib/seo.ts"
     },
     "/services/shopify-redesign": {
-      "fingerprint": "ad696d4ef0202b7e45590e1c0bc9bfab4a4841ee580cf036197cb53dcf65b86f",
+      "fingerprint": "d5c48368f053576d3b8235032dc22869bcc7b0ffb024546a6c30f5ac6501b97b",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:22:59.408Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "data/commercial-services.ts"
+      "dateSource": "lib/seo.ts"
     },
     "/services/woocommerce-to-shopify": {
-      "fingerprint": "63bfea8fa032fc4847695aafccc219e19ac9353eed22e928b8bcd1d411def23f",
+      "fingerprint": "a440ca99d9f5ab71a211e21302044df30220756aa81b586ba0e8468e8d7d9a64",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:22:59.408Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "data/commercial-services.ts"
+      "dateSource": "lib/seo.ts"
     },
     "/work/bagus": {
-      "fingerprint": "c361b62dfcf6a3902589f2ff074876264e63dd0b6e7e3f3c395ac710870eb1f3",
+      "fingerprint": "d240c85933471a99957608e99ea7e4daf0eaf7f0293eba836df52bdc8df9ee45",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:23:50.079Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "app/work/[slug]/page.tsx"
+      "dateSource": "lib/seo.ts"
     },
     "/work/citysky-builders": {
-      "fingerprint": "32fefa3ef758f5a64f87546609ac5afd4f1a63d924103de550baef1e853f2b8e",
+      "fingerprint": "a92468bcfc7696ef13317dd176573e12bc37a1f612fa892477fccc471006f4fd",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:23:50.079Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "app/work/[slug]/page.tsx"
+      "dateSource": "lib/seo.ts"
     },
     "/work/finewares": {
-      "fingerprint": "0609b39fdc3e3529d0979e98559ffcb04f91e24b69a3981c0959897558112094",
+      "fingerprint": "07e8bae525c459c46edbc6a7335bdde775f44577f224a856483e0881f666a85b",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:23:50.079Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "app/work/[slug]/page.tsx"
+      "dateSource": "lib/seo.ts"
     },
     "/work/lumy-dates": {
-      "fingerprint": "e9215ce7d593eafbdc64c8f2751b920f95cc53cee36e786fe2b20148e9fc3afb",
+      "fingerprint": "336a3da55aafc493823565f4eade4b96e7e55aa424fc82ec74e22fcbdd4ba957",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:23:50.079Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "app/work/[slug]/page.tsx"
+      "dateSource": "lib/seo.ts"
     },
     "/work/slept-club": {
-      "fingerprint": "dd46628347bba4d4e58502c0580b12f377657631a1d67b038c635548bdb4b832",
+      "fingerprint": "74f363070798454e3677c1488f4c36acf809c57e6f5780f4877db644ceceacb5",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T11:23:50.079Z",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "app/work/[slug]/page.tsx"
+      "dateSource": "lib/seo.ts"
+    },
+    "/shopify-agency/bangalore": {
+      "fingerprint": "eee8914f43a8cac4123ce09c508cb1ce13b0b6bd15dcd4d4a420136582e30a71",
+      "lastModified": "2026-11-23",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "lib/seo.ts"
+    },
+    "/shopify-agency/dubai": {
+      "fingerprint": "8bdedb3259231f3e1597c1e0d1690230abe83125317a0fc709c2a2fba9576fc5",
+      "lastModified": "2026-11-23",
+      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "lib/seo.ts"
+    },
+    "/shopify-agency/kerala": {
+      "fingerprint": "ba625dccd4b674b0d38af18dd2075a15031be4ab961acfcf2afd25d8a86def28",
+      "lastModified": "2026-11-23",
+      "sourceModifiedAt": "2026-11-23T13:08:09.684Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "app/shopify-agency/[city]/page.tsx"
     }
   },
   "excluded": [
