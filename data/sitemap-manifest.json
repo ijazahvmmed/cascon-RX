@@ -259,11 +259,11 @@
       "dateSource": "lib/seo.ts"
     },
     "/shopify-agency/bangalore": {
-      "fingerprint": "eee8914f43a8cac4123ce09c508cb1ce13b0b6bd15dcd4d4a420136582e30a71",
+      "fingerprint": "4a95833785e4b013f9b3fc18330e1183ed90fe61b2d0bfd118c4eed4cd69fefa",
       "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
+      "sourceModifiedAt": "2026-11-23T13:25:41.251Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "lib/seo.ts"
+      "dateSource": "data/locations.ts"
     },
     "/shopify-agency/dubai": {
       "fingerprint": "8bdedb3259231f3e1597c1e0d1690230abe83125317a0fc709c2a2fba9576fc5",
@@ -280,11 +280,5 @@
       "dateSource": "app/shopify-agency/[city]/page.tsx"
     }
   },
-  "excluded": [
-    {
-      "path": "/careers",
-      "reason": "redirect",
-      "status": 308
-    }
-  ]
+  "excluded": []
 }

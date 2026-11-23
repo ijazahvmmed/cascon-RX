@@ -72,7 +72,7 @@ for (const path of ['/llms.txt','/llms-full.txt']) {
   assert.ok(text.includes(canonical+'/services') && !text.includes('cascon.systems'));
 }
 const careers = await fetch(base+'/careers', {redirect:'manual'});
-assert.equal(careers.status, 308);
+assert.equal(careers.status, 301);
 assert.equal(careers.headers.get('location'), '/about');
 assert.equal((await fetch(base+'/missing-page')).status, 404);
 console.log('PASS robots, sitemap, AI documents, careers redirect and 404');

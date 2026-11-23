@@ -104,7 +104,7 @@ export const cityPages: CityPage[] = [
     faqs: [
       ['How much does a Shopify website cost in Bangalore?', 'Most Shopify builds we quote fall between ₹60,000 and ₹4,00,000, excluding GST. The number of products, custom sections and integrations decide where a store sits. Shopify, theme and app subscriptions are separate.'],
       ['Can you set up cash on delivery and UPI?', 'Yes. We set up UPI, cards and wallets through Razorpay, PayU or Cashfree, and cash on delivery with rules to cut fake and returned orders.'],
-      ['Can we visit your Bangalore office?', 'Yes. We are at HMT Layout, off CBI Road, Bangalore 560032. Book a call first so the right person is there.'],
+      ['Can we visit your Bangalore office?', 'Yes. Book a visit before coming to our office at No. 33, 4th Floor, 1st Main in HMT Layout, off CBI Road in Ganganagar. Use the Google Maps link above for directions and call the Bangalore number if you need help finding the entrance. When you book, share your store URL or product catalogue so we can prepare for the meeting.'],
       ['Do you work with brands outside Bangalore?', 'Yes. Most of our Indian clients work with us remotely, with workshops on video and visits when they help.'],
     ],
     services: ['shopify-development', 'woocommerce-to-shopify', 'shopify-cro', 'ai-product-photography'],

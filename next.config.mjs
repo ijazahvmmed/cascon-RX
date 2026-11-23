@@ -2,6 +2,9 @@ import { fileURLToPath } from 'node:url';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [{ source: '/careers', destination: '/about', statusCode: 301 }];
+  },
   async headers() {
     const preview = process.env.SITE_INDEXABLE === 'false' || process.env.NODE_ENV === 'development' || (process.env.VERCEL_ENV && process.env.VERCEL_ENV !== 'production');
     return preview ? [{ source: '/:path*', headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] }] : [];
