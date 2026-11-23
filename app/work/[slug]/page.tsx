@@ -14,7 +14,7 @@ import ServiceTag from '@/components/ServiceTag';
 import JsonLd from '@/components/JsonLd';
 export function generateStaticParams() { return projectProfiles.map(p => ({ slug: p.slug })); }
 async function getProject(params: Promise<{ slug: string }>) { const { slug } = await params; const profile = projectProfiles.find(p => p.slug === slug); if (!profile) notFound(); const work = allWorkCards.find(p => projectId(p.name) === slug)!; return { profile, work }; }
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) { const { profile: p } = await getProject(params); return pageMetadata('/work/' + p.slug, p.name + ' — Website & Creative Project', p.intro + ' Explore the project scope and related Cascon services.'); }
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) { const { profile: p } = await getProject(params); return pageMetadata('/work/' + p.slug, p.name + ' — Website & Creative Work', p.intro + ' Explore the project scope and related Cascon services.'); }
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { profile: p, work } = await getProject(params), path = '/work/' + p.slug;
   const related = allWorkCards.filter(v => projectProfiles.some(k => k.name === v.name) && v.name !== p.name && v.tags.some(tag => work.tags.includes(tag))).slice(0,2);

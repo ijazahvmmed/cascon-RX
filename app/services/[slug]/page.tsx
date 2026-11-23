@@ -1,3 +1,4 @@
+import PricingTiers from '@/components/PricingTiers';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -20,6 +21,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   return <div className="interior-gradient"><ContentIntro title={s.title} label={s.name} description={s.intro} crumbs={[{ name: 'Services', path: '/services' }, { name: s.name, path }]} />
     <div className="shell content-body"><section className="content-feature"><div><span className="eyebrow">The right fit</span><h2>{s.summary}</h2><p>{s.fit}</p><Link className="context-link" href="/contact">Discuss the fit for your business →</Link></div><div className="service-visual"><Image src={s.image} alt={s.imageAlt} fill sizes="(max-width: 640px) 90vw, 43vw" /></div></section>
     <section className="content-section"><div className="section-heading"><span className="eyebrow">Scope & deliverables</span><h2>What the work can include.</h2></div><div className="detail-grid">{s.deliverables.map(([title,body]) => <section key={title}><h3>{title}</h3><p>{body}</p></section>)}</div></section>
+    {s.extraSections?.map(x => <section className="content-section" key={x.title}><div className="section-heading"><span className="eyebrow">{x.eyebrow}</span><h2>{x.title}</h2>{x.intro && <p>{x.intro}</p>}</div>{x.pricing ? <PricingTiers tiers={x.items} /> : <div className="detail-grid">{x.items.map(([title,body]) => <section key={title}><h3>{title}</h3><p>{body}</p></section>)}</div>}</section>)}
     <section className="content-section"><div className="section-heading"><span className="eyebrow">A shared process</span><h2>From the brief to the next decision.</h2></div><ol className="process-list">{s.steps.map(([title,body],i) => <li key={title}><span className="eyebrow">0{i + 1}</span><h3>{title}</h3><p>{body}</p></li>)}</ol></section>
     <section className="content-section input-section"><h2>Bring these to the first conversation.</h2><ul className="input-list">{s.inputs.map(input => <li key={input}>{input}</li>)}</ul></section>
     {projects.length > 0 && <section className="content-section"><div className="section-heading"><span className="eyebrow">Relevant experience</span><h2>Selected work.</h2></div><div className="case-grid content-projects">{projects.slice(0,3).map(p => <CaseCard key={p.name} {...p} />)}</div></section>}

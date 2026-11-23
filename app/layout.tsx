@@ -26,7 +26,7 @@ const geist = localFont({ src: './fonts/GeistVF.woff', variable: '--font-geist',
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: 'Shopify Agency in India & AI Media Studio | Cascon', template: `%s | ${SITE_NAME}` },
+  title: { default: 'Shopify Agency in India & AI Media Studio | Cascon Digital', template: `%s | ${SITE_NAME}` },
   description: SITE_DESCRIPTION,
   openGraph: { type: 'website', siteName: SITE_NAME, title: SITE_NAME, description: SITE_DESCRIPTION, url: SITE_URL, images: [{ url: '/opengraph-image', width: 1200, height: 630 }] },
   twitter: { card: 'summary_large_image', title: SITE_NAME, description: SITE_DESCRIPTION, images: ['/opengraph-image'] },

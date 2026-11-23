@@ -12,7 +12,7 @@ export function pageMetadata(path: string, title: string, description: string): 
 
 export const organizationSchema = {
   '@context': 'https://schema.org', '@type': 'Organization', '@id': `${SITE_URL}/#organization`,
-  name: SITE_NAME, url: SITE_URL, logo: `${SITE_URL}/cascon-black.png`, email: CONTACT_EMAIL,
+  name: SITE_NAME, alternateName: 'Cascon', url: SITE_URL, logo: `${SITE_URL}/cascon-black.png`, email: CONTACT_EMAIL,
   description: 'Shopify development, conversion rate optimization, AI media production, performance marketing, automation, SEO and AEO for ecommerce brands in India and the UAE.',
   sameAs: [SOCIAL.instagram], areaServed: ['India', 'United Arab Emirates'],
   address: [

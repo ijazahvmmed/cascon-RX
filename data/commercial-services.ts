@@ -1,4 +1,4 @@
-export interface CommercialService { slug: string; name: string; title: string; description: string; summary: string; intro: string; fit: string; image: string; imageAlt: string; tags: string[]; projects: string[]; deliverables: string[][]; steps: string[][]; inputs: string[]; faqs: string[][]; related: string[]; insights: string[]; sources: string[][]; }
+export interface CommercialService { slug: string; name: string; title: string; description: string; summary: string; intro: string; fit: string; image: string; imageAlt: string; tags: string[]; projects: string[]; deliverables: string[][]; steps: string[][]; inputs: string[]; faqs: string[][]; related: string[]; insights: string[]; sources: string[][]; extraSections?: { eyebrow: string; title: string; intro?: string; pricing?: boolean; items: string[][] }[]; }
 export const commercialServices: CommercialService[] = [
   {
     "slug": "shopify-development",
@@ -91,7 +91,7 @@ export const commercialServices: CommercialService[] = [
   {
     "slug": "shopify-cro",
     "name": "Shopify CRO",
-    "title": "Shopify Conversion Rate Optimization Services",
+    "title": "Shopify Conversion Rate Optimization",
     "description": "Find friction in your Shopify buying journey. Cascon reviews analytics, mobile product pages, cart and checkout to prioritise measurable improvements.",
     "summary": "Find the friction before choosing the fix.",
     "intro": "Shopify conversion rate optimization starts with a reliable picture of how visitors shop. Cascon reviews the store journey and available analytics, then prioritises changes that address specific obstacles to buying. The work can begin with an audit without committing to a full redesign.",
@@ -254,7 +254,7 @@ export const commercialServices: CommercialService[] = [
     "slug": "woocommerce-to-shopify",
     "name": "WooCommerce to Shopify migration",
     "title": "WooCommerce to Shopify Migration Services",
-    "description": "Plan a WooCommerce to Shopify migration with catalogue mapping, redirects, integration checks and launch validation. Discuss your migration with Cascon.",
+    "description": "WooCommerce to Shopify migration for Indian ecommerce brands: data mapping, a 301 redirect plan to protect SEO rankings, launch checks and clear quotes.",
     "summary": "Move platforms with a plan for what must keep working.",
     "intro": "A WooCommerce migration is a change to data, URLs and operating workflows as well as the storefront. Cascon scopes the move by identifying what needs to transfer, what must be rebuilt and what should be retired, with acceptance checks before the domain switches.",
     "fit": "For a WooCommerce business evaluating Shopify, especially when plugins, maintenance or merchandising workflows have become difficult to manage.",
@@ -280,6 +280,76 @@ export const commercialServices: CommercialService[] = [
         "Reconcile sample data, test orders and refunds where appropriate, agree the final data cutover and rollback decision, and monitor errors after launch."
       ]
     ],
+    "extraSections": [
+      {
+        "eyebrow": "SEO retention",
+        "title": "Keeping search rankings through the move.",
+        "intro": "No migration can promise rankings won't move, because Google has to re-crawl the new store. What a plan can do is avoid the losses that come from broken URLs, missing content and changes nobody noticed after launch.",
+        "items": [
+          [
+            "Redirect map",
+            "Export every product, collection, category, page and blog URL from WooCommerce, along with Search Console landing pages and linked URLs. Map each one to its closest Shopify page as a single 301, so nothing goes through redirect chains or lands on the homepage."
+          ],
+          [
+            "URL checks before and after launch",
+            "Crawl the staging store and check the redirect list against the live domain on launch day. Confirm status codes, canonical tags, titles, meta descriptions, structured data and the sitemap, and fix anything blocked by Shopify's reserved paths."
+          ],
+          [
+            "Post-launch monitoring",
+            "Submit the new sitemap and watch Search Console coverage, 404 reports and landing-page traffic for at least the first eight weeks. Compare against the pre-migration baseline and fix broken or underperforming URLs as they appear."
+          ]
+        ]
+      },
+      {
+        "eyebrow": "Pricing & timelines",
+        "title": "Typical migration price and timeline.",
+        "pricing": true,
+        "intro": "Typical ranges for the migration fee. Shopify plan, paid theme and app subscriptions are billed separately by Shopify and app providers. You get a fixed quote after we review your WooCommerce export and plugin list.",
+        "items": [
+          [
+            "Starter",
+            "Up to about 300 products with standard variants, few plugins and a configured Shopify theme. Includes the data migration, redirect map and launch checks. Typically 2 to 3 weeks.",
+            "₹40,000 – ₹80,000",
+            "$500 – $1,000"
+          ],
+          [
+            "Growth",
+            "Up to about 3,000 products, customer and order history, reviews, several plugins to replace and theme customisation. Typically 4 to 6 weeks.",
+            "₹80,000 – ₹2,00,000",
+            "$1,000 – $2,500"
+          ],
+          [
+            "Custom",
+            "Large catalogues, subscriptions, B2B pricing, custom integrations or a full redesign alongside the move. Typically 6 to 10 weeks, scoped after the inventory.",
+            "From ₹2,00,000",
+            "From $2,500"
+          ]
+        ]
+      },
+      {
+        "eyebrow": "Cost & timeline",
+        "title": "What moves the price and the schedule.",
+        "intro": "Where your store sits in those ranges depends mostly on these factors.",
+        "items": [
+          [
+            "Catalogue size and data quality",
+            "Number of products, variants, customers and historical orders, and how much of the exported data needs cleaning before it can be imported."
+          ],
+          [
+            "Plugins to replace",
+            "Every WooCommerce plugin needs a Shopify app, a custom build or a decision to retire it. Subscriptions, bundles, B2B pricing and custom checkout logic add the most work."
+          ],
+          [
+            "Design scope",
+            "Moving onto a configured Shopify theme is faster than a redesign or custom Liquid sections built at the same time as the migration."
+          ],
+          [
+            "Launch constraints",
+            "Fixed launch dates, sale periods to avoid, and how much rehearsal and post-launch monitoring support is needed."
+          ]
+        ]
+      }
+    ],
     "steps": [
       [
         "Assess before committing",
@@ -300,6 +370,18 @@ export const commercialServices: CommercialService[] = [
       "Data retention requirements, order handling and the intended launch window."
     ],
     "faqs": [
+      [
+        "How much does a WooCommerce to Shopify migration cost?",
+        "Most migrations fall between ₹40,000 and ₹2,00,000 (about $500 to $2,500), excluding GST. Stores with subscriptions, B2B pricing, custom integrations or a redesign start from ₹2,00,000. We give a fixed quote after reviewing your export and plugin list, and list Shopify plan, theme and app costs separately."
+      ],
+      [
+        "How long does a migration take?",
+        "A smaller store moving onto a configured theme typically takes 2 to 3 weeks. Mid-sized catalogues with order history and plugins to replace take 4 to 6 weeks, and complex or redesign projects 6 to 10 weeks. Every schedule includes a sample import, a launch rehearsal and post-launch monitoring."
+      ],
+      [
+        "How do you protect SEO rankings during the move?",
+        "We map every valuable WooCommerce URL to its closest Shopify page with a single 301 redirect, carry over titles, descriptions and content, check the redirects on launch day, and monitor Search Console for at least eight weeks afterwards."
+      ],
       [
         "Can existing customer passwords transfer?",
         "Shopify’s migration guidance says customer passwords cannot be migrated. The customer-account approach and customer communications should be planned before launch."
@@ -413,7 +495,7 @@ export const commercialServices: CommercialService[] = [
   {
     "slug": "ai-video-production",
     "name": "AI video production",
-    "title": "AI Product Video & Ecommerce Creative Production",
+    "title": "AI Product Video & Ecommerce Creative",
     "description": "AI-assisted product videos and ecommerce campaign assets from Cascon. Define references, storyboards, product fidelity, deliverables and review stages.",
     "summary": "Give your products a story worth watching.",
     "intro": "Cascon develops AI-assisted product videos and creative assets for ecommerce campaigns. We agree the story, source material, product details and delivery formats before production, with a review process for visual consistency and the intended advertising or storefront placement.",

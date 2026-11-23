@@ -1,5 +1,5 @@
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.cascondigital.com').replace(/\/$/, '');
-export const SITE_NAME = 'Cascon';
+export const SITE_NAME = 'Cascon Digital';
 export const SITE_DESCRIPTION = 'Cascon is a Shopify agency and AI media studio in Bangalore and Dubai. We build ecommerce stores and create content, marketing and search foundations for brands in India and the UAE.';
 export const CONTACT_EMAIL = 'info@cascondigital.com';
 export const CAL_LINK = 'https://cal.com/cascon-haw2fz/15min';

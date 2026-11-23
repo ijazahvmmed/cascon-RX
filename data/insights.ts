@@ -1,9 +1,10 @@
-export interface InsightSection { id: string; title: string; paragraphs: string[]; checks?: string[][]; }
-export interface Insight { slug: string; title: string; description: string; summary: string; reader: string; relatedServices: string[]; sections: InsightSection[]; sources: string[][]; }
+export interface InsightSection { id: string; title: string; paragraphs: string[]; checks?: string[][]; link?: string[]; }
+export interface Insight { slug: string; title: string; updated?: string; description: string; summary: string; reader: string; relatedServices: string[]; sections: InsightSection[]; sources: string[][]; }
 export const insights: Insight[] = [
   {
     "slug": "shopify-cro-audit-methodology",
-    "title": "A practical Shopify CRO audit: evidence before fixes",
+    "updated": "2026-11-23",
+    "title": "Shopify CRO audit: evidence before fixes",
     "description": "A Shopify CRO audit framework for ecommerce teams: check measurement, review the mobile buying journey and prioritise fixes with clear validation criteria.",
     "summary": "Turn a store review into a useful decision about what to fix next.",
     "reader": "For ecommerce founders and marketing teams deciding whether their store needs focused fixes, a redesign or better measurement.",
@@ -92,7 +93,8 @@ export const insights: Insight[] = [
   },
   {
     "slug": "woocommerce-to-shopify-migration-checklist",
-    "title": "WooCommerce to Shopify: a migration readiness checklist",
+    "updated": "2026-11-23",
+    "title": "WooCommerce to Shopify migration checklist",
     "description": "Plan a WooCommerce to Shopify move around data, URLs, integrations and launch checks. A practical readiness guide for ecommerce teams evaluating migration.",
     "summary": "Know what must transfer, what must change and who signs off before launch.",
     "reader": "For WooCommerce store owners and ecommerce managers evaluating a move to Shopify, before committing to a build or launch date.",
@@ -141,6 +143,10 @@ export const insights: Insight[] = [
         "paragraphs": [
           "Collect existing product, collection and editorial URLs, alongside available search landing-page and backlink reports. Give important old pages a relevant destination and preserve useful content. Do not replace the mapping exercise with a blanket homepage redirect.",
           "Shopify redirects have reserved-path restrictions and generally apply to broken source URLs. Validate the final route behaviour in the destination store, including trailing slashes and any intermediate redirects, rather than assuming every imported mapping will work."
+        ],
+        "link": [
+          "See how Cascon plans redirects and protects rankings in a WooCommerce to Shopify migration",
+          "/services/woocommerce-to-shopify"
         ]
       },
       {

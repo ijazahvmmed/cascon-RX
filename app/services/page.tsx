@@ -10,7 +10,7 @@ import { services } from '@/data/services';
 import { SITE_URL, CAL_LINK } from '@/lib/constants';
 import { pageMetadata } from '@/lib/seo';
 
-export const metadata = pageMetadata('/services', 'Shopify Development, CRO, AI Media & SEO Services', 'Shopify development, CRO, AI product photography, performance marketing, automation, SEO and AEO for ecommerce brands in India and the UAE.');
+export const metadata = pageMetadata('/services', 'Shopify, CRO, AI Media & SEO Services', 'Shopify development, CRO, AI product photography, performance marketing, automation, SEO and AEO for ecommerce brands in India and the UAE.');
 const images: Record<string,string> = { 'ai-media': '/images/work/hanbee.jpg', 'seo-aeo': '/images/work/carsupply.jpg', 'content-strategy': '/images/work/rewise.jpg' };
 export default function ServicesPage() {
   return <div className="interior-gradient">
