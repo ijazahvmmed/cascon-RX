@@ -14,8 +14,9 @@ export const commercialServices: CommercialService[] = [
       "shopify"
     ],
     "projects": [
-      "finewares",
       "slept-club",
+      "bekid",
+      "finewares",
       "lumy-dates"
     ],
     "deliverables": [
@@ -75,7 +76,9 @@ export const commercialServices: CommercialService[] = [
       "woocommerce-to-shopify"
     ],
     "insights": [
-      "shopify-cro-audit-methodology"
+      "shopify-website-development-cost-india",
+      "how-long-to-build-shopify-store",
+      "3d-virtual-showroom-shopify"
     ],
     "sources": [
       [
@@ -161,7 +164,8 @@ export const commercialServices: CommercialService[] = [
       "shopify-development"
     ],
     "insights": [
-      "shopify-cro-audit-methodology"
+      "shopify-cro-audit-methodology",
+      "shopify-redesign-vs-cro"
     ],
     "sources": [
       [
@@ -241,7 +245,8 @@ export const commercialServices: CommercialService[] = [
       "ai-product-photography"
     ],
     "insights": [
-      "shopify-cro-audit-methodology"
+      "shopify-cro-audit-methodology",
+      "shopify-redesign-vs-cro"
     ],
     "sources": [
       [
@@ -261,7 +266,9 @@ export const commercialServices: CommercialService[] = [
     "image": "/images/services/shopify-cro.webp",
     "imageAlt": "Shopify storefront development visual",
     "tags": [],
-    "projects": [],
+    "projects": [
+      "bagus"
+    ],
     "deliverables": [
       [
         "A migration inventory",
@@ -400,7 +407,8 @@ export const commercialServices: CommercialService[] = [
       "shopify-redesign"
     ],
     "insights": [
-      "woocommerce-to-shopify-migration-checklist"
+      "woocommerce-to-shopify-migration-checklist",
+      "woocommerce-vs-shopify"
     ],
     "sources": [
       [

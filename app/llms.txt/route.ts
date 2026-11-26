@@ -1,16 +1,17 @@
 import { commercialServices } from '@/data/commercial-services';
 import { cityPages } from '@/data/locations';
+import { projectProfiles } from '@/data/project-profiles';
 import { insights } from '@/data/insights';
 import { SITE_URL, CONTACT_EMAIL } from '@/lib/constants';
 import { services } from '@/data/services';
 import { allWorkCards } from '@/data/work';
 export const dynamic = 'force-static';
 export function GET() {
-  const text = `# Cascon
+  const text = `# Cascon Digital
 
-> Cascon is a Shopify agency and AI media studio with teams in Bangalore, India and Dubai, United Arab Emirates. We work with ecommerce brands on Shopify development, conversion rate optimization, AI product imagery, marketing, automation and search discoverability.
+> Cascon Digital is a Shopify agency and AI media studio with teams in Bangalore, India and Dubai, United Arab Emirates. We work with ecommerce brands on Shopify development, conversion rate optimization, AI product imagery, marketing, automation and search discoverability.
 
-Cascon provides services to ecommerce stores. Cascon is not a retail Shopify store.
+Cascon Digital provides services to ecommerce brands.
 Canonical website: ${SITE_URL}
 Business email: ${CONTACT_EMAIL}
 India phone: +91 82816 63376
@@ -31,18 +32,24 @@ ${services.map(s => `- [${s.name}](${SITE_URL}/services#${s.id}): ${s.descriptio
 ## Detailed services
 ${commercialServices.map(s => `- [${s.name}](${SITE_URL}/services/${s.slug}): ${s.description}`).join('\n')}
 
-## Locations
+## Markets and service areas
 ${cityPages.map(c => `- [${c.title}](${SITE_URL}/shopify-agency/${c.slug}): ${c.description}`).join('\n')}
 
-## Practical guides
-${insights.map(a => `- [${a.title}](${SITE_URL}/insights/${a.slug})`).join('\n')}
+## Documented case studies
+${projectProfiles.map(project => `- [${project.name}](${SITE_URL}/work/${project.slug}): ${project.intro}`).join('\n')}
+
+## Commercial buying guides
+${insights.filter(article => article.slug !== 'shopify-cro-audit-methodology').map(article => `- [${article.title}](${SITE_URL}/insights/${article.slug}): ${article.summary}`).join('\n')}
+
+## Research and methodology
+${insights.filter(article => article.slug === 'shopify-cro-audit-methodology').map(article => `- [${article.title}](${SITE_URL}/insights/${article.slug}): ${article.summary}`).join('\n')}
 
 ## Locations
 - Bangalore: No. 33, 4th Floor, 1st Main, Ganganagar Gramatana, HMT Layout, CBI Road, Bangalore 560032, India.
 - Dubai: Office #2220, 22nd Floor, Tower Plaza, Sheikh Zayed Road, Dubai, United Arab Emirates.
 
 ## Project enquiries
-Pricing and delivery dates depend on the agreed scope. Contact Cascon for a quote. The site does not publish independently verified performance figures or guaranteed search rankings.
+Pricing and delivery dates depend on the agreed scope. Contact Cascon Digital for a quote. The site does not publish independently verified performance figures or guaranteed search rankings.
 
 ## Additional information
 - [Full text overview](${SITE_URL}/llms-full.txt): Services and frequently asked questions in plain text.

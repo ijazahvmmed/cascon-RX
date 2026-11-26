@@ -1,12 +1,12 @@
 {
-  "checkedAt": "2026-11-23T13:09:24.832Z",
-  "base": "http://127.0.0.1:62122",
-  "sitemapUrl": "http://127.0.0.1:62122/sitemap.xml",
+  "checkedAt": "2026-11-26T09:35:52.250Z",
+  "base": "http://127.0.0.1:53758",
+  "sitemapUrl": "http://127.0.0.1:53758/sitemap.xml",
   "canonicalSitemapUrl": "https://www.cascondigital.com/sitemap.xml",
   "sitemapStatus": 200,
   "xmlValid": true,
-  "urlCount": 25,
-  "lastmodCount": 25,
+  "urlCount": 31,
+  "lastmodCount": 31,
   "robotsStatus": 200,
   "pages": [
     {
@@ -52,6 +52,20 @@
       "reason": null
     },
     {
+      "path": "/insights/3d-virtual-showroom-shopify",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/insights/3d-virtual-showroom-shopify",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/insights/how-long-to-build-shopify-store",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/insights/how-long-to-build-shopify-store",
+      "indexable": true,
+      "reason": null
+    },
+    {
       "path": "/insights/shopify-cro-audit-methodology",
       "status": 200,
       "canonical": "https://www.cascondigital.com/insights/shopify-cro-audit-methodology",
@@ -59,9 +73,30 @@
       "reason": null
     },
     {
+      "path": "/insights/shopify-redesign-vs-cro",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/insights/shopify-redesign-vs-cro",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/insights/shopify-website-development-cost-india",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/insights/shopify-website-development-cost-india",
+      "indexable": true,
+      "reason": null
+    },
+    {
       "path": "/insights/woocommerce-to-shopify-migration-checklist",
       "status": 200,
       "canonical": "https://www.cascondigital.com/insights/woocommerce-to-shopify-migration-checklist",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/insights/woocommerce-vs-shopify",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/insights/woocommerce-vs-shopify",
       "indexable": true,
       "reason": null
     },
@@ -153,6 +188,13 @@
       "path": "/work/bagus",
       "status": 200,
       "canonical": "https://www.cascondigital.com/work/bagus",
+      "indexable": true,
+      "reason": null
+    },
+    {
+      "path": "/work/bekid",
+      "status": 200,
+      "canonical": "https://www.cascondigital.com/work/bekid",
       "indexable": true,
       "reason": null
     },

@@ -3,7 +3,7 @@ export interface Client {
 }
 export const clients: Client[] = [
   { name: 'Finewares', tags: ['shopify', 'ai-photography', 'content', 'seo-aeo'], region: 'INDIA', image: '/images/work/finewares.png', externalUrl: 'https://finewares.in/', logoKey: 'finewares' },
-  { name: 'Slept Club', tags: ['shopify', 'ai-photography', 'content', 'seo-aeo'], region: 'INDIA', image: '/images/work/slept.png', externalUrl: 'https://wearslept.com/', logoKey: 'slept' },
+  { name: 'WearSlept', tags: ['shopify', 'ai-photography', 'content', 'seo-aeo'], region: 'INDIA', image: '/images/work/slept.png', externalUrl: 'https://wearslept.com/', logoKey: 'slept' },
   { name: 'Lumy Dates', tags: ['shopify', 'ai-photography', 'content', 'seo-aeo'], region: 'UAE', image: '/images/work/lumy.png', externalUrl: 'https://www.lumydates.com/', logoKey: 'lumy' },
   { name: 'Citysky Builders', tags: ['web-design', 'ai-photography', 'content'], region: 'INDIA', image: '/images/work/citysky.webp', externalUrl: 'https://www.cityskyhomes.com/', logoKey: 'citysky' },
   { name: 'Vibezon', tags: ['shopify', 'ai-media', 'cro'], region: 'INDIA', image: '/images/work/vibezon.jpg', externalUrl: 'https://vibezon.com/', logoKey: 'vibezon' },

@@ -5,7 +5,7 @@ import ClientLogoGrid from '@/components/ClientLogoGrid';
 import { allWorkCards, newWorkCards } from '@/data/work';
 import { pageMetadata } from '@/lib/seo';
 
-export const metadata = pageMetadata('/clients', 'Our Ecommerce & Website Clients', 'Meet Cascon’s clients in India and the UAE, including Finewares, Slept Club, Lumy Dates, Citysky Builders, Bagus, Rewise and Vibezon.');
+export const metadata = pageMetadata('/clients', 'Our Ecommerce & Website Clients', 'Meet Cascon’s clients in India and the UAE, including Finewares, WearSlept, Lumy Dates, Citysky Builders, Bagus, Rewise and Vibezon.');
 const groups = [
   { id: 'established-brands', name: 'Established brands.', desc: 'A fresh perspective on what comes next. We help teams review an existing store, refine product journeys and connect creative production with their marketing plans.', names: ['Vibezon', 'Car Supply'] },
   { id: 'growing-brands', name: 'Growing brands.', desc: 'Make the next step a considered one. From a store redesign to consistent product imagery, we help ecommerce teams build on what is already working.', names: ['Bagus', 'Rewise'] },

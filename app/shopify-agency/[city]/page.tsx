@@ -10,7 +10,6 @@ import PricingTiers from '@/components/PricingTiers';
 import JsonLd from '@/components/JsonLd';
 import { pageMetadata, webPageSchema } from '@/lib/seo';
 import { SITE_URL, SITE_NAME, LOCATIONS, CONTACT_EMAIL } from '@/lib/constants';
-import { projectId } from '@/lib/links';
 
 export function generateStaticParams() { return cityPages.map(c => ({ city: c.slug })); }
 async function getCity(params: Promise<{ city: string }>) { const { city } = await params; const page = cityPages.find(c => c.slug === city); if (!page) notFound(); return page; }
@@ -19,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ city: str
 export default async function CityPage({ params }: { params: Promise<{ city: string }> }) {
   const c = await getCity(params), path = '/shopify-agency/' + c.slug;
   const office = c.office ? LOCATIONS[c.office] : undefined;
-  const projects = allWorkCards.filter(p => c.projects.includes(projectId(p.name)));
+  const projects = c.projects.flatMap(slug => allWorkCards.filter(project => project.slug === slug));
   const business = {
     '@context': 'https://schema.org', '@type': office ? 'ProfessionalService' : 'Service', '@id': SITE_URL + path + '#business',
     name: office ? `${SITE_NAME} ${c.city}` : SITE_NAME, url: SITE_URL + path, email: CONTACT_EMAIL,

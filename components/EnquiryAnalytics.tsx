@@ -19,7 +19,14 @@ export default function EnquiryAnalytics({ enabled = true }: { enabled?: boolean
     const click = (event: MouseEvent) => {
       const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href]') : null;
       if (!link) return;
-      const intent = contactIntent(link.getAttribute('href') || '',CAL_LINK);
+      const path = location.pathname;
+      const intent = contactIntent(link.getAttribute('href') || '', CAL_LINK);
+      if (!intent && (path.startsWith('/work/') || path.startsWith('/insights/'))) {
+        const destination = new URL(link.href);
+        if (destination.origin === location.origin && /^\/services\/[a-z0-9-]+$/.test(destination.pathname)) {
+          window.plausible?.('Editorial service click', { props: { content_path: path, service_path: destination.pathname } });
+        }
+      }
       if (intent) window.plausible?.(intent.event,{ props: { channel:intent.channel,landing_path:landing.path,source_type:landing.source,content_path:location.pathname } });
     };
     document.addEventListener('click',click);

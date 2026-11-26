@@ -1,1 +1,1 @@
-export const projectSlugs = ['finewares','slept-club','lumy-dates','citysky-builders','bagus'];
+export const projectSlugs = ['finewares','slept-club','lumy-dates','citysky-builders','bagus','bekid'];

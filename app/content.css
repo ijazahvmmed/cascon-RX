@@ -4,3 +4,15 @@
 
 .currency-toggle{display:inline-flex;border:1px solid #0a0a0a26;margin-bottom:36px}.currency-toggle button{font:inherit;font-size:13px;padding:9px 18px;background:transparent;color:#535353;cursor:pointer}.currency-toggle button[aria-pressed="true"]{background:#0a0a0a;color:#fff}.currency-toggle button:focus-visible{outline:2px solid #0a0a0a;outline-offset:2px}.tier-price{font-size:26px!important;line-height:1.2!important;color:#0a0a0a;margin-bottom:12px}.tier-note{font-size:12px;color:#535353;margin-top:30px}
 .city-note{font-size:14px;color:#535353;margin-top:30px;max-width:700px;line-height:1.6}.city-office p{font-size:16px;line-height:1.7;margin-bottom:18px}.city-office a{text-decoration:underline;text-underline-offset:3px}
+
+.project-highlights{padding-block:28px;border-bottom:1px solid #0a0a0a20}
+.project-highlights dt{font-size:12px;color:#535353;margin-bottom:8px}
+.project-highlights dd{font-size:18px;line-height:1.4}
+.project-figure img,.reading-copy figure img{max-width:100%}
+.reading-copy .article-date a{text-decoration:underline;text-underline-offset:3px}
+.guide-table{overflow-x:auto;margin-block:28px}
+.guide-table table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.5}
+.guide-table th,.guide-table td{padding:12px 16px;text-align:left;vertical-align:top;border-bottom:1px solid #0a0a0a20}
+.guide-table th{font-weight:500}
+.related-content{row-gap:32px}
+.insight-list{row-gap:26px}

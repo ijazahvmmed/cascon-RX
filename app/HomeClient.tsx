@@ -16,7 +16,7 @@ import HeroMedia from '@/components/HeroMedia';
 import Faq from '@/components/Faq';
 
 const allWork = allWorkCards;
-const featured = ['Finewares', 'Slept Club', 'Lumy Dates', 'Citysky Builders', 'Bagus', 'Vibezon'].map(name => allWork.find(work => work.name === name)!);
+const featured = ['Finewares', 'WearSlept', 'Lumy Dates', 'Citysky Builders', 'Bagus', 'Vibezon'].map(name => allWork.find(work => work.name === name)!);
 
 export default function Home() {
   return <>

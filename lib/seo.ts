@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { SITE_URL, SITE_NAME, CONTACT_EMAIL, SOCIAL } from './constants';
 
-export function pageMetadata(path: string, title: string, description: string): Metadata {
+export function pageMetadata(path: string, title: string, description: string, options: { image?: string; article?: { publishedTime?: string; modifiedTime?: string; authors?: string[] } } = {}): Metadata {
+  const image = options.image ? { url: options.image } : { url: '/opengraph-image', width: 1200, height: 630 };
   return {
     title: { absolute: `${title} | ${SITE_NAME}` }, description,
     alternates: { canonical: `${SITE_URL}${path}` },
-    openGraph: { type: 'website', siteName: SITE_NAME, title, description, url: `${SITE_URL}${path}`, images: [{ url: '/opengraph-image', width: 1200, height: 630 }] },
-    twitter: { card: 'summary_large_image', title, description, images: ['/opengraph-image'] },
+    openGraph: { ...(options.article ? { type: 'article' as const, ...options.article } : { type: 'website' as const }), siteName: SITE_NAME, title, description, url: `${SITE_URL}${path}`, images: [image] },
+    twitter: { card: 'summary_large_image', title, description, images: [image.url] },
   };
 }
 

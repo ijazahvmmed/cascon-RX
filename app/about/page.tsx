@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import PageIntro from '@/components/PageIntro';
 import ScrollReveal from '@/components/ScrollReveal';
 import MorphButton from '@/components/MorphButton';
@@ -17,6 +18,7 @@ export default function AboutPage() {
     <div className="shell"><div className="wide-image"><Image src="/images/work/bagus.jpg" alt="Bagus Shopify and creative project by Cascon" fill sizes="92vw" priority /></div>
     <section className="editorial-row"><span className="eyebrow">A connected approach</span><div><h2>One team.<br />The bigger picture.</h2><p style={{ marginTop: 30 }}>A store is one part of your brand’s experience. Product imagery, useful information, acquisition and everyday operations all shape what happens before and after a customer buys.</p><p>We work across Shopify development, conversion rate optimization, AI media, paid marketing, SEO, AEO and automation. You can bring us in for a focused project or connect several services around a shared brief.</p><MorphButton href="/services" label="What we do" /></div></section>
     <section className="editorial-row"><div><span className="eyebrow">Our way of working</span><h2>A little care<br />goes a long way.</h2></div><div>{values.map(([title, description]) => <ScrollReveal key={title}><div className="value-item"><h3>{title}</h3><p>{description}</p></div></ScrollReveal>)}</div></section>
+    <section id="editorial" className="editorial-row"><span className="eyebrow">Editorial team</span><div><h2>Who writes our guides.</h2><p>Our Shopify delivery and ecommerce teams write Cascon Digital’s guides from project work and platform documentation. We describe what we delivered, link to relevant sources and identify what a merchant should verify against their own store.</p><p>Read our <Link className="context-link" href="/insights">buyer guides</Link> or see the work behind them in the <Link className="context-link" href="/work">portfolio</Link>.</p></div></section>
     <section className="editorial-row"><span className="eyebrow">Bangalore · Dubai</span><div><h2>Close to your team.<br />Wherever you are.</h2><p style={{ marginTop: 30 }}>Our locations in India and the UAE connect us with brands across markets. We agree on milestones, communication and responsibilities at the start, so you always know where the project stands.</p><MorphButton href="/contact" label="Let’s talk" /></div></section></div>
   </div>;
 }

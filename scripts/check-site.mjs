@@ -16,7 +16,7 @@ for (const path of paths) {
   for (const match of document.matchAll(/<(?:img|image)[^>]+(?:src|href)="([^"]+)"/g)) imageUrls.add(match[1].replaceAll('&amp;', '&'));
   assert.ok(!/Antigravity|Pause motion|Resume motion/i.test(document), path + ' contains a removed element');
   assert.ok(document.includes('https://wa.me/918281663376?text='), path + ' needs the WhatsApp contact link');
-  if (['', '/work', '/clients'].includes(path)) for (const name of ['Finewares', 'Slept Club', 'Lumy Dates', 'Citysky Builders']) assert.ok(document.includes(name), path + ' missing ' + name);
+  if (['', '/work', '/clients'].includes(path)) for (const name of ['Finewares', 'WearSlept', 'Lumy Dates', 'Citysky Builders']) assert.ok(document.includes(name), path + ' missing ' + name);
   const title = document.match(/<title>(.*?)<\/title>/)?.[1];
   assert.ok(title && !titles.has(title), path + ' needs a unique title');
   titles.add(title);

@@ -5,12 +5,12 @@ import Link from 'next/link';
 import { allWorkCards } from '@/data/work';
 import { projectHref } from '@/lib/content';
 import Icon from './Icon';
-const names = ['Bagus', 'Finewares', 'Slept Club', 'Lumy Dates', 'Citysky Builders', 'Vibezon', 'Rewise', 'Hanbee'];
+const names = ['Bagus', 'Finewares', 'WearSlept', 'Lumy Dates', 'Citysky Builders', 'Vibezon', 'Rewise', 'Hanbee'];
 const projects = names.map(name => allWorkCards.find(project => project.name === name)!);
 const titles: Record<string, string> = {
 Bagus: 'A thoughtfully made store. For thoughtfully made things.',
 Finewares: 'Everyday cookware. A considered shopping experience.',
-'Slept Club': 'A fresh home for better rest.',
+'WearSlept': 'A fresh home for better rest.',
 'Lumy Dates': 'A sweet spot for dates and gifting.',
 'Citysky Builders': 'A clearer picture of a place to call home.',
 Vibezon: 'A new perspective on everyday style.',

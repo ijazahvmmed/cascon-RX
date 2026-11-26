@@ -27,7 +27,7 @@ export const footerColumns = {
     title: 'Work',
     links: [
       { href: '/work/finewares', label: 'Finewares' },
-      { href: '/work/slept-club', label: 'Slept Club' },
+      { href: '/work/slept-club', label: 'WearSlept' },
       { href: '/work/lumy-dates', label: 'Lumy Dates' },
       { href: '/work/citysky-builders', label: 'Citysky Builders' },
       { href: '/work/bagus', label: 'Bagus' },
