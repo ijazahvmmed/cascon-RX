@@ -41,7 +41,7 @@ export const insights: Insight[] = [
   {
     "slug": "shopify-website-development-cost-india",
     "title": "Shopify Website Development Cost in India",
-    "seoTitle": "Shopify Development Cost in India",
+    "seoTitle": "Shopify Website Development Cost in India",
     "summary": "A Shopify build quote depends on the theme, catalogue, custom features and integrations. Separate the build from subscription and operating costs before comparing proposals.",
     "description": "A Shopify build quote depends on the theme, catalogue, custom features and integrations. Separate the build from subscription and operating costs before comparing proposals.",
     "category": "Shopify budgets",
@@ -101,6 +101,7 @@ export const insights: Insight[] = [
           "A freelancer can suit a narrow build when your team owns content, integrations and launch decisions. A team covering design and development can suit a brief with several dependencies. Ask both who reviews scope changes, who tests payments and what is handed over after launch.",
           "For WearSlept, Cascon coordinated custom storefront work, product presentation and launch in under seven days. Use the case to understand what a focused launch can cover. Ask for a quote against your own catalogue and integrations."
         ],
+        "link": ["Review Shopify development scope and deliverables", "/services/shopify-development"],
         "checks": [
           [
             "Bring a catalogue sample",

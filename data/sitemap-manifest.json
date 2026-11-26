@@ -227,9 +227,9 @@
       "dateSource": "app/services/[slug]/page.tsx"
     },
     "/services/shopify-development": {
-      "fingerprint": "0b3d2177d91edc5d41d542874a8b49e1a4c261f800e55297eed20eb49a8c8c64",
+      "fingerprint": "aff021c92a08b30e4d897425b220d229fb2f1479d4ceb78f0b06f3e00b81464e",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T09:35:16.797Z",
+      "sourceModifiedAt": "2026-11-26T14:52:12.029Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "data/insights.ts"
     },
@@ -241,11 +241,11 @@
       "dateSource": "app/services/[slug]/page.tsx"
     },
     "/services/woocommerce-to-shopify": {
-      "fingerprint": "9c2991edc04adebb8a4e9d4e84b7ef34f1c0d2bf96ddf8180d5b54489044038c",
+      "fingerprint": "9bd1e16ba35137631bbc5a444b556088e5fb50023b7d2f1a80a1189994b3d2d2",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T09:21:53.203Z",
+      "sourceModifiedAt": "2026-11-26T14:52:12.029Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "app/services/[slug]/page.tsx"
+      "dateSource": "data/insights.ts"
     },
     "/work/bagus": {
       "fingerprint": "0a69d38761b2871599514ed1d83224127ef5172769bc5be351b8a116aeec1fed",
@@ -325,11 +325,11 @@
       "dateSource": "app/insights/[slug]/page.tsx"
     },
     "/insights/shopify-website-development-cost-india": {
-      "fingerprint": "0d0ea589c892c6c9f981764cf1e3dcd7e79bf45a12e7f0892c91833e3763ce94",
+      "fingerprint": "f17fe362986ba66c0d13c608cc3ec203973061c383fa76956be80a40f196cef2",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T09:21:53.205Z",
+      "sourceModifiedAt": "2026-11-26T14:52:12.029Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "app/insights/[slug]/page.tsx"
+      "dateSource": "data/insights.ts"
     },
     "/insights/woocommerce-vs-shopify": {
       "fingerprint": "20fec6dc5fd0114cd5af8f520a80b7b2afec4aa11a53002cb62288e283c2d2e8",

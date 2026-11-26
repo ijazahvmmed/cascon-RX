@@ -4,7 +4,7 @@ export const commercialServices: CommercialService[] = [
     "slug": "shopify-development",
     "name": "Shopify development",
     "title": "Shopify Development Agency in India",
-    "description": "Shopify store development for Indian ecommerce brands. Plan a new build, theme customisation, integrations and launch with Cascon in Bangalore and Dubai.",
+    "description": "Shopify development for D2C brands in India. Compare theme and custom builds, scope catalogue and integrations, and plan launch with Cascon Digital.",
     "summary": "A Shopify store your customers can buy from. And your team can run.",
     "intro": "Cascon designs and develops Shopify stores for ecommerce brands in India, with collaboration available for UAE teams. We connect the catalogue, buying journey, content and operational integrations around a clearly agreed launch scope.",
     "fit": "For a new ecommerce store, a move beyond a basic theme, or a brand whose team needs more useful product and collection templates.",
@@ -64,6 +64,10 @@ export const commercialServices: CommercialService[] = [
       [
         "Can you work with an existing theme?",
         "Yes. A theme can be a useful starting point when it supports the required catalogue and buying journey. We scope custom sections where they solve an identified need rather than replacing every working component."
+      ],
+      [
+        "How do I choose a Shopify development agency in India?",
+        "Compare agencies using the same catalogue sample and launch brief. Ask for a live example with similar variants or integrations, a written scope for theme and custom work, and named owners for mobile testing, launch and handover."
       ],
       [
         "Do I need Shopify Plus?",
@@ -259,7 +263,7 @@ export const commercialServices: CommercialService[] = [
     "slug": "woocommerce-to-shopify",
     "name": "WooCommerce to Shopify migration",
     "title": "WooCommerce to Shopify Migration Services",
-    "description": "WooCommerce to Shopify migration for Indian ecommerce brands: data mapping, a 301 redirect plan to protect SEO rankings, launch checks and clear quotes.",
+    "description": "WooCommerce to Shopify migration services in India. Scope product and customer data, URL redirects, checkout testing and a launch rehearsal.",
     "summary": "Move platforms with a plan for what must keep working.",
     "intro": "A WooCommerce migration is a change to data, URLs and operating workflows as well as the storefront. Cascon scopes the move by identifying what needs to transfer, what must be rebuilt and what should be retired, with acceptance checks before the domain switches.",
     "fit": "For a WooCommerce business evaluating Shopify, especially when plugins, maintenance or merchandising workflows have become difficult to manage.",
