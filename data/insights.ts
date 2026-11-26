@@ -1,3 +1,5 @@
+import { benchmarkInsight } from './benchmark-insight';
+
 export interface InsightSection {
   id: string;
   title: string;
@@ -38,6 +40,7 @@ export interface Insight {
 }
 
 export const insights: Insight[] = [
+  benchmarkInsight,
   {
     "slug": "shopify-website-development-cost-india",
     "title": "Shopify Website Development Cost in India",

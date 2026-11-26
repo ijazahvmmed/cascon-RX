@@ -35,6 +35,10 @@
       "lastModified": "2026-11-26"
     },
     {
+      "path": "/insights/indian-shopify-storefronts-50-store-study",
+      "lastModified": "2026-11-26"
+    },
+    {
       "path": "/insights/shopify-cro-audit-methodology",
       "lastModified": "2026-11-26"
     },
@@ -171,11 +175,11 @@
       "dateSource": "lib/seo.ts"
     },
     "/insights": {
-      "fingerprint": "ca706de4698dd92398f4d374529626439d0fe002d6cf276048d2409cef3d9696",
+      "fingerprint": "aab8658de254a65f08c6521a1604229630c5b35c5599d43291928460e363d0fc",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T09:18:53.100Z",
+      "sourceModifiedAt": "2026-11-26T15:19:59.916Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "lib/constants.ts"
+      "dateSource": "data/insights.ts"
     },
     "/work": {
       "fingerprint": "925cc236bf36b32c255b5b89514b785de77b15d89b0033ca85b0ff4b3931cf4b",
@@ -344,6 +348,13 @@
       "sourceModifiedAt": "2026-11-26T09:35:16.798Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "app/work/[slug]/page.tsx"
+    },
+    "/insights/indian-shopify-storefronts-50-store-study": {
+      "fingerprint": "be6f7ac7a3f0f3da088d95960529a1be9e3aec35277d3616e35f832dde1de43c",
+      "lastModified": "2026-11-26",
+      "sourceModifiedAt": "2026-11-26T15:19:59.916Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "data/insights.ts"
     }
   },
   "excluded": []
