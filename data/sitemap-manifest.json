@@ -60,7 +60,7 @@
     },
     {
       "path": "/privacy-policy",
-      "lastModified": "2026-11-23"
+      "lastModified": "2026-11-26"
     },
     {
       "path": "/services",
@@ -161,11 +161,11 @@
       "dateSource": "data/work.ts"
     },
     "/privacy-policy": {
-      "fingerprint": "892aaaa8c5b2bbe3aea9e5ca02d13a0732ddde424537c9be151731b40be10182",
-      "lastModified": "2026-11-23",
-      "sourceModifiedAt": "2026-11-23T13:04:13.881Z",
+      "fingerprint": "d3e89846371c93cd9879f7834090ad306f6b66f7d3ed215021055d98c7482c54",
+      "lastModified": "2026-11-26",
+      "sourceModifiedAt": "2026-11-26T15:34:26.169Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "lib/seo.ts"
+      "dateSource": "app/privacy-policy/page.tsx"
     },
     "/contact": {
       "fingerprint": "9d9758d8f795d3c8d81b0b865827154b883a19cf4f8fbea91d21045c986d2864",

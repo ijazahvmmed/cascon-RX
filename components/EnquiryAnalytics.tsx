@@ -27,7 +27,11 @@ export default function EnquiryAnalytics({ enabled = true }: { enabled?: boolean
           window.plausible?.('Editorial service click', { props: { content_path: path, service_path: destination.pathname } });
         }
       }
-      if (intent) window.plausible?.(intent.event,{ props: { channel:intent.channel,landing_path:landing.path,source_type:landing.source,content_path:location.pathname } });
+      if (intent) {
+        const props = { channel: intent.channel, landing_path: landing.path, source_type: landing.source, content_path: location.pathname };
+        window.plausible?.(intent.event, { props });
+        window.dispatchEvent(new CustomEvent('cascon:enquiry-intent', { detail: props }));
+      }
     };
     document.addEventListener('click',click);
     return () => document.removeEventListener('click',click);
