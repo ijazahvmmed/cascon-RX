@@ -6,7 +6,7 @@ export const commercialServices: CommercialService[] = [
     "title": "Shopify Development Agency in India",
     "description": "Shopify development for D2C brands in India. Compare theme and custom builds, scope catalogue and integrations, and plan launch with Cascon Digital.",
     "summary": "A Shopify store your customers can buy from. And your team can run.",
-    "intro": "Cascon designs and develops Shopify stores for ecommerce brands in India, with collaboration available for UAE teams. We connect the catalogue, buying journey, content and operational integrations around a clearly agreed launch scope.",
+    "intro": "Cascon designs and develops Shopify stores for D2C brands in India and works with teams in the UAE. A configured theme can suit a first launch. Custom Liquid sections or integrations make sense when the catalogue, buying journey or operating workflows need them.",
     "fit": "For a new ecommerce store, a move beyond a basic theme, or a brand whose team needs more useful product and collection templates.",
     "image": "/images/work/finewares.png",
     "imageAlt": "Cookware imagery on the Finewares storefront, a Cascon Shopify project",
@@ -59,7 +59,7 @@ export const commercialServices: CommercialService[] = [
     "faqs": [
       [
         "How much does Shopify development cost in India?",
-        "The quote depends on template complexity, catalogue structure, integrations and content readiness. We separate the build fee from Shopify subscriptions, paid themes, app charges and payment-provider fees so you can compare the full operating cost."
+        "Cascon’s published Bangalore planning ranges are ₹60,000–₹1,50,000 for a configured theme and ₹1,50,000–₹4,00,000 for a growth build with custom sections, excluding GST and subscriptions. Catalogue complexity, design, content readiness and integrations affect the quote. The cost guide shows how to compare the build with the first year of operating expenses."
       ],
       [
         "Can you work with an existing theme?",
@@ -82,7 +82,8 @@ export const commercialServices: CommercialService[] = [
     "insights": [
       "shopify-website-development-cost-india",
       "how-long-to-build-shopify-store",
-      "3d-virtual-showroom-shopify"
+      "3d-virtual-showroom-shopify",
+      "indian-shopify-storefronts-50-store-study"
     ],
     "sources": [
       [

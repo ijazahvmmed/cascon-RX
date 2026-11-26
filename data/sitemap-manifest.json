@@ -175,11 +175,11 @@
       "dateSource": "lib/seo.ts"
     },
     "/insights": {
-      "fingerprint": "aab8658de254a65f08c6521a1604229630c5b35c5599d43291928460e363d0fc",
+      "fingerprint": "6213b450795ceeeb72fb9e448ea99bfe9389e28dd3b7ae64e6efb3082bff12f9",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T15:19:59.916Z",
+      "sourceModifiedAt": "2026-11-26T16:33:59.358Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "data/insights.ts"
+      "dateSource": "data/benchmark-insight.ts"
     },
     "/work": {
       "fingerprint": "925cc236bf36b32c255b5b89514b785de77b15d89b0033ca85b0ff4b3931cf4b",
@@ -231,11 +231,11 @@
       "dateSource": "app/services/[slug]/page.tsx"
     },
     "/services/shopify-development": {
-      "fingerprint": "aff021c92a08b30e4d897425b220d229fb2f1479d4ceb78f0b06f3e00b81464e",
+      "fingerprint": "6f2d03613a8823aa2de9fcb19f3a601cce61c9d94a4c160b6b9f2ff7fed47e3f",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T14:52:12.029Z",
+      "sourceModifiedAt": "2026-11-26T16:33:59.358Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "data/insights.ts"
+      "dateSource": "data/benchmark-insight.ts"
     },
     "/services/shopify-redesign": {
       "fingerprint": "f18fd3bde695a5eb0445df129333c94609e985a366eb1a69ef7f9b0b8da973f9",
@@ -329,11 +329,11 @@
       "dateSource": "app/insights/[slug]/page.tsx"
     },
     "/insights/shopify-website-development-cost-india": {
-      "fingerprint": "f17fe362986ba66c0d13c608cc3ec203973061c383fa76956be80a40f196cef2",
+      "fingerprint": "32b3862c19012153215f7b2ed17571c2984e96fe5c172c355d11adb33fe3a4af",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T14:52:12.029Z",
+      "sourceModifiedAt": "2026-11-26T16:33:59.360Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "data/insights.ts"
+      "dateSource": "app/insights/[slug]/page.tsx"
     },
     "/insights/woocommerce-vs-shopify": {
       "fingerprint": "20fec6dc5fd0114cd5af8f520a80b7b2afec4aa11a53002cb62288e283c2d2e8",
@@ -350,11 +350,11 @@
       "dateSource": "app/work/[slug]/page.tsx"
     },
     "/insights/indian-shopify-storefronts-50-store-study": {
-      "fingerprint": "be6f7ac7a3f0f3da088d95960529a1be9e3aec35277d3616e35f832dde1de43c",
+      "fingerprint": "5e88b5dfb31bd68f38d810ad1ee02372194906f7e66574632bf2aad487b89bf9",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T15:19:59.916Z",
+      "sourceModifiedAt": "2026-11-26T16:33:59.360Z",
       "dateBasis": "modified-working-tree-source",
-      "dateSource": "data/insights.ts"
+      "dateSource": "app/insights/[slug]/page.tsx"
     }
   },
   "excluded": []

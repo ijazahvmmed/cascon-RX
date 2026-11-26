@@ -44,6 +44,7 @@ export default async function InsightPage({ params }: Props) {
   const byline = article.author ?? { name: SITE_NAME, profile: '/about#editorial' };
   const published = article.published;
   const updated = article.updated;
+  const dataset = article.research?.dataset;
   return <div className="interior-gradient">
     <ContentIntro title={article.title} description={article.summary} label={article.category ?? 'Practical guide'}
       crumbs={[{ name: 'Insights', path: '/insights' }, { name: article.title, path }]} />
@@ -94,7 +95,17 @@ export default async function InsightPage({ params }: Props) {
       image: new URL(sharingImage(article), SITE_URL).href,
       author: article.author ? { '@type': 'Person', name: byline.name, url: new URL(byline.profile, SITE_URL).href } : { '@id': SITE_URL + '/#organization' },
       publisher: { '@id': SITE_URL + '/#organization' }, mainEntityOfPage: { '@id': SITE_URL + path + '#webpage' },
+      ...(dataset ? { about: { '@id': SITE_URL + path + '#dataset' } } : {}),
       citation: article.sources.map(([, url]) => url),
     }} />
+    {dataset && <JsonLd data={{
+      '@context': 'https://schema.org', '@type': 'Dataset', '@id': SITE_URL + path + '#dataset',
+      name: article.title, description: article.description, url: SITE_URL + path,
+      identifier: `https://doi.org/${dataset.doi}`, sameAs: `https://doi.org/${dataset.doi}`,
+      creator: { '@id': SITE_URL + '/#organization' }, datePublished: published,
+      license: dataset.license, version: dataset.version, inLanguage: 'en-IN',
+      distribution: { '@type': 'DataDownload', encodingFormat: 'text/csv', contentUrl: new URL(dataset.csv, SITE_URL).href },
+      subjectOf: { '@id': SITE_URL + path + '#article' },
+    }} />}
   </div>;
 }

@@ -36,6 +36,7 @@ export interface Insight {
     limitations: string;
     downloads: { label: string; url: string }[];
     versions: { date: string; changes: string }[];
+    dataset?: { doi: string; version: string; license: string; csv: string };
   };
 }
 
@@ -45,8 +46,8 @@ export const insights: Insight[] = [
     "slug": "shopify-website-development-cost-india",
     "title": "Shopify Website Development Cost in India",
     "seoTitle": "Shopify Website Development Cost in India",
-    "summary": "A Shopify build quote depends on the theme, catalogue, custom features and integrations. Separate the build from subscription and operating costs before comparing proposals.",
-    "description": "A Shopify build quote depends on the theme, catalogue, custom features and integrations. Separate the build from subscription and operating costs before comparing proposals.",
+    "summary": "For a small D2C brand, Cascon’s published India planning ranges start at ₹60,000–₹1,50,000 for a configured theme and ₹1,50,000–₹4,00,000 for a growth build with custom sections. Compare build scope and recurring costs before signing a quote.",
+    "description": "Compare Cascon’s Shopify build ranges in India, from configured themes to custom development. See what changes the quote and how to budget for running costs.",
     "category": "Shopify budgets",
     "relatedServices": [
       "shopify-development"
@@ -55,13 +56,31 @@ export const insights: Insight[] = [
       "slept-club"
     ],
     "relatedArticles": [
-      "how-long-to-build-shopify-store"
+      "how-long-to-build-shopify-store",
+      "indian-shopify-storefronts-50-store-study"
     ],
     "cta": "Discuss your Shopify project.",
     "published": "2026-11-26",
     "updated": "2026-11-26",
     "reader": "For ecommerce teams planning their next investment.",
     "sections": [
+      {
+        "id": "planning-ranges",
+        "title": "What should a small D2C brand budget?",
+        "paragraphs": [
+          "Use the configured-theme range if a standard product page and checkout cover your launch requirements. Move into the growth range when custom sections solve a named buying or merchandising problem. Complex catalogue logic, wholesale pricing or integrations with an ERP need a separately scoped quote.",
+          "These are Cascon’s published Bangalore planning ranges for Shopify development. They exclude GST, Shopify plans, paid themes and app subscriptions. They are estimates for our scoping process. A fixed quote follows discovery."
+        ],
+        "table": {
+          "columns": ["Build scope", "Cascon planning range", "What to ask for"],
+          "rows": [
+            ["Configured theme", "₹60,000–₹1,50,000", "Standard product and collection templates, payment and shipping setup, launch checks."],
+            ["Growth build with custom sections", "₹1,50,000–₹4,00,000", "Agreed custom templates or sections, integrations, reporting and mobile testing."],
+            ["Complex custom development", "From ₹4,00,000", "A specified build for custom Liquid, operational integrations or business pricing."]
+          ]
+        },
+        "link": ["Review Cascon’s Bangalore Shopify planning ranges", "/shopify-agency/bangalore"]
+      },
       {
         "id": "scope",
         "title": "What changes the development cost?",
@@ -74,7 +93,8 @@ export const insights: Insight[] = [
         "id": "ongoing",
         "title": "Separate the build from running costs",
         "paragraphs": [
-          "Ask for one-time design, development and migration fees on separate lines from Shopify subscriptions, premium themes, paid apps and launch support. Include payment processing, fulfilment tools and ongoing maintenance in your operating budget. Check current plan and app terms for your country before signing."
+          "Ask for one-time design, development and migration fees separately from Shopify subscriptions, premium themes, paid apps and launch support. Include payment processing, fulfilment tools and ongoing maintenance in your operating budget.",
+          "Compare the first year by adding the one-time build and launch items to twelve months of recurring charges, then adding expected usage-based fees under the same order-volume assumption for every quote. Watch for annual billing, app usage tiers and renewal terms. For a 2027 launch, verify Shopify India pricing and the fees for your selected payment provider before committing."
         ],
         "table": {
           "columns": [
@@ -102,7 +122,7 @@ export const insights: Insight[] = [
         "title": "Compare a freelancer and an agency on the same brief",
         "paragraphs": [
           "A freelancer can suit a narrow build when your team owns content, integrations and launch decisions. A team covering design and development can suit a brief with several dependencies. Ask both who reviews scope changes, who tests payments and what is handed over after launch.",
-          "For WearSlept, Cascon coordinated custom storefront work, product presentation and launch in under seven days. Use the case to understand what a focused launch can cover. Ask for a quote against your own catalogue and integrations."
+          "For WearSlept, Cascon coordinated custom storefront work, product presentation and launch in under seven days. Use the case to understand what a focused launch can cover. Ask for a comparable storefront example and a quote against your own catalogue and integrations."
         ],
         "link": ["Review Shopify development scope and deliverables", "/services/shopify-development"],
         "checks": [
@@ -117,6 +137,10 @@ export const insights: Insight[] = [
           [
             "Ask what the quote includes",
             "Request exclusions, ownership, recurring costs and acceptance criteria."
+          ],
+          [
+            "Check who owns the store",
+            "Confirm Shopify admin access, theme ownership, source files, paid app accounts, handover documentation and the boundary between defect support and new work."
           ]
         ]
       }

@@ -5,6 +5,7 @@ export const benchmarkSlug = 'indian-shopify-storefronts-50-store-study';
 export const benchmarkInsight: Insight = {
   slug: benchmarkSlug,
   title: 'Indian Shopify Storefronts: A 50-Store Observational Study',
+  seoTitle: 'Indian Shopify Storefront Study (50 Stores)',
   summary: 'A mobile browser snapshot of 50 storefronts from an India-filtered directory, with recorded product-route responses and the limits of what they show.',
   description: 'Explore the sample, product-route responses and Shopify evidence from a one-day mobile browser study of 50 storefronts.',
   category: 'Storefront research',
@@ -33,6 +34,7 @@ export const benchmarkInsight: Insight = {
   sources: [
     ['ShopScan India Shopify directory, accessed 26 November 2026', 'https://www.shopscan.app/shopify-stores/in/india'],
     ['Global Beauty Secrets product page', 'https://discovergbs.com/products/greek-yogurt-and-lavender-body-moisturiser'],
+    ['Version 0.4 dataset and report on Zenodo', 'https://doi.org/10.5281/zenodo.24564516'],
   ],
   research: {
     methodology: 'We reconciled saved captures from 26 November 2026. The browser was headless Playwright Chromium 119 with a 390 × 844 CSS-pixel mobile viewport and an Android Chrome 131 user-agent override. Each storefront used a fresh anonymous session.',
@@ -45,7 +47,14 @@ export const benchmarkInsight: Insight = {
       { label: 'Download the research report (PDF)', url: '/research/indian-shopify-storefronts/indian-shopify-storefronts-report.pdf' },
       { label: 'Download the 50-store observations (CSV)', url: '/research/indian-shopify-storefronts/indian-shopify-storefronts-observations.csv' },
       { label: 'Download the data dictionary', url: '/research/indian-shopify-storefronts/indian-shopify-storefronts-data-dictionary.md' },
+      { label: 'Download the research methodology', url: '/research/indian-shopify-storefronts/indian-shopify-storefronts-methodology.md' },
     ],
     versions: [{ date: '2026-11-26', changes: 'Version 0.4. Corrects the Global Beauty Secrets product URL and reports the results as an observational study.' }],
+    dataset: {
+      doi: '10.5281/zenodo.24564516',
+      version: '0.4',
+      license: 'https://creativecommons.org/licenses/by/4.0/',
+      csv: '/research/indian-shopify-storefronts/indian-shopify-storefronts-observations.csv',
+    },
   },
 };
