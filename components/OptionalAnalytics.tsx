@@ -13,10 +13,11 @@ const PREFERENCE = 'cascon:optional-analytics';
 const PRODUCTION_HOST = 'www.cascondigital.com';
 
 type Props = Record<string, string>;
+type Clarity = ((command: string, status: Record<string, string>) => void) & { q?: IArguments[] };
 type TrackingWindow = Window & {
   dataLayer?: IArguments[];
   gtag?: (...args: unknown[]) => void;
-  clarity?: (command: string, status: Record<string, string>) => void;
+  clarity?: Clarity;
   casconAnalyticsReady?: boolean;
 };
 
@@ -50,6 +51,11 @@ export default function OptionalAnalytics() {
       });
       tracking.gtag('js', new Date());
       tracking.gtag('config', GA_ID, { send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false });
+      // Clarity's tag expects its command queue to be present before loading.
+      // eslint-disable-next-line prefer-rest-params
+      const clarity: Clarity = function () { (clarity.q ??= []).push(arguments); };
+      tracking.clarity ??= clarity;
+      tracking.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' });
       tracking.casconAnalyticsReady = true;
     }
 
@@ -134,8 +140,7 @@ export default function OptionalAnalytics() {
     </button>
     {allowed && ready && <>
       <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
-      <Script src={`https://www.clarity.ms/tag/${CLARITY_ID}`} strategy="afterInteractive"
-        onReady={() => (window as TrackingWindow).clarity?.('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' })} />
+      <Script src={`https://www.clarity.ms/tag/${CLARITY_ID}`} strategy="afterInteractive" />
     </>}
   </>;
 }
