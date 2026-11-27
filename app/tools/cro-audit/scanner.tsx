@@ -200,7 +200,9 @@ export default function Scanner() {
           <dialog ref={scopeDialog} className={styles.scopeDialog} aria-labelledby="cro-scope-title">
             <h2 id="cro-scope-title">What this scan covers</h2>
             <p>This automated scan provides a first look at a few public store pages. It checks whether shoppers can find essentials such as product details, prices, delivery terms and returns. The report points to the evidence it could verify.</p>
-            <p>A CRO expert can try the full shopping journey, review how customers behave and recommend what to change or test first.</p>
+            <p className={styles.scopeWarning}>
+              <strong>Automated scans can make mistakes. Avoid relying on this report alone. Ask a CRO expert to review the findings before making changes.</strong>
+            </p>
             <form method="dialog">
               <button className={styles.secondary} type="submit">Close</button>
             </form>

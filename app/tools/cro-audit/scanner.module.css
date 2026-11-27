@@ -122,3 +122,5 @@
 .scopeDialog h2{font-size:1.5rem;font-weight:400;letter-spacing:-.025em}
 .scopeDialog p{margin-top:12px;font-size:.92rem;line-height:1.5;color:var(--color-text-secondary)}
 .scopeDialog form{margin-top:18px}
+.scopeDialog .scopeWarning{color:var(--color-text)}
+.scopeWarning strong{font-weight:700}
