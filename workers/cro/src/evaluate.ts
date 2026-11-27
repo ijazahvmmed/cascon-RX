@@ -48,7 +48,8 @@ const rules: Record<string, Rule> = {
   'collection-products': ['collection', p => observed(p.candidates.some(c => c.kind === 'product'))],
   'collection-sort': ['collection', p => p.candidates.filter(c => c.kind === 'product').length >= 8 ? observed(p.sort) : na],
 
-  'product-heading': ['product', p => p.headings ? pass : p.main ? check(false, 'The verified product HTML has a main landmark and no text-bearing H1.', 'Moderate') : unknown],
+  // A storefront can render its name in a theme-specific element or after hydration.
+  'product-heading': ['product', p => p.itemSignals?.title ? pass : unknown],
   'product-image': ['product', p => observed(p.images)],
   'product-image-alt': ['product', p => p.productImage ? check(p.productImage.alt, 'The identified primary product image has empty or missing alt text.', 'Moderate') : unknown],
   'product-action': ['product', p => checkLabels(p.labels.purchase)],

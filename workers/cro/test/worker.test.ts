@@ -164,3 +164,13 @@ test('gives the earned points and possible final score for every combination of 
     }
   }
 });
+
+test('a product page without a detected title does not generate a missing-title recommendation', () => {
+  const home = evidence();
+  const product = evidence({url:new URL('/products/wooden-mushroom-white', at), headings:0, main:true});
+  const outcomes: {rule:string;state:string}[][] = [];
+  const report = evaluate(home, {homepage:home, product}, [], time,
+    result => outcomes.push(result as {rule:string;state:string}[]));
+  assert.equal(outcomes[0].find(outcome => outcome.rule === 'product-heading')?.state, 'unknown');
+  assert.ok(!report.recommendations.some(finding => finding.id === 'product-heading'));
+});

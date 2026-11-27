@@ -3,6 +3,7 @@ import type { Sample, ShoppingCheck } from '../../../lib/cro/model';
 import type { DocumentEvidence } from './extract';
 
 export interface ItemSignals {
+  title?: boolean;
   description: boolean;
   excerpt?: string;
   placeholder: boolean;
@@ -74,6 +75,12 @@ export function readItemSignals(rewriter: HTMLRewriter, onEnd: (el: Element, fin
       },
     });
   }
+  const markTitle = (value: string) => {
+    if (/[\p{L}\p{N}]/u.test(value)) signals.title = true;
+  };
+  inspect('h1, [role="heading"][aria-level="1"]', markTitle);
+  inspect('.product__title, .product-single__title, .product_title, [data-product-title], [data-testid="product-title"]',
+    markTitle, { outsideProduct: true });
   const describe = (value: string) => {
     if (/^(?:coming soon|description (?:goes here|coming soon)|lorem ipsum\b.*|tbd)[.!]?$/i.test(value)) signals.placeholder = true;
     else if (value.length >= 24 && /\p{L}/u.test(value)) {

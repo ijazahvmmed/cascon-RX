@@ -266,7 +266,10 @@ test('custom server-rendered product routes require item-specific visible eviden
   try {
     const observation = await inspect(item);
     assert.equal(observation.verified,true,JSON.stringify(observation));
-    const related = await inspect('<aside data-testid="related-products">' + item + '</aside>');
+    const customTitle = await inspect('<h2 class="product__title">Linen bag</h2>' + item);
+    assert.equal(customTitle.signals.title, true);
+    const related = await inspect('<aside data-testid="related-products"><h2 class="product__title">Another bag</h2>' + item + '</aside>');
+    assert.equal(related.signals.title, undefined);
     assert.equal(related.verified,false);
     assert.equal(related.signals.price,false);
     assert.equal(related.signals.buy,false);

@@ -14,7 +14,7 @@ interface Env {
   ALLOWED_ORIGINS: string;
   SCAN_BUDGET: DurableObjectNamespace<ScanBudget>;
 }
-const reportNamespace = 'cro-7-';
+const reportNamespace = 'cro-8-';
 const maximumInput = 4600;
 const errors: Record<ScanError, number> = {
   verification: 403, invalid: 400, denied: 422, 'store-limited': 429, blocked: 422, unverified: 422, unsampled: 422,
