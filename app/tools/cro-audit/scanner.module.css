@@ -113,3 +113,14 @@
 .captureStatus{max-width:58ch;color:var(--color-text-secondary)}
 .speedLink{display:inline-block;margin-top:9px;font-size:.85rem;text-decoration:underline;text-underline-offset:3px}
 .reportNote{max-width:68ch;margin-top:16px;font-size:.88rem;line-height:1.5;color:var(--color-text-secondary)}
+
+.scopeNotice{margin-top:20px;max-width:610px;border:1px solid #e5ddc8;border-left:3px solid #9a732e;background:#fcf9f1;padding:14px 16px}
+.scopeNotice strong{font-weight:500;color:var(--color-text)}
+.scopeNotice p{margin-top:4px;font-size:.9rem;line-height:1.45;color:var(--color-text-secondary)}
+.scopeNotice button{margin-top:8px}
+.scopeNotice+.scopeDialog+.form{margin-top:24px}
+.scopeDialog{width:min(480px,calc(100% - 32px));max-height:calc(100% - 32px);margin:auto;padding:clamp(20px,5vw,32px);border:1px solid var(--color-border);border-radius:18px;background:#fff;color:var(--color-text)}
+.scopeDialog::backdrop{background:rgb(15 15 15 / 45%)}
+.scopeDialog h2{font-size:1.5rem;font-weight:400;letter-spacing:-.025em}
+.scopeDialog p{margin-top:12px;font-size:.92rem;line-height:1.5;color:var(--color-text-secondary)}
+.scopeDialog form{margin-top:18px}

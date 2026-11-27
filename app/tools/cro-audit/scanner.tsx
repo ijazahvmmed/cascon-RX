@@ -57,6 +57,7 @@ export default function Scanner() {
   const active = useRef<AbortController | null>(null);
   const scoreHeading = useRef<HTMLHeadingElement>(null);
   const errorHeading = useRef<HTMLHeadingElement>(null);
+  const scopeDialog = useRef<HTMLDialogElement>(null);
   const engagement = useRef(new Set<string>());
   useEffect(() => () => active.current?.abort(), []);
   useEffect(() => {
@@ -194,6 +195,20 @@ export default function Scanner() {
           <p className={styles.kicker}>Cascon Digital <span>/</span> Store tools</p>
           <h1 id="cro-title">Free online store check</h1>
           <p className={styles.intro}>See what shoppers can find before they buy, from the item price to delivery and returns.</p>
+          <aside className={styles.scopeNotice} aria-label="Important note about the scan">
+            <strong>Automated first look</strong>
+            <p>This scan checks a few public store pages. A full CRO audit needs an expert review.</p>
+            <button className={styles.textAction} type="button" aria-haspopup="dialog"
+              onClick={() => scopeDialog.current?.showModal()}>What this scan covers</button>
+          </aside>
+          <dialog ref={scopeDialog} className={styles.scopeDialog} aria-labelledby="cro-scope-title">
+            <h2 id="cro-scope-title">What this scan covers</h2>
+            <p>It checks whether shoppers can find essentials such as product details, prices, delivery terms and returns. The report points to the evidence it could verify.</p>
+            <p>A CRO expert can try the full shopping journey, review how customers behave and recommend what to change or test first.</p>
+            <form method="dialog">
+              <button className={styles.secondary} type="submit">Close</button>
+            </form>
+          </dialog>
           <form onSubmit={submit} className={styles.form} data-clarity-mask="true">
             <label htmlFor="cro-store">Store address</label>
             <div className={styles.inputRow}>
