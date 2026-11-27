@@ -100,7 +100,20 @@ export default function Scanner() {
         const code = payload?.error as ScanError;
         const error = Object.hasOwn(errors, code) ? errors[code] :
           request.status === 429 ? errors.limited : errors.busy;
-        throw new Error(error);
+        if (controller.signal.aborted) return;
+        const seconds = payload?.retryAfter;
+        if (code === 'limited' && Number.isInteger(seconds) && seconds > 0 && seconds <= 86400) {
+          const reset = new Date(Date.now() + seconds * 1000).toLocaleString(undefined, {
+            month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit',
+          });
+          const limit = payload.scope === 'visitor' ? 'Your network reached its ten-minute scan limit.' :
+            payload.scope === 'merchant' ? 'This store reached its daily scan limit.' : 'The scanner reached its daily capacity.';
+          setMessage(limit + ' You can scan again at ' + reset + ' (your local time).');
+        } else {
+          setMessage(error);
+        }
+        setState('error');
+        return;
       }
       if (controller.signal.aborted) return;
       const result = payload as ScanReport;

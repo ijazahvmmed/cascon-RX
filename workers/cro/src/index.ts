@@ -5,6 +5,7 @@ import { merchantKey, Rejection, storeEntry } from './target';
 
 export { ScanBudget };
 interface Env {
+  LOCAL_PREVIEW?: string;
   ALLOWED_ORIGINS: string;
   SCAN_BUDGET: DurableObjectNamespace<ScanBudget>;
 }
@@ -83,11 +84,17 @@ export default {
       const [visitor, merchant] = await Promise.all([
         hash(new Date().toISOString().slice(0,10) + '|' + ip), hash(merchantKey(target)),
       ]);
-      const limiter = env.SCAN_BUDGET.get(env.SCAN_BUDGET.idFromName('public-scan-v1'));
+      const preview = env.LOCAL_PREVIEW === 'true' && ['localhost', '127.0.0.1'].includes(url.hostname);
+      const limiter = env.SCAN_BUDGET.get(env.SCAN_BUDGET.idFromName(preview ? 'local-preview-v1' : 'public-scan-v1'));
       const allowance = await limiter.fetch('https://budget.internal/reserve', {
-        method: 'POST', body: JSON.stringify({ visitor, merchant }), signal: deadline,
+        method: 'POST', body: JSON.stringify({ visitor, merchant, preview }), signal: deadline,
       });
-      if (allowance.status === 429) return reject('limited');
+      if (allowance.status === 429) {
+        const retryAfter = allowance.headers.get('retry-after');
+        return new Response(allowance.body, {
+          status: 429, headers: retryAfter ? { ...defaults, 'retry-after': retryAfter } : defaults,
+        });
+      }
       if (!allowance.ok) return reject('busy');
       const report = await scan(target, deadline);
       return Response.json(report, { headers: defaults });

@@ -108,3 +108,37 @@ test('two submissions to the Worker read the same storefront independently', asy
     assert.deepEqual(await second.json(), {error:'denied'});
   } finally { await mf.dispose(); }
 });
+
+
+test('only the local launch setting and loopback host select preview quotas', async () => {
+  const mf = await fixture(`
+    import scanner from './src/index';
+    export default { async fetch(request) {
+      const origin = 'https://tool.example.com';
+      const enabled = request.headers.get('x-test-config') === 'preview';
+      const budget = {
+        idFromName: name => name,
+        get: name => ({ fetch: async (_, init) => Response.json({
+          error:'limited', scope:'visitor', retryAfter:60, name, preview:JSON.parse(init.body).preview
+        }, {status:429, headers:{'retry-after':'60'}}) }),
+      };
+      return scanner.fetch(request,{LOCAL_PREVIEW: enabled ? 'true' : undefined,
+        ALLOWED_ORIGINS:origin, SCAN_BUDGET:budget});
+    }};
+  `);
+  try {
+    for (const [host, enabled, preview] of [
+      ['localhost', true, true], ['localhost', false, false], ['tool.example.com', true, false],
+    ] as const) {
+      const response = await mf.dispatchFetch('https://' + host + '/scan', {
+        method:'POST', headers:{origin:'https://tool.example.com', 'content-type':'application/json',
+          'cf-connecting-ip':'192.0.2.1', 'x-test-config':enabled ? 'preview' : 'public'},
+        body:JSON.stringify({url:'https://shop.example.com', preview:true}),
+      });
+      assert.equal(response.status,429);
+      assert.equal(response.headers.get('retry-after'),'60');
+      assert.deepEqual(await response.json(), { error:'limited', scope:'visitor', retryAfter:60,
+        name:preview ? 'local-preview-v1' : 'public-scan-v1', preview });
+    }
+  } finally { await mf.dispose(); }
+});

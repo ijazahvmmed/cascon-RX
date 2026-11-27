@@ -3,7 +3,7 @@ import { DurableObject } from 'cloudflare:workers';
 export class ScanBudget extends DurableObject {
   async fetch(request: Request) {
     if (request.method !== 'POST') return new Response(null, { status: 405 });
-    const { visitor, merchant } = await request.json<{visitor: string; merchant: string}>();
+    const { visitor, merchant, preview } = await request.json<{visitor: string; merchant: string; preview?: boolean}>();
     if (![visitor, merchant].every(value => /^[a-f0-9]{64}$/.test(value))) {
       return new Response(null, { status: 400 });
     }
@@ -14,25 +14,26 @@ export class ScanBudget extends DurableObject {
     const dailyStart = Math.floor(now / period) * period;
     const shortWindow = 10 * minute;
     const windowStart = Math.floor(now / shortWindow) * shortWindow;
-    const limits: [key: string, expiry: number, limit: number][] = [
-      ['ip:' + windowStart + ':' + visitor, windowStart + shortWindow, 6],
-      ['day:' + dailyStart, dailyStart + period, 3000],
-      ['scan:' + dailyStart, dailyStart + period, 1200],
-      ['site:' + dailyStart + ':' + merchant, dailyStart + period, 20],
+    const limits: [key: string, expiry: number, limit: number, scope: string][] = [
+      ['day:' + dailyStart, dailyStart + period, 3000, 'daily'],
+      ['scan:' + dailyStart, dailyStart + period, 1200, 'daily'],
+      ['site:' + dailyStart + ':' + merchant, dailyStart + period, 20, 'merchant'],
+      ['ip:' + windowStart + ':' + visitor, windowStart + shortWindow, preview === true ? 30 : 6, 'visitor'],
     ];
-    const allowed = this.ctx.storage.transactionSync(() => {
+    const blocked = this.ctx.storage.transactionSync(() => {
       sql.exec('CREATE TABLE IF NOT EXISTS counters (id TEXT PRIMARY KEY, n INTEGER NOT NULL, expiry INTEGER NOT NULL)');
       sql.exec('CREATE INDEX IF NOT EXISTS counters_expiry ON counters (expiry)');
       sql.exec('DELETE FROM counters WHERE expiry <= ?', now);
-      for (const [key,,limit] of limits) {
+      for (const [key,expiry,limit,scope] of limits) {
         const count = sql.exec<{ n: number }>('SELECT n FROM counters WHERE id = ?', key).toArray()[0]?.n ?? 0;
-        if (count >= limit) return false;
+        if (count >= limit) return { error: 'limited', scope, retryAfter: Math.ceil((expiry - now) / 1000) };
       }
       for (const [key,expiry] of limits) {
         sql.exec('INSERT INTO counters VALUES (?,1,?) ON CONFLICT(id) DO UPDATE SET n = n+1', key, expiry);
       }
-      return true;
+      return null;
     });
-    return new Response(null, { status: allowed ? 204 : 429 });
+    if (blocked) return Response.json(blocked, { status: 429, headers: { 'retry-after': String(blocked.retryAfter) } });
+    return new Response(null, { status: 204 });
   }
 }

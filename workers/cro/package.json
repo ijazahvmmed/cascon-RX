@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev --local --port 8787 --var ALLOWED_ORIGINS:http://localhost:3000",
+    "dev": "wrangler dev --local --ip 127.0.0.1 --port 8787 --var LOCAL_PREVIEW:true --var ALLOWED_ORIGINS:http://localhost:3000",
     "check": "tsc --noEmit && wrangler deploy --dry-run --outdir .wrangler/dry-run",
     "test": "node --import tsx --test test/*.test.ts"
   },

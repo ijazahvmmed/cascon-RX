@@ -4,7 +4,7 @@ Branch preview only. The existing website and the Cloudflare account have not be
 
 ## Local setup
 
-Install root and Worker dependencies with `npm ci` and `npm --prefix workers/cro ci`. Run the Worker with `npm --prefix workers/cro run dev`. In another terminal, run `npm run dev` and open `http://localhost:3000/tools/cro-audit`. The development default is the Worker at port 8787. Match the origin exactly when using a different port or hostname.
+Install root and Worker dependencies with `npm ci` and `npm --prefix workers/cro ci`. Run the Worker with `npm --prefix workers/cro run dev`. In another terminal, run `npm run dev` and open `http://localhost:3000/tools/cro-audit`. The development default is the Worker at port 8787. The loopback preview has a separate quota with 30 requests per ten minutes. Run automated tests with the isolated Worker fixtures so they do not consume that allowance. A quota response identifies its scope and next reset. Match the origin exactly when using a different port or hostname.
 
 Run the Worker tests with `npm --prefix workers/cro test`. Its `check` command type-checks and bundles with Wrangler dry-run. The Next.js build includes both public tool pages in its existing sitemap gate.
 

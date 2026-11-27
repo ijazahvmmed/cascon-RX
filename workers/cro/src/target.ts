@@ -108,7 +108,7 @@ export function fetcher(signal: AbortSignal, transport: Transport = fetch, resol
     let current = entry;
     for (let hop = 0; hop <= 2; hop++) {
       if (restricted) throw new Rejection('blocked');
-      if (++outbound > 8) throw new Rejection('limited');
+      if (++outbound > 8) throw new Rejection('unavailable');
       try { await resolve(current.hostname, signal, transport); }
       catch (error) { throw error instanceof Rejection ? error : new Rejection('unavailable'); }
       await delay();
