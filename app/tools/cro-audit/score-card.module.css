@@ -23,6 +23,9 @@
   font-size: .76rem; font-weight: 400; color: #575757;
 }
 .views button[aria-pressed="true"] { background: #eaeaea; color: #101010; }
+.card [data-tone="passed"] { --outcome-ink:#287457; --outcome-glow:#81caa635; }
+.card [data-tone="issues"] { --outcome-ink:#a84845; --outcome-glow:#df8e8b38; }
+.card [data-tone="open"] { --outcome-ink:#8c631d; --outcome-glow:#e7bc603b; }
 .card button:focus-visible { outline: 2px solid #333; outline-offset: 2px; }
 .number { display: flex; align-items: baseline; gap: 6px; font-size: clamp(42px, 4.5vw, 60px); line-height: 1.08; font-weight: 300; letter-spacing: -.055em; }
 .unit { color: #636363; font-size: .36em; letter-spacing: -.025em; white-space: pre; }
@@ -43,20 +46,20 @@
   transition: opacity .16s;
 }
 .bar[data-dim="true"] .column { opacity: .35; }
-.fill { width: 100%; display: flex; flex-direction: column-reverse; }
+.fill { width: 100%; display: flex; flex-direction: column-reverse; background: linear-gradient(transparent, var(--outcome-glow)); filter: drop-shadow(0 0 5px var(--outcome-glow)); }
 .dotRow {
   display: block; flex: 1;
-  background: radial-gradient(circle at 3px 50%, #262626 2px, transparent 2.3px) left bottom / 8px 100% repeat-x;
+  background: radial-gradient(circle at 3px 50%, var(--outcome-ink) 2px, transparent 2.3px) left bottom / 8px 100% repeat-x;
   animation: pop .36s cubic-bezier(.22, .85, .36, 1) var(--delay) backwards;
 }
 .bar[data-tone="issues"] .dotRow {
-  background-image: linear-gradient(#7b7b7b, #7b7b7b);
+  background-image: linear-gradient(var(--outcome-ink), var(--outcome-ink));
   background-size: 4px 4px; background-repeat: repeat-x;
   mask: repeating-linear-gradient(to right, transparent 0 1px, #000 1px 5px, transparent 5px 8px) center / 100% 4px no-repeat;
   background-position: center;
 }
 .bar[data-tone="open"] .dotRow {
-  background-image: radial-gradient(circle at 3px 50%, #f9f9f9 1.15px, #7e7e7e 1.4px 2.1px, transparent 2.35px);
+  background-image: radial-gradient(circle at 3px 50%, #f9f9f9 1.15px, var(--outcome-ink) 1.4px 2.1px, transparent 2.35px);
 }
 .tip {
   position: absolute; left: 50%; top: 2px; transform: translateX(-50%);
@@ -64,10 +67,10 @@
   font-size: .7rem; white-space: nowrap; pointer-events: none;
 }
 .barLabel { gap: 6px; font-size: .73rem; font-weight: 400; color: #525252; }
-.keyDot { flex: 0 0 auto; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #222; }
-.keyDot[data-tone="issues"], [data-tone="issues"] .keyDot { border-radius: 1px; background: #777; }
-.keyDot[data-tone="open"], [data-tone="open"] .keyDot { border: 1px solid #777; background: transparent; }
-.count { font-size: 1.18rem; line-height: 1.3; font-weight: 300; }
+.keyDot { flex: 0 0 auto; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--outcome-ink, #222); }
+.keyDot[data-tone="issues"], [data-tone="issues"] .keyDot { border-radius: 1px; background: var(--outcome-ink); }
+.keyDot[data-tone="open"], [data-tone="open"] .keyDot { border: 1px solid var(--outcome-ink); background: transparent; }
+.count { color: var(--outcome-ink); font-size: 1.18rem; line-height: 1.3; font-weight: 300; }
 .areas { margin-top: 18px; }
 .areaList { padding: 0; margin: 0; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; }
 .areaList button {
