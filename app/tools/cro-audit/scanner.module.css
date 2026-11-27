@@ -112,3 +112,4 @@
 .photos>.photoGrid figure[data-viewport="390"]{max-width:200px}
 .captureStatus{max-width:58ch;color:var(--color-text-secondary)}
 .speedLink{display:inline-block;margin-top:9px;font-size:.85rem;text-decoration:underline;text-underline-offset:3px}
+.reportNote{max-width:68ch;margin-top:16px;font-size:.88rem;line-height:1.5;color:var(--color-text-secondary)}

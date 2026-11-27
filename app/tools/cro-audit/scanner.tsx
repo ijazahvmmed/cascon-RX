@@ -234,6 +234,11 @@ export default function Scanner() {
           </div>
         </header>
 
+        <p className={styles.reportNote}>
+          This automated scan provides a first look at a few public store pages. A CRO expert can go further by trying key shopping journeys,
+          reviewing customer behavior, and identifying what to test first.
+        </p>
+
         <section className={styles.photos} aria-label="Homepage screenshots">
           <h3>Homepage screenshots</h3>
           {screenshots.length ? <>
