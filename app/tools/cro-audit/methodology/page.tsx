@@ -14,7 +14,7 @@ export const metadata = pageMetadata(path, title, description);
 export default function MethodologyPage() {
   return <div className={styles.method}>
     <article className={styles.wrap}>
-      <Link className={styles.back} href="/tools/cro-audit">← CRO scanner</Link>
+      <Link className={styles.back} href="/tools/cro-audit">CRO scanner</Link>
       <h1>How the CRO scanner works</h1>
       <p className={styles.intro}>A rule-based review of public storefront HTML, with a clear boundary around what the evidence can establish.</p>
       <section>
@@ -48,7 +48,7 @@ export default function MethodologyPage() {
         <h2>Privacy and availability</h2>
         <p>Reports remain in the current browser tab. A short-lived edge cache can reuse report summaries. Site analytics follow your consent settings and omit submitted addresses. Choosing a consultation passes your store address and a short summary to Cal.com. The PDF saves the same free summary shown on screen.</p>
         <p>Scan capacity is limited. Stores that require scripts or block automated access may return partial evidence or be unavailable. The scanner makes no claim about how often it works across all stores.</p>
-        <Link className={styles.back} href="/tools/cro-audit">Run a free scan →</Link>
+        <Link className={styles.back} href="/tools/cro-audit">Run a free scan</Link>
       </section>
     </article>
     <JsonLd data={webPageSchema(path, title, description)} />

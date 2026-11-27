@@ -44,6 +44,8 @@ The paced local Wrangler run covered 16 distinct storefronts. 13 returned a repo
 | International Shopify | https://drinkolipop.com | partial | blocked | blocked |
 | Additional storefront | https://www.thebattery.com | read | not found | not found |
 
+The table records the original validation run. The preview now distinguishes merchant rate limits, explicit denials and pages skipped after a denial. A passive detection script on a readable storefront does not itself indicate a challenge. Cached partial reports can reduce repeat requests to throttled stores.
+
 The same rules and thresholds ran for every cohort. Early validation found two problems. Large responses could terminate extraction, and simultaneous storefront reads could trigger upstream rates on secondary pages. The current implementation uses bounded prefixes and serialized requests. The local run still encountered rate restrictions on Shopify deep pages, so only the available homepage evidence was used for those reports.
 
 Browser tests exercised the scanner at desktop and mobile widths, invalid URL feedback, real report disclosure, PDF file download and existing booking-link context. Confirmed bookings were not created during QA.

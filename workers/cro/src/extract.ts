@@ -273,7 +273,7 @@ export async function extract(document: Response, url: URL): Promise<DocumentEvi
     .on('[data-campaign] time[datetime], time[data-campaign][datetime]', {
       element(el) { if (proof.campaignDate.length < 20) proof.campaignDate.push((el.getAttribute('datetime') ?? '').slice(0,80)); },
     })
-    .on('script[src*="/cdn-cgi/challenge"], #challenge-form, #shopify-section-main-password, form[action="/password"]', {
+    .on('script[src*="/challenge-platform/"][src*="/orchestrate/"], #challenge-form, #shopify-section-main-password, form[action="/password"]', {
       element() { proof.blocked = true; },
     });
 

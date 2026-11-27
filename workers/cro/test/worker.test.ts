@@ -89,6 +89,8 @@ test('rejects bot gates and unexpected media, and bounds oversized decompressed 
     const read = fetcher(signal,asFetch(async () => response),async () => {});
     await assert.rejects(read(at,at,true),Rejection);
   }
+  const throttled = fetcher(signal, asFetch(async () => new Response(null, { status: 429 })), async () => {});
+  await assert.rejects(throttled(at,at,true), error => (error as Rejection).code === 'store-limited');
   const chunks = new ReadableStream({ start(c) { c.enqueue(new Uint8Array(MAX_HTML_BYTES + 1)); c.close(); } });
   const read = fetcher(signal,asFetch(async () => new Response(chunks, { headers: { 'content-type':'text/html' } })),async () => {});
   const response = await read(at,at,true);

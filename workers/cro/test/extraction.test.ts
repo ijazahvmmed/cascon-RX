@@ -20,6 +20,7 @@ test('Cloudflare HTMLRewriter validates Shopify and WooCommerce fixture journeys
     "if (url.pathname === '/') html = '<body><nav><a href=\"'+collection+'\">Bags</a><a href=\"/contact\">Contact</a><a href=\"/cart\">Cart</a></nav><main><h1>Linen shop</h1><a href=\"'+pdp+'\">Bag</a></main>';",
     "if (url.pathname === pdp) html = '<body class=\"'+(woo?'single-product':'template-product')+'\"><main><h1>Linen bag</h1><img class=\"product__media-image\" src=\"/bag.jpg\" width=\"600\" height=\"400\" alt=\"\"><button name=\"add-to-cart\">Add to cart</button><script type=\"application/ld+json\">'+JSON.stringify({'@type':'Product',image:'/bag.jpg',offers:{price:'30',priceCurrency:'USD'}})+'</script></main>';",
     "if (url.pathname === collection) html = '<body class=\"'+(woo?'tax-product_cat':'template-collection')+'\"><main><h1>Bags</h1><a href=\"'+pdp+'\">Linen bag</a></main>';",
+    "if (url.pathname === '/') html += '<script src=\"/cdn-cgi/challenge-platform/scripts/jsd/api.js\"></script>';",
     "if (!html) throw new Error('Unexpected request');",
     "if (scenario === '/challenge' && url.pathname === pdp) return {url, isPartial: () => false, document:new Response('<html><head><title>Verify you are human</title></head><body>Security check</body></html>',{headers:{'content-type':'text/html'}})};",
     "return {url, isPartial: () => false, document:new Response(common+html+'</body></html>',{headers:{'content-type':'text/html'}})};",
@@ -47,7 +48,7 @@ test('Cloudflare HTMLRewriter validates Shopify and WooCommerce fixture journeys
     const challenge = await mf.dispatchFetch('http://fixture.test/challenge');
     assert.equal(challenge.status, 200);
     const { result, visited } = await challenge.json();
-    assert.deepEqual(result.samples.map(s => s.status), ['read', 'blocked', 'blocked']);
+    assert.deepEqual(result.samples.map(s => s.status), ['read', 'blocked', 'skipped']);
     assert.deepEqual(visited, ['/', '/products/linen-bag']);
   } finally { await mf.dispose(); }
 });

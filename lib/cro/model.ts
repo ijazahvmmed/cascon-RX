@@ -37,7 +37,13 @@ export interface Coverage {
   score: number | null;
 }
 export interface CategoryResult extends Coverage { category: Category }
-export interface Sample { kind: PageKind; path?: string; status: 'read' | 'partial' | 'blocked' | 'unavailable' | 'not found' | 'unverified' }
+export interface Sample { kind: PageKind; path?: string; status: 'read' | 'partial' | 'blocked' | 'unavailable' | 'not found' | 'unverified' | 'rate limited' | 'skipped' | 'outside scope' }
+export const sampleLabels: Record<Sample['status'], string> = {
+  read: 'Sampled', partial: 'HTML prefix sampled', blocked: 'Store declined request',
+  'rate limited': 'Store rate limit', skipped: 'Not requested', 'outside scope': 'Outside scan scope',
+  unavailable: 'Could not read', 'not found': 'Not discovered', unverified: 'Could not verify',
+};
+
 export interface ScanReport {
   version: 1;
   store: string;
@@ -48,4 +54,4 @@ export interface ScanReport {
   samples: Sample[];
   recommendations: Finding[];
 }
-export type ScanError = 'invalid' | 'blocked' | 'unavailable' | 'busy' | 'limited' | 'timeout' | 'unverified';
+export type ScanError = 'invalid' | 'blocked' | 'unavailable' | 'busy' | 'store-limited' | 'denied' | 'limited' | 'timeout' | 'unverified';

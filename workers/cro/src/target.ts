@@ -125,7 +125,9 @@ export function fetcher(signal: AbortSignal, transport: Transport = fetch, resol
         !/^(text\/html|application\/xhtml\+xml)(?:;|$)/i.test(response.headers.get('content-type')?.trim() ?? '') ||
         !response.body) {
         void response.body?.cancel().catch(() => {});
-        throw new Rejection(response.status === 403 || response.status === 429 ? 'blocked' : 'unavailable');
+        if (response.status === 429) throw new Rejection('store-limited');
+        if (restricted) throw new Rejection('denied');
+        throw new Rejection('unavailable');
       }
       let size = 0, partial = false;
       const reader = response.body.getReader();

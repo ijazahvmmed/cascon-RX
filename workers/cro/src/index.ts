@@ -11,7 +11,7 @@ interface Env {
 const maximumInput = 2300;
 const reportCache = 20 * 60;
 const errors: Record<ScanError, number> = {
-  invalid: 400, blocked: 422, unverified: 422,
+  invalid: 400, denied: 422, 'store-limited': 429, blocked: 422, unverified: 422,
   unavailable: 502, timeout: 504, limited: 429, busy: 503,
 };
 const encoder = new TextEncoder();
@@ -84,7 +84,7 @@ export default {
       const [visitor, merchant, bucket] = await Promise.all([
         hash(new Date().toISOString().slice(0,10) + '|' + ip), hash(merchantKey(target)), hash(target.origin),
       ]);
-      const key = new Request(new URL('/cache/cro-v1/' + bucket, url));
+      const key = new Request(new URL('/cache/cro-v2/' + bucket, url));
       const cached = await caches.default.match(key).catch(() => undefined);
       const limiter = env.SCAN_BUDGET.get(env.SCAN_BUDGET.idFromName('public-scan-v1'));
       const allowance = await limiter.fetch('https://budget.internal/reserve', {
@@ -95,7 +95,7 @@ export default {
       if (cached) return new Response(cached.body, { headers: defaults });
       const report = await scan(target, deadline);
       const body = JSON.stringify(report);
-      if (report.samples.every(sample => sample.status !== 'unavailable' && sample.status !== 'blocked')) {
+      if (report.samples.every(sample => sample.status !== 'unavailable')) {
         ctx.waitUntil(caches.default.put(key, new Response(body, {
           headers: { 'content-type': defaults['content-type'], 'cache-control': 'public, max-age=' + reportCache },
         })).catch(() => {}));

@@ -8,7 +8,7 @@ export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signa
   const homeResponse = await read(entry, entry, true);
   const home = await extract(homeResponse.document, homeResponse.url);
   home.complete = !homeResponse.isPartial();
-  if (home.blocked) throw new Rejection('blocked');
+  if (home.blocked) throw new Rejection('denied');
   if (!verifies(home, 'homepage')) throw new Rejection('unverified');
 
   const samples: Sample[] = [{ kind: 'homepage', path: home.url.pathname, status: home.complete ? 'read' : 'partial' }];
@@ -19,10 +19,12 @@ export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signa
       .filter(hit => hit.kind === kind)
       .sort((a,b) => b.quality - a.quality);
     let status: Sample['status'] = 'not found';
+    let attemptedPath: string | undefined;
     for (const hit of hits) {
       const candidate = sampleUrl(hit.path, home.url);
       if (!candidate || tried.has(candidate.pathname)) continue;
       if (attempts-- <= 0 || signal.aborted) break;
+      attemptedPath = candidate.pathname;
       tried.add(candidate.pathname);
       try {
         const response = await read(candidate, home.url);
@@ -35,16 +37,20 @@ export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signa
         }
         status = page.blocked ? 'blocked' : 'unverified';
       } catch (error) {
-        status = error instanceof Rejection && error.code === 'blocked' ? 'blocked' : 'unavailable';
+        const code = error instanceof Rejection ? error.code : 'unavailable';
+        if (code === 'store-limited') status = 'rate limited';
+        else if (code === 'denied') status = 'blocked';
+        else if (code === 'blocked' || code === 'invalid') status = 'outside scope';
+        else status = 'unavailable';
       }
-      if (status === 'blocked') break;
+      if (status === 'blocked' || status === 'rate limited') break;
     }
-    return { kind, status } satisfies Sample;
+    return { kind, status, path: attemptedPath } satisfies Sample;
   }
 
   const product = await sample('product', [home], 1);
-  const collection: Sample = product.status === 'blocked'
-    ? { kind: 'collection', status: 'blocked' }
+  const collection: Sample = product.status === 'blocked' || product.status === 'rate limited'
+    ? { kind: 'collection', status: 'skipped' }
     : await sample('collection', [home], 2);
   samples.push(!pages.product && product.status !== 'blocked' && pages.collection ?
     await sample('product', [pages.collection, home], 2).then(found =>
@@ -52,7 +58,7 @@ export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signa
   collection);
   if (signal.aborted && !pages.product && !pages.collection) {
     // The homepage is still valid evidence when deeper pages time out.
-    for (const sample of samples) if (sample.status !== 'read' && sample.status !== 'partial' && sample.status !== 'blocked') sample.status = 'unavailable';
+    for (const sample of samples) if (sample.status !== 'read' && sample.status !== 'partial' && !['blocked','rate limited','skipped','outside scope'].includes(sample.status)) sample.status = 'unavailable';
   }
   return evaluate(home, pages, samples, new Date().toISOString());
 }

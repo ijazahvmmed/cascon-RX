@@ -1,3 +1,4 @@
+import { sampleLabels } from './model';
 import { PDFDocument, StandardFonts, rgb, type PDFFont } from 'pdf-lib';
 import { categories, type ScanReport } from './model';
 
@@ -70,7 +71,7 @@ export async function summaryPdf(report: ScanReport) {
   y -= 32;
   text('Sample evidence',14,true);
   for (const sample of report.samples) {
-    text(sample.kind + '  /  ' + (sample.status === 'partial' ? 'HTML prefix sampled' : sample.status) + (sample.path ? '  /  ' + sample.path : ''),9,false,muted);
+    text(sample.kind + '  /  ' + sampleLabels[sample.status] + (sample.path ? '  /  ' + sample.path : ''),9,false,muted);
   }
   y -= 11;
   text('Category results',14,true);
