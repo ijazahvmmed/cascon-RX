@@ -76,7 +76,7 @@
     },
     {
       "path": "/services/shopify-cro",
-      "lastModified": "2026-11-26"
+      "lastModified": "2026-11-27"
     },
     {
       "path": "/services/shopify-development",
@@ -101,6 +101,14 @@
     {
       "path": "/shopify-agency/kerala",
       "lastModified": "2026-11-23"
+    },
+    {
+      "path": "/tools/cro-audit",
+      "lastModified": "2026-11-27"
+    },
+    {
+      "path": "/tools/cro-audit/methodology",
+      "lastModified": "2026-11-27"
     },
     {
       "path": "/work",
@@ -224,9 +232,9 @@
       "dateSource": "app/services/[slug]/page.tsx"
     },
     "/services/shopify-cro": {
-      "fingerprint": "6a464cbb8316fd36daba619b1705d1d60726b807dc1b59ad9aa1241af9862eaf",
-      "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T09:21:53.203Z",
+      "fingerprint": "e19036a1e5470838e774600505a6136941a32d3542663886a2ac72074942ae99",
+      "lastModified": "2026-11-27",
+      "sourceModifiedAt": "2026-11-27T18:16:21.237Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "app/services/[slug]/page.tsx"
     },
@@ -355,6 +363,20 @@
       "sourceModifiedAt": "2026-11-26T16:33:59.360Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "app/insights/[slug]/page.tsx"
+    },
+    "/tools/cro-audit/methodology": {
+      "fingerprint": "e4e9727ea25a069f3409613f1780503b4ce364d9e88fdf723626a0b09985df0a",
+      "lastModified": "2026-11-27",
+      "sourceModifiedAt": "2026-11-27T18:26:03.225Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "app/tools/cro-audit/methodology/page.tsx"
+    },
+    "/tools/cro-audit": {
+      "fingerprint": "01f48343bd77f1431906337eea84a785951e4ea59c51e4be37001628428cefb8",
+      "lastModified": "2026-11-27",
+      "sourceModifiedAt": "2026-11-27T18:24:24.037Z",
+      "dateBasis": "modified-working-tree-source",
+      "dateSource": "app/tools/cro-audit/scanner.tsx"
     }
   },
   "excluded": []

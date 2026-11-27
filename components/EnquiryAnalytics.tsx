@@ -18,7 +18,7 @@ export default function EnquiryAnalytics({ enabled = true }: { enabled?: boolean
     } catch { /* Measurement still works without storage. */ }
     const click = (event: MouseEvent) => {
       const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href]') : null;
-      if (!link) return;
+      if (!link || link.hasAttribute('data-cro-booking')) return;
       const path = location.pathname;
       const intent = contactIntent(link.getAttribute('href') || '', CAL_LINK);
       if (!intent && (path.startsWith('/work/') || path.startsWith('/insights/'))) {

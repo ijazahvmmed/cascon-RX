@@ -1,0 +1,15 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "cascon-cro-audit",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-24",
+  "compatibility_flags": ["global_fetch_strictly_public"],
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": { "enabled": false },
+  "vars": { "ALLOWED_ORIGINS": "https://www.cascondigital.com,https://cascondigital.com" },
+  "durable_objects": {
+    "bindings": [{ "name": "SCAN_BUDGET", "class_name": "ScanBudget" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ScanBudget"] }]
+}

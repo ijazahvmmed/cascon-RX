@@ -1,0 +1,21 @@
+{
+  "name": "cascon-cro-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --local --port 8787 --var ALLOWED_ORIGINS:http://localhost:3000",
+    "check": "tsc --noEmit && wrangler deploy --dry-run --outdir .wrangler/dry-run",
+    "test": "node --import tsx --test test/*.test.ts"
+  },
+  "dependencies": {
+    "ipaddr.js": "2.5.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20261127.1",
+    "esbuild": "0.28.2",
+    "miniflare": "5.20261127.0-beta",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "wrangler": "4.169.0"
+  }
+}

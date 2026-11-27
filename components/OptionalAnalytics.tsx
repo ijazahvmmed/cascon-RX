@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import type { PostHog } from 'posthog-js';
 import { sourceType } from '@/lib/analytics';
+import { CRO_ACTIVITY, type CroActivity } from '@/lib/cro/activity';
 
 const GA_ID = 'G-HC2CS0B5GW';
 const CLARITY_ID = 'zjqxftn53a';
@@ -117,8 +118,34 @@ export default function OptionalAnalytics() {
       (window as TrackingWindow).gtag?.('event', 'enquiry_intent', props);
       posthog.current?.capture('enquiry_intent', props, { send_instantly: true });
     }
+    function trackAudit(event: Event) {
+      if (location.pathname !== '/tools/cro-audit') return;
+      const activity = (event as CustomEvent<CroActivity>).detail;
+      let props: Props;
+      switch (activity?.name) {
+        case 'cro_scan_complete':
+          if (!['scored','partial'].includes(activity.coverage) || !/^[1-3]$/.test(activity.sampled)) return;
+          props = { coverage: activity.coverage, sampled_pages: activity.sampled };
+          break;
+        case 'cro_recommendation_engagement':
+          if (!/^[a-z-]{3,45}$/.test(activity.rule)) return;
+          props = { rule: activity.rule };
+          break;
+        case 'enquiry_intent':
+          props = { channel: 'calendar', tool: 'cro-audit', content_path: '/tools/cro-audit' };
+          break;
+        default: return;
+      }
+      props.source_type = landing.current?.source ?? sourceType(document.referrer, location.search);
+      (window as TrackingWindow).gtag?.('event', activity.name, props);
+      posthog.current?.capture(activity.name, props, { send_instantly: true });
+    }
     window.addEventListener('cascon:enquiry-intent', trackIntent);
-    return () => window.removeEventListener('cascon:enquiry-intent', trackIntent);
+    window.addEventListener(CRO_ACTIVITY, trackAudit);
+    return () => {
+      window.removeEventListener('cascon:enquiry-intent', trackIntent);
+      window.removeEventListener(CRO_ACTIVITY, trackAudit);
+    };
   }, [allowed, ready]);
 
   function changePreference() {

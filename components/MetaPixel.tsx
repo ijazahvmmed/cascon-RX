@@ -24,7 +24,7 @@ export default function MetaPixel({ isProduction = true }: { isProduction?: bool
     if (!ready) return;
     const click = (event: MouseEvent) => {
       const target = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[href]') : null;
-      if (!target) return;
+      if (!target || target.hasAttribute('data-cro-booking')) return;
       const href = target.getAttribute('href') || '';
       if (href.startsWith('https://wa.me/')) {
         trackEvent('Contact', { contact_method: 'whatsapp' });
