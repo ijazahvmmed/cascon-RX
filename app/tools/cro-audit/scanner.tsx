@@ -109,7 +109,7 @@ export default function Scanner() {
           const reset = new Date(Date.now() + seconds * 1000).toLocaleString(undefined, {
             month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit',
           });
-          const limit = code === 'store-limited' ? 'This store paused automated visits.' : payload.scope === 'visitor' ? 'You have used your three free audits for today.' : payload.scope === 'network' ? 'Your network reached its ten-minute scan limit.' :
+          const limit = code === 'store-limited' ? 'This store paused automated visits.' : payload.scope === 'visitor' ? (payload.limit === 30 ? 'You have used today’s 30 staging audits.' : 'You have used your three free audits for today.') : payload.scope === 'network' ? 'Your network reached its ten-minute scan limit.' :
             payload.scope === 'merchant' ? 'This store reached its daily scan limit.' : 'The scanner reached its daily capacity.';
           setMessage(code === 'store-limited'
             ? 'This store paused the scan. You can retry after ' + reset + ' (your local time). This attempt did not use one of your free audits.'

@@ -37,7 +37,8 @@
       "preview_urls": false,
       "vars": {
         "ALLOWED_ORIGINS": "https://staging.cascondigital.com,http://localhost:3012",
-        "FREE_ENRICHMENT": "verified-free"
+        "FREE_ENRICHMENT": "verified-free",
+        "STAGING_TEST_ORIGIN": "http://localhost:3012"
       },
       "kv_namespaces": [
         {

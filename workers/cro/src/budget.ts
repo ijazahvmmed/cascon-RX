@@ -126,7 +126,9 @@ export class ScanBudget extends DurableObject<Resources> {
       return new Response(null, {status:204});
     }
     if (path !== '/reserve') return new Response(null, {status:404});
-    const { visitor, merchant, network, preview } = await request.json<{visitor: string; network:string; merchant: string; preview?: boolean}>();
+    const { visitor, merchant, network, preview, stagingTest } = await request.json<{
+      visitor:string; network:string; merchant:string; preview?:boolean; stagingTest?:boolean;
+    }>();
     if (![visitor, merchant, network].every(value => /^[a-f0-9]{64}$/.test(value))) {
       return new Response(null, { status: 400 });
     }
@@ -141,7 +143,7 @@ export class ScanBudget extends DurableObject<Resources> {
       ['day:' + dailyStart, dailyStart + period, 3000, 'daily'],
       ['scan:' + dailyStart, dailyStart + period, 600, 'daily'],
       ['site:' + dailyStart + ':' + merchant, dailyStart + period, 20, 'merchant'],
-      ...(!preview ? [['visitor:' + dailyStart + ':' + visitor,dailyStart + period,3,'visitor'] as [string,number,number,string]] : []),
+      ...(!preview ? [['visitor:' + dailyStart + ':' + visitor,dailyStart + period,stagingTest === true ? 30 : 3,'visitor'] as [string,number,number,string]] : []),
       ['ip:' + windowStart + ':' + network, windowStart + shortWindow, preview === true ? 30 : 6, 'network'],
     ];
     const grant = preview ? undefined : crypto.randomUUID();
@@ -151,7 +153,7 @@ export class ScanBudget extends DurableObject<Resources> {
       sql.exec('DELETE FROM counters WHERE expiry <= ?', now);
       for (const [key,expiry,limit,scope] of limits) {
         const count = sql.exec<{ n: number }>('SELECT n FROM counters WHERE id = ?', key).toArray()[0]?.n ?? 0;
-        if (count >= limit) return { error: 'limited', scope, retryAfter: Math.ceil((expiry - now) / 1000) };
+        if (count >= limit) return { error: 'limited', scope, limit, retryAfter: Math.ceil((expiry - now) / 1000) };
       }
       for (const [key,expiry] of limits) {
         sql.exec('INSERT INTO counters VALUES (?,1,?) ON CONFLICT(id) DO UPDATE SET n = n+1', key, expiry);

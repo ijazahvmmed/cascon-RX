@@ -11,6 +11,7 @@ interface Env {
   TURNSTILE_SECRET?: string;
   REPORT_CACHE?: KVNamespace;
   LOCAL_PREVIEW?: string;
+  STAGING_TEST_ORIGIN?: string;
   ALLOWED_ORIGINS: string;
   SCAN_BUDGET: DurableObjectNamespace<ScanBudget>;
 }
@@ -107,9 +108,10 @@ export default {
       ]);
       const responseHeaders = new Headers(defaults);
       if (user.cookie) responseHeaders.set('set-cookie',user.cookie);
+      const stagingTest = origin === env.STAGING_TEST_ORIGIN;
       const limiter = env.SCAN_BUDGET.get(env.SCAN_BUDGET.idFromName(preview ? 'local-preview-v1' : 'public-scan-v1'));
       const allowance = await limiter.fetch('https://budget.internal/reserve', {
-        method: 'POST', body: JSON.stringify({ network, visitor, merchant, preview }), signal: deadline,
+        method: 'POST', body: JSON.stringify({ network, visitor, merchant, preview, stagingTest }), signal: deadline,
       });
       if (allowance.status === 429) {
         const retryAfter = allowance.headers.get('retry-after');

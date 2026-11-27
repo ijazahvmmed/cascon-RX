@@ -32,7 +32,7 @@ test('public admission coalesces cold requests, reuses a summary, and enforces t
       if(url.hostname==='challenges.cloudflare.com'){
         if(init.redirect!=='manual')throw new TypeError('Siteverify must use manual redirects');
         if(init.body.get('response')==='redirect')return new Response(null,{status:302});
-        return Response.json({success:init.body.get('response')==='valid',action:'cro_scan',hostname:'tool.example.com'});
+        return Response.json({success:['valid','staging'].includes(init.body.get('response')),action:'cro_scan',hostname:init.body.get('response')==='staging'?'localhost':'tool.example.com'});
       }
       if(url.hostname==='cloudflare-dns.com')return Response.json({Status:0,Answer:url.searchParams.get('type')==='1'?[{type:1,data:'93.184.216.34'}]:[]});
       if(url.hostname==='pause-without-header.example.com')return new Response(null,{status:429});
@@ -45,8 +45,8 @@ test('public admission coalesces cold requests, reuses a summary, and enforces t
   const bundle=await build({stdin:{contents:code,resolveDir:process.cwd()},bundle:true,format:'esm',write:false,external:['cloudflare:workers']});
   const mf=new Miniflare(convertV4MiniflareOptions({name:'admission',modules:true,script:bundle.outputFiles[0].text,compatibilityDate:'2026-11-24',kvNamespaces:['REPORT_CACHE'],
     durableObjects:{SCAN_BUDGET:{className:'ScanBudget',useSQLite:true}},
-    bindings:{VISITOR_SECRET:'v'.repeat(40),TURNSTILE_SECRET:'fixture',ALLOWED_ORIGINS:'https://tool.example.com'}}));
-  const post=(token:string,cookie='',url='https://shop.example.com')=>mf.dispatchFetch('https://scanner.example.com/scan',{method:'POST',headers:{origin:'https://tool.example.com','content-type':'application/json',cookie,'cf-connecting-ip':url.includes('pause-without-header') ? '192.0.2.11' : '192.0.2.10'},body:JSON.stringify({url,token})});
+    bindings:{VISITOR_SECRET:'v'.repeat(40),TURNSTILE_SECRET:'fixture',ALLOWED_ORIGINS:'https://tool.example.com,http://localhost:3012',STAGING_TEST_ORIGIN:'http://localhost:3012'}}));
+  const post=(token:string,cookie='',url='https://shop.example.com')=>mf.dispatchFetch('https://scanner.example.com/scan',{method:'POST',headers:{origin:token === 'staging' ? 'http://localhost:3012' : 'https://tool.example.com','content-type':'application/json',cookie,'cf-connecting-ip':(token === 'staging' || url.includes('pause-without-header')) ? '192.0.2.11' : '192.0.2.10'},body:JSON.stringify({url,token})});
   try{
     assert.equal((await post('bad')).status,403);
     assert.equal((await post('redirect')).status,403);
@@ -67,5 +67,8 @@ test('public admission coalesces cold requests, reuses a summary, and enforces t
     for(let i=0;i<2;i++)assert.deepEqual(await (await post('valid',cookie)).json(),report);
     assert.equal((await post('valid',cookie)).status,429);
     assert.equal(await (await mf.dispatchFetch('https://scanner.example.com/count')).json(),1);
+    const privateTest = await post('staging',cookie);
+    assert.equal(privateTest.status,200);
+    assert.deepEqual(await privateTest.json(),report);
   }finally{await mf.dispose();}
 });
