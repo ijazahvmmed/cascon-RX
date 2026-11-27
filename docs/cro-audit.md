@@ -19,7 +19,9 @@ Run the Worker tests with `npm --prefix workers/cro test`. Its `check` command t
 
 ## Lead and privacy behavior
 
-The browser shows an 18-second activity trace. It streams actual page requests, then reveals returned observations, scoring scope and recommendation evidence. This presentation runs on the client. Errors and cancellations are immediate. The headline counts seven shopper questions. Unconfirmed answers are separated from observed problems. Generic setup checks cannot earn shopping points. Version 2 drops the old homepage and storewide percentage fields. The earlier cohort below describes the original version only. The downloadable PDF contains the free summary. No result has a permalink and the API uses noindex and no-store. Submitted URLs are excluded from analytics payloads and the tool view is masked for Clarity. The existing opt-in analytics pipeline receives scan completion, recommendation engagement and a single tool-attributed enquiry intent per assessment. The consultation uses the existing Cal.com booking link and passes the normalized store URL and short evidence context. Confirmed bookings can be attributed in Cal.com through its UTM booking record. A browser booking click is recorded as intent. [Cal.com booking attribution](https://cal.com/help/bookings/utm-tracking).
+The browser shows an 18-second activity trace with actual page requests and returned observations. Errors and cancellations are immediate. Seven equally weighted shopping questions share 100 points. The rounded share confirmed is the lower bound. The rounded share confirmed or open is the upper bound. The final score is known when both agree. A dot chart shows confirmed, to-fix and open counts. A second view shows applicable checks in each store area. These individual details sit outside the shopping score. The screen, summary PDF and consultation notes use the same calculation. The cohort below describes the original version.
+
+No result has a permalink and the API uses noindex and no-store. Submitted URLs are excluded from analytics payloads and the tool view is masked for Clarity. The existing opt-in analytics pipeline receives scan completion, recommendation engagement and a single tool-attributed enquiry intent per assessment. The consultation uses the existing Cal.com booking link and passes the normalized store URL and short evidence context. Confirmed bookings can be attributed in Cal.com through its UTM booking record. A browser booking click is recorded as intent. [Cal.com booking attribution](https://cal.com/help/bookings/utm-tracking).
 
 ## Local validation
 
@@ -51,6 +53,8 @@ The same rules and thresholds ran for every cohort. Early validation found two p
 Browser tests exercised the scanner at desktop and mobile widths, invalid URL feedback, real report disclosure, PDF file download and existing booking-link context. Confirmed bookings were not created during QA.
 
 The revised checklist was tested on hidden and crossed-out prices, delivery fees shown in a table, a disabled buy button, an unfinished product listing and complete shopping information. Finewares confirmed one answer from its homepage after the store limited the product request. Cipher Skincare confirmed six of seven, including its current sale price. Return terms were unconfirmed. Those figures describe these scans only.
+
+On November 28, the Bleame preview confirmed five of seven shopping answers from its homepage, earning 71 points with 29 open. The product request was rate-limited. The homepage contained a named item link, a selling price in that item's listing, an advertised shipping offer, a return period and a customer support destination. The description and purchase button stayed open. Fixtures also cover unrelated or hidden prices, comparison amounts, mixed-item listings, paid shipping and disabled purchase controls.
 
 ## Before public release
 

@@ -6,6 +6,10 @@ import { fetcher, Rejection, sampleUrl } from './target';
 
 function stripSlash(path: string) { return path.replace(/\/$/, ''); }
 
+function merchantStopped(sample?: Sample) {
+  return sample?.status === 'blocked' || sample?.status === 'rate limited';
+}
+
 function requireRead(sample: Sample) {
   if (sample.status === 'read' || sample.status === 'partial') return;
   if (sample.status === 'blocked') throw new Rejection('denied');
@@ -18,7 +22,7 @@ export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signa
   const root = new URL(entry.origin);
   onRead?.('homepage', root.pathname);
   const homeResponse = await read(root, root, true);
-  const home = await extract(homeResponse.document, homeResponse.url);
+  const home = await extract(homeResponse.document, homeResponse.url, 'homepage');
   home.complete = !homeResponse.isPartial();
   if (home.blocked) throw new Rejection('denied');
   if (!verifies(home, 'homepage')) throw new Rejection('unverified');
@@ -41,7 +45,7 @@ export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signa
       try {
         onRead?.(kind, candidate.pathname);
         const response = await read(candidate, home.url);
-        const page = await extract(response.document, response.url);
+        const page = await extract(response.document, response.url, kind);
         page.complete = !response.isPartial();
         const samePath = candidate.pathname.replace(/\/$/, '') === page.url.pathname.replace(/\/$/, '');
         if ((!exactPath || samePath) && verifies(page, kind, samePath)) {
@@ -68,22 +72,23 @@ export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signa
     const match = home.candidates.find(hit => stripSlash(hit.path) === requested);
     if (match?.kind === 'collection') {
       collection = await sample('collection', [home], 1, requested);
-      requireRead(collection);
+      if (!merchantStopped(collection)) requireRead(collection);
     } else {
       if (!match) {
         collection = await sample('collection', [home], 2);
         requireRead(collection);
       }
       product = await sample('product', pages.collection ? [pages.collection, home] : [home], 1, requested);
-      requireRead(product);
+      if (!merchantStopped(product)) requireRead(product);
     }
   }
 
-  product ??= await sample('product', pages.collection ? [pages.collection, home] : [home], 1);
-  collection ??= product.status === 'blocked' || product.status === 'rate limited'
+  product ??= merchantStopped(collection) ? { kind:'product', status:'skipped' }
+    : await sample('product', pages.collection ? [pages.collection, home] : [home], 1);
+  collection ??= merchantStopped(product)
     ? { kind: 'collection', status: 'skipped' }
     : await sample('collection', [home], 2);
-  if (!pages.product && product.status !== 'blocked' && product.status !== 'rate limited' && pages.collection) {
+  if (!pages.product && !merchantStopped(product) && pages.collection) {
     const retry = await sample('product', [pages.collection, home], 2);
     if (retry.status !== 'not found') product = retry;
   }

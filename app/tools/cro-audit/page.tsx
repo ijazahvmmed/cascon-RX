@@ -5,7 +5,7 @@ import Scanner from './scanner';
 
 const path = '/tools/cro-audit';
 const title = 'Free Ecommerce CRO Audit';
-const description = 'Check your online store for the details shoppers need to buy. See what we found, what still needs checking and up to three changes to consider.';
+const description = 'Get a free shopping score for your online store. See how it handles product details, pricing, delivery and returns, plus up to three changes to consider.';
 export const metadata = pageMetadata(path, title, description);
 
 export default function CroAuditPage() {

@@ -35,7 +35,7 @@ test('Cloudflare HTMLRewriter validates Shopify and WooCommerce fixture journeys
     "if (url.pathname === '/') html += '<script src=\"/cdn-cgi/challenge-platform/scripts/jsd/api.js\"></script>';",
     "if (scenario === '/deep' && url.pathname === '/') html = html.replace(pdp, '/products/another-bag');",
     "if (!html) throw new Error('Unexpected request');",
-    "if (scenario === '/challenge' && url.pathname === pdp) return {url, isPartial: () => false, document:new Response('<html><head><title>Verify you are human</title></head><body>Security check</body></html>',{headers:{'content-type':'text/html'}})};",
+    "if (scenario === '/challenge' && url.pathname === pdp || scenario === '/closed-collection' && url.pathname === collection) return {url, isPartial: () => false, document:new Response('<html><head><title>Verify you are human</title></head><body>Security check</body></html>',{headers:{'content-type':'text/html'}})};",
     "return {url, isPartial: () => false, document:new Response(common+html+'</body></html>',{headers:{'content-type':'text/html'}})};",
     "}); return Response.json({result, visited}); } catch (error) { return Response.json({error:error.code, visited},{status:422}); } } };",
   ].join('\n');
@@ -70,6 +70,14 @@ test('Cloudflare HTMLRewriter validates Shopify and WooCommerce fixture journeys
     const { result, visited } = await challenge.json();
     assert.deepEqual(result.samples.map(s => s.status), ['read', 'blocked', 'skipped']);
     assert.deepEqual(visited, ['/', '/products/linen-bag']);
+    for (const [scenario, path] of [['challenge','/products/linen-bag'],['closed-collection','/collections/bags']]) {
+      const attempted = await mf.dispatchFetch('http://fixture.test/' + scenario + '?page=' + encodeURIComponent(path));
+      assert.equal(attempted.status,200);
+      const partial = await attempted.json();
+      assert.deepEqual(partial.visited,['/',path]);
+      assert.ok(partial.result.samples.some(s => s.path === path && s.status === 'blocked'));
+      assert.equal(partial.result.shopping[1].result,'Could not confirm');
+    }
   } finally { await mf.dispose(); }
 });
 
@@ -144,6 +152,40 @@ test('only the local launch setting and loopback host select preview quotas', as
 });
 
 
+test('homepage answers require named destinations, a matching item price and explicit store terms', async () => {
+  const mf = await fixture(`
+    import { extract } from './src/extract';
+    import { shoppingChecks } from './src/shopping';
+    export default { async fetch(request) {
+      const home = await extract(new Response(await request.text()), new URL('https://merchant.example.com/en'), 'homepage');
+      return Response.json(shoppingChecks(home, undefined, '/products/bag'));
+    }};
+  `);
+  async function run(html: string) {
+    const reply = await mf.dispatchFetch('http://fixture.test/', {method:'POST', body:'<body><main>' + html + '</main></body>'});
+    assert.equal(reply.status,200);
+    return (await reply.json() as {result:string}[]).map(answer => answer.result === 'Confirmed');
+  }
+  const link = '<a href="/products/bag">Linen bag</a>';
+  const price = '<span class="price">$42</span>';
+  const listing = (html: string) => '<article class="product-card">' + html + '</article>';
+  const visible = listing(link + price) + '<p>Free shipping on orders over $50.</p><p>30-day returns</p>' +
+    '<a href="https://help.merchant.example.com/en">Contact us</a>';
+  try {
+    assert.deepEqual(await run(visible), [true,false,true,false,true,true,true]);
+    assert.equal((await run('<p>Delivery fee: $5.00 per order.</p>'))[4],true);
+    assert.equal((await run('<p>Shipping options on orders over $50.</p>'))[4],false);
+    assert.deepEqual(await run('<div hidden>' + visible + '</div><blockquote><p>30-day returns</p></blockquote>' +
+      '<a href="https://help.merchant.example.com.other.test/">Contact us</a><a href="/returns">Return policy</a>' +
+      '<a href="/products/bag"></a><p>Is shipping free?</p>'), Array(7).fill(false));
+    assert.equal((await run(listing(link + '<a href="/products/shoes">Shoes</a>' + price)))[2],false);
+    assert.equal((await run(listing('<a href="/products/shoes">Shoes</a>' + price)))[2],false);
+    assert.equal((await run(listing(link + '<span class="price price--compare">$65</span>')))[2],false);
+    assert.equal((await run(listing(link + '<span class="price">You save $12</span>')))[2],false);
+    assert.equal((await run(listing(link + '<span class="price">-$12</span>')))[2],false);
+  } finally { await mf.dispose(); }
+});
+
 test('shopping scores track what an item page actually tells shoppers', async () => {
   const mf = await fixture(`
     import { extract } from './src/extract';
@@ -180,6 +222,18 @@ test('shopping scores track what an item page actually tells shoppers', async ()
     const extras = await run('<article class="product type-product"><table><tr><td><span class="price">$50</span></td></tr></table>' +
       '<p>We do not offer free shipping.</p><p>Is delivery free?</p><button name="add" class="disabled">Add to cart</button></article>');
     assert.deepEqual(extras,bare);
+    const templateOnly = await run(
+      '<div itemprop="description">Our company sends orders all around the world.</div>' +
+      wrap('<div class="product__summary"><h1>Shopping bag</h1><span class="price">You save $12</span>' +
+        '<fieldset disabled><button name="add">Add to cart</button></fieldset></div>')
+    );
+    assert.deepEqual(templateOnly,bare);
+    const saving = await run(wrap('<span class="price">You save <span class="woocommerce-Price-amount">$12</span></span>'));
+    assert.equal(saving[2].result,'Could not confirm');
+    const combinedPrice = await run(wrap('<span class="price">Was $60, now $42</span>'));
+    assert.equal(combinedPrice[2].result,'Confirmed');
+    const inputBuy = await run(wrap('<input type="submit" name="add" value="Add to bag"/>'));
+    assert.equal(inputBuy[3].result,'Confirmed');
     const oldPrice = '<del><span class="price">$60</span></del>';
     const announced = (text: string) => '<span class="screen-reader-text">' + text + '</span>';
     const sale = await run(wrap(oldPrice + announced('Original price was: $60. Current price is: $42.')));

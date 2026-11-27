@@ -18,11 +18,13 @@ export default function MethodologyPage() {
       <p className={styles.intro}>Can a shopper find an item, understand the price and see how to buy it?</p>
       <section><h2>What we look for</h2>
         <p>We start on your homepage and follow store links to one product and one collection when we can. We check for a way to reach the product, its description, its price, an add-to-cart button, delivery terms, return terms and a way to contact the store.</p>
-        <p>We look for a delivery time or a free-delivery statement with the item. For returns, we look for a return period or a statement that returns are unavailable. A policy link alone earns no credit for those answers.</p>
+        <p>If an item page will not open, we can still confirm a visible item link and a selling price shown alongside it on the homepage. We check that both belong to the same item.</p>
+        <p>We also look for a delivery time or charge, a return period or a no-returns statement. A stated fee and a free-delivery offer both answer the shipping question. Your report says where we found each answer. A policy link alone leaves the question open.</p>
       </section>
-      <section><h2>How to read the result</h2>
-        <p>Each confirmed answer counts once. An unfinished price or description is marked for attention. If a page will not open or we cannot recognize the answer, it stays on the list to check. Once all seven answers are known, we show how many passed.</p>
-        <p>The other store checks cover smaller details, such as whether a cart link has a name. Those details do not earn extra points on the shopping checklist. Optional discounts, gifts and special offers are always your choice.</p>
+      <section><h2>How the score works</h2>
+        <p>The seven questions share 100 points equally. We round the total to the nearest whole point. A confirmed answer earns its share. An unfinished price or description can count as a problem. If we cannot see the answer, its points stay open.</p>
+        <p>For example, six confirmed answers earn 86 points. If the seventh answer is still open, the possible score is 86–100. If we find a problem with that answer, the finished score is 86 out of 100.</p>
+        <p>The “By area” view shows individual details, such as whether a cart link has a name. These sit outside the seven-question score. Discounts, gifts and special offers are optional.</p>
       </section>
       <section><h2>What takes a closer look</h2>
         <p>Someone needs to try the store to judge how easy it feels on a phone or how checkout works. Understanding sales takes real customer and order information. The free scan never places an order.</p>

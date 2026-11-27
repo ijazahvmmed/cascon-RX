@@ -49,7 +49,7 @@ export default function ScanTrace({ reads, result, started, settled }: {
   if (result) {
     const summary = assessment(result);
     rows.push({ title: 'Other checks', detail: result.overall.passed + ' passed out of ' + result.overall.assessed + ' checks.' },
-      { title: summary.label, detail: summary.detail });
+      { title: summary.label, detail: summary.value + '. ' + summary.detail });
     const first = result.recommendations[0];
     if (first) rows.push({ title: first.title, detail: first.evidence });
   }
@@ -58,8 +58,9 @@ export default function ScanTrace({ reads, result, started, settled }: {
   return <div className={styles.scanTrace} data-clarity-mask="true">
     <button type="button" className={styles.loading} aria-label={title} aria-expanded={open} aria-controls="cro-trace-rows"
       onClick={() => setManualOpen(!open)}>
-      <span className={settled ? styles.doneDot : styles.pixels} aria-hidden="true">{settled ? '✓' :
-        Array.from({ length: 9 }, (_, i) => <i key={i} style={{ animationDelay: ((i % 3) + Math.floor(i / 3)) * 90 + 'ms' }} />)}</span>
+      {!settled && <span className={styles.pixels} aria-hidden="true">
+        {Array.from({ length: 9 }, (_, i) => <i key={i} style={{ animationDelay: ((i % 3) + Math.floor(i / 3)) * 90 + 'ms' }} />)}
+      </span>}
       <span role="status" className={settled ? undefined : styles.shimmer}>{title}</span>
       {!settled && <span className={styles.elapsed} aria-hidden="true">{(elapsed / 1000).toFixed(1)}s</span>}
       <span aria-hidden="true">{open ? '−' : '+'}</span>

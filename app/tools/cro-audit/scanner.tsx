@@ -4,16 +4,10 @@ import Link from 'next/link';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { CAL_LINK } from '@/lib/constants';
 import { trackCro } from '@/lib/cro/activity';
-import { assessment, categories, categoryResult, sampleLabels } from '@/lib/cro/model';
-import type { ScanError, ScanReport, Sample } from '@/lib/cro/model';
+import { assessment, type ScanError, type ScanReport } from '@/lib/cro/model';
 import styles from './scanner.module.css';
 import ScanTrace, { presentationMs, readStream, type PageRead } from './scan-trace';
-
-const pages = [
-  { kind: 'homepage', label: 'Homepage', detail: 'Where shoppers start' },
-  { kind: 'product', label: 'Product page', detail: 'What the item costs and how to buy it' },
-  { kind: 'collection', label: 'Collection page', detail: 'How shoppers find an item' },
-] as const;
+import ScoreCard from './score-card';
 
 const errors: Record<ScanError, string> = {
   invalid: 'Enter a store address, such as https://your-store.com.',
@@ -30,16 +24,11 @@ const errors: Record<ScanError, string> = {
 const worker = process.env.NEXT_PUBLIC_CRO_WORKER_URL ||
   (process.env.NODE_ENV === 'development' ? 'http://localhost:8787' : '');
 
-function scopeStatus(report: ScanReport | null, kind: Sample['kind']) {
-  const sample = report?.samples.find(s => s.kind === kind);
-  return sample ? sampleLabels[sample.status] : '';
-}
-
 function consultationUrl(report: ScanReport) {
   const booking = new URL(CAL_LINK);
   const findingList = report.recommendations.map(item => item.title).join('. ');
   const summary = assessment(report);
-  const score = summary.label + ' ' + summary.value;
+  const score = summary.label + ' ' + summary.value + '. ' + summary.detail;
   booking.searchParams.set('notes', [
     'Store: ' + report.store,
     'Cascon store check: ' + score + ' · ' + report.overall.assessed + ' checks completed',
@@ -61,10 +50,22 @@ export default function Scanner() {
   const [pdfError, setPdfError] = useState('');
   const [makingPdf, setMakingPdf] = useState(false);
   const active = useRef<AbortController | null>(null);
-  const heading = useRef<HTMLHeadingElement>(null);
+  const scoreHeading = useRef<HTMLHeadingElement>(null);
+  const errorHeading = useRef<HTMLHeadingElement>(null);
   const engagement = useRef(new Set<string>());
   useEffect(() => () => active.current?.abort(), []);
-  useEffect(() => { if (state === 'done' || state === 'error') heading.current?.focus(); }, [state]);
+  useEffect(() => {
+    if (state === 'done' && scoreHeading.current) {
+      const title = scoreHeading.current;
+      title.focus({ preventScroll: true });
+      const card = title.closest('section');
+      if (card) {
+        const bounds = card.getBoundingClientRect();
+        if (bounds.top < 80 || bounds.bottom > window.innerHeight - 16) card.scrollIntoView({ block: 'center' });
+      }
+    }
+    if (state === 'error') errorHeading.current?.focus();
+  }, [state]);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -93,7 +94,7 @@ export default function Scanner() {
             if (!controller.signal.aborted) setReads(previous => [...previous, event]);
           })
         : await request.json().catch(() => null);
-      if (!request.ok || payload?.version !== 2 || !Array.isArray(payload.shopping) || !Array.isArray(payload.recommendations)) {
+      if (!request.ok || payload?.version !== 2 || !Array.isArray(payload.shopping) || !payload.shopping.length || !Array.isArray(payload.recommendations)) {
         const code = payload?.error as ScanError;
         const error = Object.hasOwn(errors, code) ? errors[code] :
           request.status === 429 ? errors.limited : errors.busy;
@@ -175,7 +176,6 @@ export default function Scanner() {
     }
   }
 
-  const summary = report && assessment(report);
   return <div className={styles.surface}>
     <div className={styles.wrap}>
       <section className={styles.hero} aria-labelledby="cro-title">
@@ -196,34 +196,23 @@ export default function Scanner() {
                 }} />
               <button className={styles.primary} disabled={state === 'loading'} type="submit">Scan store</button>
             </div>
-            <p id="cro-input-help">Enter a homepage or a linked product or collection. No email required.</p>
+            <p id="cro-input-help">Enter a store or product page. No email required. <Link href="/tools/cro-audit/methodology">About the score</Link></p>
           </form>
           {(state === 'loading' || report) && <div className={styles.progress}>
             <ScanTrace key={started} reads={reads} result={report ?? pendingReport} started={started} settled={Boolean(report)} />
             {state === 'loading' && <button type="button" onClick={cancel} className={styles.textAction}>Cancel scan</button>}
           </div>}
-          {state === 'error' && <h2 ref={heading} tabIndex={-1} role="alert" className={styles.error}>{message}</h2>}
+          {state === 'error' && <h2 ref={errorHeading} tabIndex={-1} role="alert" className={styles.error}>{message}</h2>}
         </div>
-        <aside className={styles.scope} aria-label="Pages we check">
-          <div className={styles.scopeTop}><h2>Pages we check</h2></div>
-          <ol className={styles.scopeRows}>
-            {pages.map((page, i) => <li key={page.kind}>
-              <span className={styles.pageNumber} aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-              <div><strong>{page.label}</strong><p>{page.detail}</p></div>
-              <span className={styles.scopeState}>{scopeStatus(report,page.kind)}</span>
-            </li>)}
-          </ol>
-          <Link className={styles.methodLink} href="/tools/cro-audit/methodology">About the checklist</Link>
-        </aside>
+        <ScoreCard key={started} report={report} loading={state === 'loading'} headingRef={scoreHeading} />
       </section>
 
       {report && <section className={styles.result} data-cro-report="" data-clarity-mask="true" aria-labelledby="cro-report-title">
         <header className={styles.resultTop}>
           <div>
             <p className={styles.kicker}>{new URL(report.store).hostname}</p>
-            <h2 id="cro-report-title" ref={heading} tabIndex={-1}>Your store results</h2>
-            <p>Scanned <time dateTime={report.capturedAt}>{new Date(report.capturedAt).toLocaleString()}</time>
-              {' · '}{report.samples.filter(page => page.status === 'read' || page.status === 'partial').length} of 3 pages read</p>
+            <h2 id="cro-report-title">Your store results</h2>
+            <p>Scanned <time dateTime={report.capturedAt}>{new Date(report.capturedAt).toLocaleString()}</time></p>
           </div>
           <div>
             <button className={styles.secondary} onClick={downloadReport} disabled={makingPdf} type="button">
@@ -233,34 +222,15 @@ export default function Scanner() {
           </div>
         </header>
 
-        <div className={styles.scoreBox}>
-          <div><p>{summary?.label}</p><strong>{summary?.value}</strong></div>
-          <p>{summary?.detail}</p>
-        </div>
-
-        <ul className={styles.shoppingList} aria-label="Shopping checklist">
-          {report.shopping.map(item => <li key={item.title}>
-            <div><strong>{item.title}</strong><span>{item.result}</span></div><p>{item.detail}</p>
-          </li>)}
-        </ul>
         <details className={styles.trace}>
-          <summary>Pages checked</summary>
-          <ul>{report.samples.map(sample => <li key={sample.kind}>
-            <span>{pages.find(page => page.kind === sample.kind)?.label}</span>
-            <span>{sampleLabels[sample.status]}{sample.path ? ' · ' + sample.path : ''}</span>
-          </li>)}</ul>
-          {report.samples.some(sample => sample.status === 'rate limited' || sample.status === 'blocked') &&
-            <p className={styles.sampleNote}>The store asked us to stop. We can only report on the pages we opened.</p>}
+          <summary>What went into your score</summary>
+          <ul className={styles.shoppingList}>
+            {report.shopping.map(item => <li key={item.title}>
+              <div><strong>{item.title}</strong><span>{item.result === 'Could not confirm' ? 'Still open' : item.result}</span></div>
+              <p>{item.detail}</p>
+            </li>)}
+          </ul>
         </details>
-        <section className={styles.categorySection}>
-          <h3>Other store checks</h3>
-          <p>These cover individual details, such as whether a cart link has a name. Checkout and payment need a hands-on review.</p>
-          <ul className={styles.categoryGrid}>{report.categories.map(category => <li key={category.category}>
-            <strong>{categories[category.category]}</strong>
-            <span>{categoryResult(category)}</span>
-            <small>{category.applicable > category.assessed ? (category.applicable - category.assessed) + ' still to check' : ''}</small>
-          </li>)}</ul>
-        </section>
         <section className={styles.recommendations}>
           <h3>Recommended next steps</h3>
           {report.recommendations.length === 0 ?

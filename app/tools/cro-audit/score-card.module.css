@@ -1,0 +1,86 @@
+.card {
+  width: 100%;
+  max-width: 460px;
+  min-width: 0;
+  justify-self: center;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid #e6e6e6;
+  border-radius: 24px;
+  background: #f9f9f9;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 5%);
+  font-variant-numeric: tabular-nums;
+}
+.cardHead, .views, .legend, .barLabel { display: flex; align-items: center; }
+.cardHead { justify-content: space-between; gap: 8px; min-height: 32px; }
+.label {
+  margin: 0; font-size: .72rem; line-height: 1.4; letter-spacing: .05em;
+  font-weight: 400; color: #545454; text-transform: uppercase; scroll-margin-top: 100px;
+}
+.label:focus { outline: none; }
+.views { gap: 2px; }
+.views button {
+  min-height: 32px; padding: 4px 9px; border-radius: 7px; white-space: nowrap;
+  font-size: .76rem; font-weight: 400; color: #575757;
+}
+.views button[aria-pressed="true"] { background: #eaeaea; color: #101010; }
+.card button:focus-visible { outline: 2px solid #333; outline-offset: 2px; }
+.number { display: flex; align-items: baseline; gap: 6px; font-size: clamp(42px, 4.5vw, 60px); line-height: 1.08; font-weight: 300; letter-spacing: -.055em; }
+.unit { color: #636363; font-size: .36em; letter-spacing: -.025em; white-space: pre; }
+.description { margin: 9px 0 0; font-size: .87rem; color: #414141; }
+.plot {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
+  margin-top: 26px;
+}
+.bar {
+  display: flex; flex-direction: column; align-items: stretch; min-width: 0;
+  padding: 0; text-align: left; color: #222; border-radius: 3px;
+}
+.bar:disabled { opacity: 1; cursor: default; }
+.column {
+  display: flex; align-items: flex-end; position: relative;
+  height: 112px; width: 100%; margin-bottom: 15px;
+  background: radial-gradient(circle at 3px 4px, #e1e1e1 1.35px, transparent 1.7px) left bottom / 8px 8px;
+  transition: opacity .16s;
+}
+.bar[data-dim="true"] .column { opacity: .35; }
+.fill { width: 100%; display: flex; flex-direction: column-reverse; }
+.dotRow {
+  display: block; flex: 1;
+  background: radial-gradient(circle at 3px 50%, #262626 2px, transparent 2.3px) left bottom / 8px 100% repeat-x;
+  animation: pop .36s cubic-bezier(.22, .85, .36, 1) var(--delay) backwards;
+}
+.bar[data-tone="issues"] .dotRow {
+  background-image: linear-gradient(#7b7b7b, #7b7b7b);
+  background-size: 4px 4px; background-repeat: repeat-x;
+  mask: repeating-linear-gradient(to right, transparent 0 1px, #000 1px 5px, transparent 5px 8px) center / 100% 4px no-repeat;
+  background-position: center;
+}
+.bar[data-tone="open"] .dotRow {
+  background-image: radial-gradient(circle at 3px 50%, #f9f9f9 1.15px, #7e7e7e 1.4px 2.1px, transparent 2.35px);
+}
+.tip {
+  position: absolute; left: 50%; top: 2px; transform: translateX(-50%);
+  padding: 4px 7px; border-radius: 5px; background: #202020; color: white;
+  font-size: .7rem; white-space: nowrap; pointer-events: none;
+}
+.barLabel { gap: 6px; font-size: .73rem; font-weight: 400; color: #525252; }
+.keyDot { flex: 0 0 auto; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #222; }
+.keyDot[data-tone="issues"], [data-tone="issues"] .keyDot { border-radius: 1px; background: #777; }
+.keyDot[data-tone="open"], [data-tone="open"] .keyDot { border: 1px solid #777; background: transparent; }
+.count { font-size: 1.18rem; line-height: 1.3; font-weight: 300; }
+.areas { margin-top: 18px; }
+.areaList { padding: 0; margin: 0; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; }
+.areaList button {
+  display: flex; width: 100%; min-height: 34px; align-items: center; justify-content: space-between; gap: 6px;
+  border-bottom: 1px solid #e1e1e1; font-size: .75rem; text-align: left; line-height: 1.2;
+}
+.areaList button[aria-pressed="true"] { border-color: #505050; }
+.areaDots { display: flex; gap: 3px; align-items: center; font-size: .66rem; color: #666; }
+.areaDetail { font-size: .78rem; margin-top: 14px; color: #333; }
+.legend { flex-wrap: wrap; gap: 4px 14px; margin-top: 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 5px; font-size: .7rem; color: #555; }
+.srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@keyframes pop { from { opacity: 0; transform: translateY(4px) scaleY(.6); } to { opacity: 1; transform: none; } }
+@media (max-width: 880px) { .card { justify-self: start; } }
+@media (max-width: 380px) { .areaList { grid-template-columns: 1fr; } .plot { gap: 8px; } }
+@media (prefers-reduced-motion: reduce) { .dotRow { animation: none; } .column { transition: none; } }

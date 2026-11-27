@@ -4,7 +4,7 @@ import { checkDns, fetcher, isPublicIp, MAX_HTML_BYTES, publicUrl, Rejection, sa
 import { evaluate } from '../src/evaluate';
 import { verifies } from '../src/extract';
 import type { DocumentEvidence } from '../src/extract';
-import { assessment } from '../../../lib/cro/model';
+import { assessment, type ShoppingCheck } from '../../../lib/cro/model';
 import { principles } from '../../../lib/cro/principles';
 
 const at = new URL('https://example.com/');
@@ -100,7 +100,7 @@ test('rejects bot gates and unexpected media, and bounds oversized decompressed 
   assert.equal(response.isPartial(),true);
 });
 
-test('withholds an overall score on homepage-only evidence and never scores absent campaign tactics negatively', () => {
+test('leaves product answers open on homepage-only evidence and excludes absent campaign tactics', () => {
   const home = evidence();
   const report = evaluate(home,{homepage:home},[{kind:'homepage',path:'/',status:'read'}],time);
   assert.ok(report.shopping.some(item => item.result === 'Could not confirm'));
@@ -141,7 +141,25 @@ test('template features alone earn no product credit on a homepage-only scan', (
   const home = evidence({ candidates:[{kind:'product',path:'/products/a',quality:2}],
     links:new Set(['about','shipping','returns','contact','privacy','cart']), search:true });
   const report = evaluate(home, {homepage:home}, [], time);
-  assert.equal(assessment(report).value,'0 confirmed');
+  assert.equal(assessment(report).minimum,0);
+  assert.equal(assessment(report).maximum,100);
   assert.equal(report.shopping.filter(item => item.result === 'Could not confirm').length,7);
   assert.equal(verifies(evidence({candidates:[],links:new Set(['cart'])}),'homepage'),false);
+});
+
+test('gives the earned points and possible final score for every combination of seven shopping answers', () => {
+  for (let passed = 0; passed <= 7; passed++) {
+    for (let issues = 0; issues <= 7 - passed; issues++) {
+      const shopping = Array.from({ length: 7 }, (_, i): ShoppingCheck => ({
+        title: String(i), detail: '', result: i < passed ? 'Confirmed' : i < passed + issues ? 'Needs attention' : 'Could not confirm',
+      }));
+      const score = assessment({ shopping });
+      const open = 7 - passed - issues;
+      assert.deepEqual([score.passed, score.issues, score.open], [passed, issues, open]);
+      assert.equal(score.minimum, Math.round(100 * passed / 7));
+      assert.equal(score.maximum, Math.round(100 * (7 - issues) / 7));
+      assert.equal(score.partial, open > 0);
+      assert.equal(score.minimum === score.maximum, !open);
+    }
+  }
 });

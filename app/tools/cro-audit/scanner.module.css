@@ -13,6 +13,7 @@
 .inputRow input{width:100%;min-width:0;background:transparent;border:0;padding:11px 12px;color:#111;outline:0}
 .inputRow input::placeholder{color:#666960}
 .form p{font-size:.80rem;color:var(--color-text-secondary);margin:10px 0 0 2px}
+.form p a{text-decoration:underline;text-underline-offset:3px;margin-inline-start:3px}
 .primary,.secondary{min-height:46px;border-radius:var(--radius-pill);padding:10px 17px;display:inline-flex;justify-content:center;align-items:center;gap:12px;font-weight:400;transition:background .2s,color .2s,transform .2s;white-space:nowrap}
 .primary{background:var(--color-text);color:#fff;border:1px solid transparent}
 .primary:not(:disabled):hover{background:#333;transform:translateY(-2px)}
@@ -20,19 +21,9 @@
 .primary:disabled{opacity:.65;cursor:wait}
 .secondary{background:transparent;color:var(--color-text);border:1px solid var(--color-border)}
 .secondary:hover{background:var(--color-surface)}
-.scope{background:var(--color-surface);border:1px solid var(--color-border);padding:clamp(17px,3vw,30px);min-width:0}
-.scopeTop{display:flex;align-items:center;gap:10px;padding-bottom:18px;border-bottom:1px solid var(--color-border)}
-.scopeTop h2{margin:0;font-size:1.15rem;font-weight:400}
-.scopeTop>span:last-child{margin-left:auto;color:var(--color-text-secondary);font-size:.72rem;font-weight:400}
-.scopeRows{list-style:none;margin:0;padding:0}
-.scopeRows li{display:grid;grid-template-columns:1.7rem minmax(0,1fr) auto;align-items:center;gap:7px;padding:16px 0;border-bottom:1px solid var(--color-border)}
-.scopeRows strong{font-weight:400}
-.scopeRows p{font-size:.76rem;color:var(--color-text-secondary)}
-.pageNumber,.elapsed{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:.74rem;color:var(--color-text-secondary)}
-.scopeState{font-size:.69rem;text-align:right;font-weight:400;color:var(--color-text-secondary)}
-.methodLink,.back,.textAction{display:inline-flex;align-items:center;gap:10px;min-height:44px;text-underline-offset:4px;font-weight:400}
-.methodLink:hover,.back:hover,.textAction:hover{text-decoration:underline}
-.methodLink{margin-top:6px;font-size:var(--font-size-sm);text-decoration:underline;color:var(--color-text)}
+.elapsed{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:.74rem;color:var(--color-text-secondary)}
+.back,.textAction{display:inline-flex;align-items:center;gap:10px;min-height:44px;text-underline-offset:4px;font-weight:400}
+.back:hover,.textAction:hover{text-decoration:underline}
 .progress{margin-top:16px}
 .scanTrace{max-width:100%;border-top:1px solid var(--color-border);padding-top:10px}
 .loading{min-height:40px}
@@ -41,7 +32,6 @@
 .steps small{display:block;color:var(--color-text-secondary);font-size:var(--font-size-xs);overflow-wrap:anywhere}
 .traceDot,.spin{position:absolute;left:-22px;top:9px;width:8px;height:8px;border-radius:50%;background:#888;outline:3px solid var(--color-bg)}
 .spin{background:var(--color-bg);border:1.5px solid #bbb;border-top-color:var(--color-text);animation:rotate .7s linear infinite}
-.doneDot{color:var(--color-text-secondary)}
 @keyframes rotate{to{transform:rotate(360deg)}}
 .loading{display:flex;align-items:center;gap:9px;font-weight:400}
 .pixels{display:grid;grid-template-columns:repeat(3,4px);gap:2px}
@@ -55,26 +45,17 @@
 .result{margin:0 0 var(--spacing-2xl);padding:clamp(22px,5vw,58px);background:#fff;border:1px solid var(--color-border);animation:enter .45s var(--ease-out-quint) both}
 .resultTop,.expert{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .resultTop h2{font-size:var(--font-size-h2);font-weight:300;margin-top:7px;letter-spacing:-.03em}
-.scoreBox{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:end;background:var(--color-surface);padding:23px}
-.scoreBox strong{font-size:clamp(22px,3.1vw,37px);font-weight:300;display:block;letter-spacing:-.045em}
-.scoreBox p{font-size:.85rem;color:var(--color-text-secondary)}
 .trace{margin-top:13px;border-bottom:1px solid var(--color-border)}
 .trace summary,.catalogue summary{min-height:44px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.91rem;font-weight:400;list-style:none;padding:8px 0}
 .trace summary::-webkit-details-marker,.catalogue summary::-webkit-details-marker{display:none}
 .trace summary:after,.catalogue summary:after{margin-left:auto;content:'+';font-size:1.25rem;color:var(--color-text)}
-.trace[open] summary:after,.catalogue details[open] summary:after{content:'âˆ’'}
+.trace[open]>summary:after,.catalogue details[open]>summary:after{content:'\2212'}
 .trace summary:hover,.catalogue summary:hover{color:var(--color-text)}
 .trace ul{border-left:1px solid var(--color-border);margin:0 0 12px 7px;padding:2px 0 6px 15px}
-.sampleNote{font-size:var(--font-size-sm);margin:0 0 14px}
-.trace li{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:.8rem}
-.trace li span:last-child{text-align:right;color:var(--color-text-secondary);overflow-wrap:anywhere}
-.categorySection,.recommendations{margin-top:34px}
-.categorySection h3,.recommendations h3,.expert h3{font-size:var(--font-size-h3);font-weight:300;margin-bottom:10px}
-.categoryGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--color-border);margin-top:14px;gap:0 15px}
-.categoryGrid li{border-bottom:1px solid var(--color-border);min-width:0;padding:13px 0;display:grid;gap:3px}
-.categoryGrid li strong{font-size:.88rem;font-weight:400}
-.categoryGrid li span{font-size:.83rem;color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
-.categoryGrid li small,.finding dd span{font-size:.75rem;color:var(--color-text-secondary);overflow-wrap:anywhere}
+.catalogue li{padding:5px 0;font-size:.8rem}
+.recommendations{margin-top:34px}
+.recommendations h3,.expert h3{font-size:var(--font-size-h3);font-weight:300;margin-bottom:10px}
+.finding dd span{font-size:.75rem;color:var(--color-text-secondary);overflow-wrap:anywhere}
 .finding{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;border-left:1px solid var(--color-border);margin:0 0 16px 7px;padding-left:14px}
 .finding dt{font-size:.72rem;letter-spacing:.02em;font-weight:400;color:var(--color-text-secondary);margin-bottom:3px}
 .finding dd{font-size:.85rem;color:var(--color-text-secondary)}
@@ -95,9 +76,9 @@
 @keyframes pixel{50%{opacity:1}}
 @keyframes sweep{to{background-position:-200% center}}
 @keyframes enter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
-@media(max-width:880px){.hero{grid-template-columns:1fr;gap:37px;min-height:0;padding-block:110px 58px}.scope{max-width:640px}}
-@media(max-width:620px){.wrap{width:calc(100% - 38px)}.hero h1{margin-top:15px}.inputRow{flex-direction:column;border:0;background:transparent;padding:0}.inputRow:focus-within{box-shadow:none}.inputRow input{border:1px solid var(--color-border);border-radius:var(--radius-pill);background:#fff;min-height:46px;padding-inline:15px}.inputRow input:focus-visible{outline:2px solid var(--color-text);outline-offset:2px}.form{margin-top:23px}.categoryGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.scoreBox,.finding{grid-template-columns:1fr}.result{margin-top:0}.expert .primary{white-space:normal}.scopeRows li{padding-block:12px}.scopeRows p{max-width:25ch}.expert{align-items:start}}
-@media(prefers-reduced-motion:reduce){.pixels i,.shimmer,.introColumn,.result{animation:none}.primary,.secondary{transition:none}}
+@media(max-width:880px){.hero{grid-template-columns:1fr;gap:37px;min-height:0;padding-block:110px 58px}}
+@media(max-width:620px){.wrap{width:calc(100% - 38px)}.hero h1{margin-top:15px}.inputRow{flex-direction:column;border:0;background:transparent;padding:0}.inputRow:focus-within{box-shadow:none}.inputRow input{border:1px solid var(--color-border);border-radius:var(--radius-pill);background:#fff;min-height:46px;padding-inline:15px}.inputRow input:focus-visible{outline:2px solid var(--color-text);outline-offset:2px}.form{margin-top:23px}.finding{grid-template-columns:1fr}.result{margin-top:0}.expert .primary{white-space:normal}.expert{align-items:start}}
+@media(prefers-reduced-motion:reduce){.pixels i,.shimmer,.introColumn,.result,.steps li,.spin{animation:none}.primary,.secondary{transition:none}}
 
 .shoppingList{margin-block:18px}
 .shoppingList li{padding:12px 0;border-bottom:1px solid var(--color-border)}

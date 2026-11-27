@@ -1,4 +1,5 @@
 import { readItemSignals, type ItemSignals } from './shopping';
+import { readHomeShopping, type HomeShopping } from './home-shopping';
 import type { PageKind, Platform } from '../../../lib/cro/model';
 import { sampleUrl } from './target';
 
@@ -8,6 +9,7 @@ type LinkSignal = 'contact' | 'about' | 'privacy' | 'shipping' | 'returns' | 'ca
 
 export interface DocumentEvidence {
   itemSignals?: ItemSignals;
+  homeShopping?: HomeShopping;
   url: URL;
   platform: Platform;
   visible: boolean;
@@ -88,7 +90,7 @@ function candidateKind(path: string, hint: string): Hit['kind'] | null {
 }
 
 /** Only parsed evidence leaves this module. Merchant text and scripts are never rendered. */
-export async function extract(document: Response, url: URL): Promise<DocumentEvidence> {
+export async function extract(document: Response, url: URL, kind?: PageKind): Promise<DocumentEvidence> {
   const proof = {
     url, platform: 'Other or undetected' as Platform,
     visible: false, complete: true, blocked: false, title: '', description: false, headings: 0, lang: false,
@@ -280,7 +282,12 @@ export async function extract(document: Response, url: URL): Promise<DocumentEvi
       element() { proof.blocked = true; },
     });
 
-  const itemSignals = readItemSignals(rewriter, url);
+  const isHome = kind ? kind === 'homepage' : url.pathname === '/';
+  const homeShopping = isHome ? readHomeShopping(rewriter, url, (link, hint) => {
+    if (candidateKind(link.pathname,hint) !== 'product') return null;
+    return sampleUrl(link.href,url)?.pathname ?? null;
+  }) : undefined;
+  const itemSignals = !isHome && kind !== 'collection' ? readItemSignals(rewriter) : undefined;
   const reader = rewriter.transform(document).body!.getReader();
   try { while (!(await reader.read()).done) { /* Drain to complete extraction. */ } }
   finally { reader.releaseLock(); }
@@ -311,7 +318,7 @@ export async function extract(document: Response, url: URL): Promise<DocumentEvi
     proof.images = Boolean(match);
   }
   proof.purchase ||= formIds.size > 0;
-  return { ...proof, itemSignals, secureCartForm:formIds.size > 0 };
+  return { ...proof, itemSignals, homeShopping, secureCartForm:formIds.size > 0 };
 }
 
 export function verifies(evidence: DocumentEvidence, kind: PageKind, routeHint = false) {

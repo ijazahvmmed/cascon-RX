@@ -59,7 +59,7 @@ const rules: Record<string, Rule> = {
   'trust-contact': ['homepage', p => observed(p.links.has('contact'))],
   'trust-about': ['homepage', p => observed(p.links.has('about'))],
   'trust-privacy': ['homepage', p => observed(p.links.has('privacy'))],
-  'trust-https': ['homepage', p => check(p.url.protocol === 'https:', 'The storefront’s sampled entry response used HTTP.')],
+  'trust-https': ['homepage', p => check(p.url.protocol === 'https:', 'The store opened over an unsecured connection.')],
 
   'price-present': ['product', p => observed(p.visiblePrice || p.offers.some(o => validMoney(o.price)))],
   'price-currency': ['product', p => condition(p.offers.filter(o => exists(o.price) || exists(o.priceCurrency)).map(o => o.priceCurrency),
@@ -170,5 +170,6 @@ export function evaluate(home: DocumentEvidence, pages: Partial<Record<PageKind,
     if (!recommendations.some(v => v.category === finding.category)) recommendations.push(finding);
     if (recommendations.length >= 3) break;
   }
-  return { version: 2, shopping: shoppingChecks(home, pages.product), store: home.url.origin, platform: home.platform, capturedAt, overall, categories: summary, samples, recommendations:recommendations.map(merchantFinding) };
+  const attemptedProduct = samples.find(sample => sample.kind === 'product');
+  return { version: 2, shopping: shoppingChecks(home, pages.product, attemptedProduct?.path), store: home.url.origin, platform: home.platform, capturedAt, overall, categories: summary, samples, recommendations:recommendations.map(merchantFinding) };
 }
