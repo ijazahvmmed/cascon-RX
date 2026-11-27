@@ -1,3 +1,4 @@
+import { readItemSignals, type ItemSignals } from './shopping';
 import type { PageKind, Platform } from '../../../lib/cro/model';
 import { sampleUrl } from './target';
 
@@ -6,6 +7,7 @@ type Hit = { path: string; kind: Exclude<PageKind,'homepage'>; quality: number }
 type LinkSignal = 'contact' | 'about' | 'privacy' | 'shipping' | 'returns' | 'cart' | 'checkout';
 
 export interface DocumentEvidence {
+  itemSignals?: ItemSignals;
   url: URL;
   platform: Platform;
   visible: boolean;
@@ -25,6 +27,7 @@ export interface DocumentEvidence {
   links: Set<LinkSignal>;
   detailLinks: Set<LinkSignal>;
   labels: { cart: number[]; checkout: number[]; purchase: number[]; quantity: number[] };
+  secureCartForm?: boolean;
   insecureCart: boolean;
   insecureCheckout: boolean;
   payment: boolean;
@@ -277,6 +280,7 @@ export async function extract(document: Response, url: URL): Promise<DocumentEvi
       element() { proof.blocked = true; },
     });
 
+  const itemSignals = readItemSignals(rewriter, url);
   const reader = rewriter.transform(document).body!.getReader();
   try { while (!(await reader.read()).done) { /* Drain to complete extraction. */ } }
   finally { reader.releaseLock(); }
@@ -307,7 +311,7 @@ export async function extract(document: Response, url: URL): Promise<DocumentEvi
     proof.images = Boolean(match);
   }
   proof.purchase ||= formIds.size > 0;
-  return proof;
+  return { ...proof, itemSignals, secureCartForm:formIds.size > 0 };
 }
 
 export function verifies(evidence: DocumentEvidence, kind: PageKind, routeHint = false) {
@@ -319,6 +323,9 @@ export function verifies(evidence: DocumentEvidence, kind: PageKind, routeHint =
   }
   if (kind === 'collection') return !evidence.productTemplate &&
     (evidence.collectionTemplate && productCount > 0 || productCount >= 2 && (evidence.collectionSchema || routeHint));
-  const commerce = evidence.links.has('cart') || evidence.purchase || productCount > 0;
-  return commerce || (evidence.platform !== 'Other or undetected' && evidence.candidates.some(x => x.kind === 'collection'));
+  const storePlatform = evidence.platform !== 'Other or undetected';
+  const catalogue = evidence.candidates.length > 0;
+  return (catalogue && (evidence.links.has('cart') || evidence.purchase || storePlatform)) ||
+    (productCount > 1 && (evidence.visiblePrice || evidence.collectionSchema)) ||
+    (evidence.productSchema && evidence.purchase);
 }

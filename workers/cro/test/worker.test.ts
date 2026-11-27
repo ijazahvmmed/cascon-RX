@@ -103,10 +103,10 @@ test('rejects bot gates and unexpected media, and bounds oversized decompressed 
 test('withholds an overall score on homepage-only evidence and never scores absent campaign tactics negatively', () => {
   const home = evidence();
   const report = evaluate(home,{homepage:home},[{kind:'homepage',path:'/',status:'read'}],time);
-  assert.equal(report.overall.score,null);
+  assert.ok(report.shopping.some(item => item.result === 'Could not confirm'));
   assert.equal(report.recommendations.length,0);
-  assert.equal(report.categories.find(c=>c.category==='seasonal')?.score,null);
-  assert.equal(report.categories.find(c=>c.category==='mobile')?.score,100);
+  assert.equal(report.categories.find(c=>c.category==='seasonal')?.assessed,0);
+  assert.equal(report.categories.find(c=>c.category==='mobile')?.passed,3);
 });
 
 test('rejects misleading candidate types and applies the same calculation regardless of ownership', () => {
@@ -133,22 +133,15 @@ test('prefix scans do not flag content missing beyond the byte limit', () => {
   const home = evidence({ complete:false, title:'', description:false, headings:0, viewport:null, main:true });
   const report = evaluate(home,{ homepage:home },[{kind:'homepage',path:'/',status:'partial'}],time);
   assert.equal(report.recommendations.length,0);
-  assert.equal(report.overall.score,null);
+  assert.ok(report.shopping.some(item => item.result === 'Could not confirm'));
 });
 
 
-test('uses a scoped homepage score only with sufficient homepage evidence', () => {
+test('template features alone earn no product credit on a homepage-only scan', () => {
   const home = evidence({ candidates:[{kind:'product',path:'/products/a',quality:2}],
     links:new Set(['about','shipping','returns','contact','privacy','cart']), search:true });
-  const samples = [{kind:'homepage',path:'/',status:'read'}, {kind:'product',status:'rate limited'}] as const;
-  const report = evaluate(home, {homepage:home}, [...samples], time);
-  assert.equal(report.overall.score,null);
-  assert.equal(report.homepage.score,100);
-  assert.equal(assessment(report).label,'Homepage readiness');
-  assert.match(assessment(report).detail,/rate-limited/);
-  const sparse = evidence({complete:false, title:'', description:false, headings:0, nav:false,
-    main:false, search:false, lang:false, viewport:null, candidates:[], links:new Set()});
-  const insufficient = evaluate(sparse, {homepage:sparse}, [], time);
-  assert.equal(insufficient.homepage.score,null);
-  assert.equal(assessment(insufficient).label,'Verified checks');
+  const report = evaluate(home, {homepage:home}, [], time);
+  assert.equal(assessment(report).value,'0 confirmed');
+  assert.equal(report.shopping.filter(item => item.result === 'Could not confirm').length,7);
+  assert.equal(verifies(evidence({candidates:[],links:new Set(['cart'])}),'homepage'),false);
 });

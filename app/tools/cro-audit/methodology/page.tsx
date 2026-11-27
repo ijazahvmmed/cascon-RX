@@ -1,53 +1,44 @@
 import Link from 'next/link';
+import { categories, type Category } from '@/lib/cro/model';
+import { principles } from '@/lib/cro/principles';
 import JsonLd from '@/components/JsonLd';
 import { breadcrumbSchema, pageMetadata, webPageSchema } from '@/lib/seo';
-import { categories } from '@/lib/cro/model';
-import type { Category } from '@/lib/cro/model';
-import { principles } from '@/lib/cro/principles';
 import styles from '../scanner.module.css';
 
 const path = '/tools/cro-audit/methodology';
-const title = 'Ecommerce CRO Audit Methodology';
-const description = 'See how the Cascon CRO scanner samples stores, scores clear evidence and separates automated findings from expert review.';
+const title = 'How the store checklist works';
+const description = 'See what Cascon checks on your store and how to read your results.';
 export const metadata = pageMetadata(path, title, description);
 
 export default function MethodologyPage() {
   return <div className={styles.method}>
     <article className={styles.wrap}>
       <Link className={styles.back} href="/tools/cro-audit">CRO scanner</Link>
-      <h1>How the CRO scanner works</h1>
-      <p className={styles.intro}>A rule-based review of public storefront HTML, with a clear boundary around what the evidence can establish.</p>
-      <section>
-        <h2>Pages sampled</h2>
-        <p>The scanner reads the store entry page and samples one verified same-origin collection and one verified product when discoverable. Each accepted submission starts a new scan. For a product or collection link, the scanner must discover and verify the submitted path before it returns a report. URL queries and fragments are discarded. For larger pages the scanner reads a bounded HTML prefix and withholds findings that depend on missing content. Unavailable or ambiguous pages are reported separately. Only public page requests are made. The scanner spaces page requests and stops on access restrictions or rate limits. It does not load embedded assets or execute scripts, and never opens a cart or checkout or submits an order.</p>
+      <h1>How the store checklist works</h1>
+      <p className={styles.intro}>Can a shopper find an item, understand the price and see how to buy it?</p>
+      <section><h2>What we look for</h2>
+        <p>We start on your homepage and follow store links to one product and one collection when we can. We check for a way to reach the product, its description, its price, an add-to-cart button, delivery terms, return terms and a way to contact the store.</p>
+        <p>We look for a delivery time or a free-delivery statement with the item. For returns, we look for a return period or a statement that returns are unavailable. A policy link alone earns no credit for those answers.</p>
       </section>
-      <section>
-        <h2>Evidence and scoring</h2>
-        <p>Each rule can pass, fail, remain unknown or be outside the observed page’s scope. Weighted passes are divided by weighted assessed checks. High, medium and low priority checks weigh 3, 2 and 1. Unknown checks affect evidence coverage only. Optional offers do not affect the score by being absent.</p>
-        <p>A category score requires at least two assessed checks and at least 60% of its applicable evidence weight. The overall score also requires a verified product page, at least 18 assessed checks and six scored categories. When the overall threshold is unmet, we can score just the homepage using all automated homepage rules, with at least six assessed checks and 60% of applicable evidence weight. Below both thresholds we show verified counts. The report shows assessed and applicable counts alongside the result. Score thresholds describe evidence coverage and do not predict revenue, usability or performance.</p>
-        <p>Recommendations are limited to three confirmed observations from distinct categories. Higher business priority weighs first, then confidence and implementation effort. Moderate confidence marks a static observation that merits checking in the rendered page.</p>
+      <section><h2>How to read the result</h2>
+        <p>Each confirmed answer counts once. An unfinished price or description is marked for attention. If a page will not open or we cannot recognize the answer, it stays on the list to check. Once all seven answers are known, we show how many passed.</p>
+        <p>The other store checks cover smaller details, such as whether a cart link has a name. Those details do not earn extra points on the shopping checklist. Optional discounts, gifts and special offers are always your choice.</p>
       </section>
-      <section>
-        <h2>Expert assessment</h2>
-        <p>Visual hierarchy, real device behavior, checkout interaction, competitor comparison, a detailed roadmap and experiment design need an expert assessment. These are matters to investigate during a consultation.</p>
+      <section><h2>What takes a closer look</h2>
+        <p>Someone needs to try the store to judge how easy it feels on a phone or how checkout works. Understanding sales takes real customer and order information. The free scan never places an order.</p>
       </section>
-      <section>
-        <h2>120 principles</h2>
-        <p>48 rules use public HTML when evidence supports a result. The other 72 are contextual consultation prompts. The same catalogue and applicability rules apply to every store.</p>
+      <details className={styles.trace}>
+        <summary>Questions for a hands-on review</summary>
         <div className={styles.catalogue}>
           {(Object.keys(categories) as Category[]).map(category => <details key={category}>
             <summary>{categories[category]}</summary>
-            <dl>{principles.filter(p => p.category === category).map(p => <div key={p.id}>
-              <dt>{p.title} <span>{p.mode === 'automated' ? 'HTML rule' : 'Expert review'}</span></dt>
-              <dd>{p.why} {p.change} <small>Effort {p.effort.toLowerCase()}</small></dd>
-            </div>)}</dl>
+            <ul>{principles.filter(p => p.mode === 'expert' && p.category === category).map(p =>
+              <li key={p.id}>{p.title}</li>)}</ul>
           </details>)}
         </div>
-      </section>
-      <section>
-        <h2>Privacy and availability</h2>
-        <p>Reports remain in the current browser tab. Site analytics follow your consent settings and omit submitted addresses. Choosing a consultation passes your store address and a short summary to Cal.com. The PDF saves the same free summary shown on screen.</p>
-        <p>Scan capacity is limited. Stores that require scripts or block automated access may return partial evidence or be unavailable. The scanner makes no claim about how often it works across all stores.</p>
+      </details>
+      <section><h2>Your report</h2>
+        <p>You can read and save the summary without giving us an email address. If you choose a consultation, we pass your store address and a short summary to the booking page.</p>
         <Link className={styles.back} href="/tools/cro-audit">Run a free scan</Link>
       </section>
     </article>

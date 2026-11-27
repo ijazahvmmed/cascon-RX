@@ -4,28 +4,28 @@ import Link from 'next/link';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { CAL_LINK } from '@/lib/constants';
 import { trackCro } from '@/lib/cro/activity';
-import { assessment, categories, sampleLabels } from '@/lib/cro/model';
+import { assessment, categories, categoryResult, sampleLabels } from '@/lib/cro/model';
 import type { ScanError, ScanReport, Sample } from '@/lib/cro/model';
 import styles from './scanner.module.css';
 import ScanTrace, { presentationMs, readStream, type PageRead } from './scan-trace';
 
 const pages = [
-  { kind: 'homepage', label: 'Homepage', detail: 'Store entry and visible navigation' },
-  { kind: 'product', label: 'Product page', detail: 'Product details, price and buy controls' },
-  { kind: 'collection', label: 'Collection page', detail: 'Product links and browsing structure' },
+  { kind: 'homepage', label: 'Homepage', detail: 'Where shoppers start' },
+  { kind: 'product', label: 'Product page', detail: 'What the item costs and how to buy it' },
+  { kind: 'collection', label: 'Collection page', detail: 'How shoppers find an item' },
 ] as const;
 
 const errors: Record<ScanError, string> = {
-  invalid: 'Enter a public storefront URL, such as a store homepage.',
-  blocked: 'This address falls outside the scannerâ€™s public storefront scope. Try the storeâ€™s main domain.',
-  denied: 'The storefront declined automated access. A report could not be prepared.',
-  'store-limited': 'The storefront is limiting requests. Try again later.',
-  unavailable: 'The storefront could not be read within the scan limits. Try the public homepage or try again later.',
-  unsampled: 'We couldnâ€™t verify the submitted page as a linked product or collection. Try the store homepage for a storefront assessment.',
-  unverified: 'The response did not contain enough storefront evidence to verify an ecommerce site.',
-  busy: 'The scanner is temporarily unavailable. Try again later.',
-  limited: 'The free scan limit has been reached. Try again later.',
-  timeout: 'The store took too long to respond. Try again later.',
+  invalid: 'Enter a store address, such as https://your-store.com.',
+  blocked: 'We could not open that address. Try the store homepage.',
+  denied: 'The store did not let us open this page.',
+  'store-limited': 'The store asked us to pause. Please try again later.',
+  unavailable: 'We could not read this store. Try its homepage or come back later.',
+  unsampled: 'We could not find that product or collection through the store. Try its homepage.',
+  unverified: 'We could not tell that this is a shop. Try the main store address.',
+  busy: 'The scanner is busy. Please try again later.',
+  limited: 'The scanner has reached its limit. Please try again later.',
+  timeout: 'The store took too long to open. Please try again later.',
 };
 const worker = process.env.NEXT_PUBLIC_CRO_WORKER_URL ||
   (process.env.NODE_ENV === 'development' ? 'http://localhost:8787' : '');
@@ -42,7 +42,7 @@ function consultationUrl(report: ScanReport) {
   const score = summary.label + ' ' + summary.value;
   booking.searchParams.set('notes', [
     'Store: ' + report.store,
-    'Cascon CRO assessment: ' + score + ' Â· ' + report.overall.assessed + ' checks assessed',
+    'Cascon store check: ' + score + ' · ' + report.overall.assessed + ' checks completed',
     findingList && 'Observed priorities: ' + findingList,
   ].filter(Boolean).join('\n'));
   booking.searchParams.set('utm_source', 'cascon_cro_audit');
@@ -93,7 +93,7 @@ export default function Scanner() {
             if (!controller.signal.aborted) setReads(previous => [...previous, event]);
           })
         : await request.json().catch(() => null);
-      if (!request.ok || payload?.version !== 1 || !Array.isArray(payload.recommendations)) {
+      if (!request.ok || payload?.version !== 2 || !Array.isArray(payload.shopping) || !Array.isArray(payload.recommendations)) {
         const code = payload?.error as ScanError;
         const error = Object.hasOwn(errors, code) ? errors[code] :
           request.status === 429 ? errors.limited : errors.busy;
@@ -129,7 +129,7 @@ export default function Scanner() {
       if (controller.signal.aborted) return;
       setReport(result);
       setState('done');
-      trackCro({ name: 'cro_scan_complete', coverage: result.overall.score === null ? 'partial' : 'scored',
+      trackCro({ name: 'cro_scan_complete', coverage: result.shopping.some(item => item.result === 'Could not confirm') ? 'partial' : 'scored',
         sampled: String(result.samples.filter(page => page.status === 'read' || page.status === 'partial').length) });
     } catch (error) {
       if (controller.signal.aborted && controller.signal.reason !== 'timeout') return;
@@ -180,11 +180,11 @@ export default function Scanner() {
     <div className={styles.wrap}>
       <section className={styles.hero} aria-labelledby="cro-title">
         <div className={styles.introColumn}>
-          <p className={styles.kicker}>Cascon Digital <span>/</span> Conversion tools</p>
-          <h1 id="cro-title">Free ecommerce CRO audit</h1>
-          <p className={styles.intro}>Check your storefrontâ€™s public HTML. Get a readiness assessment and up to three evidence-backed improvements.</p>
+          <p className={styles.kicker}>Cascon Digital <span>/</span> Store tools</p>
+          <h1 id="cro-title">Free online store check</h1>
+          <p className={styles.intro}>See what shoppers can find before they buy, from the item price to delivery and returns.</p>
           <form onSubmit={submit} className={styles.form} data-clarity-mask="true">
-            <label htmlFor="cro-store">Storefront URL</label>
+            <label htmlFor="cro-store">Store address</label>
             <div className={styles.inputRow}>
               <input id="cro-store" type="text" inputMode="url" autoCapitalize="none" autoCorrect="off" autoComplete="off" spellCheck={false}
                 placeholder="https://your-store.com" maxLength={2048} required disabled={state === 'loading'} value={target}
@@ -204,8 +204,8 @@ export default function Scanner() {
           </div>}
           {state === 'error' && <h2 ref={heading} tabIndex={-1} role="alert" className={styles.error}>{message}</h2>}
         </div>
-        <aside className={styles.scope} aria-label="Pages the scanner samples">
-          <div className={styles.scopeTop}><h2>Scan scope</h2><span>Public HTML</span></div>
+        <aside className={styles.scope} aria-label="Pages we check">
+          <div className={styles.scopeTop}><h2>Pages we check</h2></div>
           <ol className={styles.scopeRows}>
             {pages.map((page, i) => <li key={page.kind}>
               <span className={styles.pageNumber} aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
@@ -213,17 +213,17 @@ export default function Scanner() {
               <span className={styles.scopeState}>{scopeStatus(report,page.kind)}</span>
             </li>)}
           </ol>
-          <Link className={styles.methodLink} href="/tools/cro-audit/methodology">Scoring notes</Link>
+          <Link className={styles.methodLink} href="/tools/cro-audit/methodology">About the checklist</Link>
         </aside>
       </section>
 
       {report && <section className={styles.result} data-cro-report="" data-clarity-mask="true" aria-labelledby="cro-report-title">
         <header className={styles.resultTop}>
           <div>
-            <p className={styles.kicker}>{report.platform} Â· {new URL(report.store).hostname}</p>
-            <h2 id="cro-report-title" ref={heading} tabIndex={-1}>Conversion readiness</h2>
+            <p className={styles.kicker}>{new URL(report.store).hostname}</p>
+            <h2 id="cro-report-title" ref={heading} tabIndex={-1}>Your store results</h2>
             <p>Scanned <time dateTime={report.capturedAt}>{new Date(report.capturedAt).toLocaleString()}</time>
-              {' Â· '}{report.samples.filter(page => page.status === 'read' || page.status === 'partial').length} of 3 pages read</p>
+              {' · '}{report.samples.filter(page => page.status === 'read' || page.status === 'partial').length} of 3 pages read</p>
           </div>
           <div>
             <button className={styles.secondary} onClick={downloadReport} disabled={makingPdf} type="button">
@@ -238,40 +238,46 @@ export default function Scanner() {
           <p>{summary?.detail}</p>
         </div>
 
-        <details className={styles.trace} open>
-          <summary>Scan evidence</summary>
+        <ul className={styles.shoppingList} aria-label="Shopping checklist">
+          {report.shopping.map(item => <li key={item.title}>
+            <div><strong>{item.title}</strong><span>{item.result}</span></div><p>{item.detail}</p>
+          </li>)}
+        </ul>
+        <details className={styles.trace}>
+          <summary>Pages checked</summary>
           <ul>{report.samples.map(sample => <li key={sample.kind}>
             <span>{pages.find(page => page.kind === sample.kind)?.label}</span>
-            <span>{sampleLabels[sample.status]}{sample.path ? ' Â· ' + sample.path : ''}</span>
+            <span>{sampleLabels[sample.status]}{sample.path ? ' · ' + sample.path : ''}</span>
           </li>)}</ul>
           {report.samples.some(sample => sample.status === 'rate limited' || sample.status === 'blocked') &&
-            <p className={styles.sampleNote}>The store limited automated access. The report uses the pages it could read. Missing evidence carries no score penalty.</p>}
+            <p className={styles.sampleNote}>The store asked us to stop. We can only report on the pages we opened.</p>}
         </details>
         <section className={styles.categorySection}>
-          <h3>Category results</h3>
+          <h3>Other store checks</h3>
+          <p>These cover individual details, such as whether a cart link has a name. Checkout and payment need a hands-on review.</p>
           <ul className={styles.categoryGrid}>{report.categories.map(category => <li key={category.category}>
             <strong>{categories[category.category]}</strong>
-            <span>{category.score === null ? 'Insufficient evidence' : category.score + ' / 100'}</span>
-            <small>{category.applicable > 0 ? category.assessed + ' of ' + category.applicable + ' assessed' : 'No applicable checks'}</small>
+            <span>{categoryResult(category)}</span>
+            <small>{category.applicable > category.assessed ? (category.applicable - category.assessed) + ' still to check' : ''}</small>
           </li>)}</ul>
         </section>
         <section className={styles.recommendations}>
           <h3>Recommended next steps</h3>
           {report.recommendations.length === 0 ?
-            <p>The scan found no recommendation with enough evidence to show here. Check the sample and coverage to see what was assessed.</p> :
+            <p>We did not find a change we could confidently recommend from these pages.</p> :
             report.recommendations.map(item => <details key={item.id} className={styles.trace}
               onToggle={e => { if (e.currentTarget.open) engagementOnce(item.id, () => trackCro({ name: 'cro_recommendation_engagement', rule: item.id })); }}>
               <summary>{item.title}</summary>
               <dl className={styles.finding}>
-                <div><dt>Observed evidence</dt><dd>{item.evidence} <span>{item.path}</span></dd></div>
+                <div><dt>What we found</dt><dd>{item.evidence} <span>{item.path}</span></dd></div>
                 <div><dt>Why it matters</dt><dd>{item.why}</dd></div>
                 <div><dt>Suggested change</dt><dd>{item.change}</dd></div>
-                <div><dt>Priority, effort and confidence</dt><dd>{item.priority} priority Â· {item.effort} effort Â· {item.confidence} confidence</dd></div>
+                <div><dt>Planning the change</dt><dd>{item.priority} priority · {item.effort} effort · {item.confidence} confidence</dd></div>
               </dl>
             </details>)}
         </section>
         <section className={styles.expert}>
-          <div><h3>Expert CRO audit</h3><p>Get a visual UX review, competitor analysis, a prioritized implementation roadmap and an experimentation strategy.</p></div>
+          <div><h3>A closer look at your store</h3><p>Have Cascon shop through your store, compare it with competitors and suggest what to change and test first.</p></div>
           <a className={styles.primary} data-cro-booking href={consultationUrl(report)} referrerPolicy="no-referrer"
             onClick={() => engagementOnce('consultation', () => trackCro({ name: 'enquiry_intent', channel: 'calendar', tool: 'cro-audit' }))}>
             Unlock full CRO audit

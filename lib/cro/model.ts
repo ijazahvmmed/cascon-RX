@@ -1,7 +1,7 @@
 export const categories = {
   home: 'Homepage', collections: 'Collections', product: 'Product pages',
   navigation: 'Navigation', trust: 'Trust', pricing: 'Pricing', shipping: 'Shipping',
-  returns: 'Returns', cart: 'Cart', checkout: 'Checkout', mobile: 'Mobile foundations',
+  returns: 'Returns', cart: 'Cart', checkout: 'Checkout', mobile: 'Shopping on a phone',
   seasonal: 'Seasonal campaigns',
 } as const;
 
@@ -34,23 +34,35 @@ export interface Coverage {
   assessed: number;
   applicable: number;
   passed: number;
-  score: number | null;
 }
 export interface CategoryResult extends Coverage { category: Category }
 export interface Sample { kind: PageKind; path?: string; status: 'read' | 'partial' | 'blocked' | 'unavailable' | 'not found' | 'unverified' | 'rate limited' | 'skipped' | 'outside scope' }
 export const sampleLabels: Record<Sample['status'], string> = {
-  read: 'Sampled', partial: 'HTML prefix sampled', blocked: 'Store declined request',
-  'rate limited': 'Store rate limit', skipped: 'Not requested', 'outside scope': 'Outside scan scope',
-  unavailable: 'Could not read', 'not found': 'Not discovered', unverified: 'Could not verify',
+  read: 'Checked', partial: 'Partly checked', blocked: 'Could not open',
+  'rate limited': 'Store asked us to pause', skipped: 'Skipped', 'outside scope': 'Outside this store',
+  unavailable: 'Could not read', 'not found': 'No page found', unverified: 'Could not identify the page',
 };
 
+export interface ShoppingCheck {
+  title: string;
+  result: 'Confirmed' | 'Needs attention' | 'Could not confirm';
+  detail: string;
+}
+
+export function categoryResult(category: CategoryResult) {
+  if (!category.applicable) return 'Does not apply here';
+  if (!category.assessed) return 'Could not check';
+  const issues = category.assessed - category.passed;
+  return category.passed + ' passed' + (issues ? ' · ' + issues + ' to fix' : '');
+}
+
 export interface ScanReport {
-  version: 1;
+  shopping: ShoppingCheck[];
+  version: 2;
   store: string;
   platform: Platform;
   capturedAt: string;
   overall: Coverage;
-  homepage: Coverage;
   categories: CategoryResult[];
   samples: Sample[];
   recommendations: Finding[];
@@ -58,16 +70,12 @@ export interface ScanReport {
 export type ScanError = 'invalid' | 'blocked' | 'unavailable' | 'busy' | 'store-limited' | 'denied' | 'limited' | 'timeout' | 'unsampled' | 'unverified';
 
 export function assessment(report: ScanReport) {
-  if (report.overall.score !== null) return { label: 'Storefront readiness', value: report.overall.score + ' / 100',
-    detail: report.overall.passed + ' of ' + report.overall.assessed + ' assessed checks passed across the sampled storefront.' };
-  const product = report.samples.find(sample => sample.kind === 'product');
-  const reason = product?.status === 'rate limited' ? 'The store rate-limited the product page.' :
-    product?.status === 'blocked' ? 'The store declined the product-page request.' :
-    'Evidence for a storewide score is incomplete.';
-  if (report.homepage?.score != null) return { label: 'Homepage readiness', value: report.homepage.score + ' / 100',
-    detail: report.homepage.passed + ' of ' + report.homepage.assessed + ' assessed homepage checks passed. ' + reason };
-  return { label: 'Verified checks', value: report.overall.assessed ? report.overall.passed + ' of ' + report.overall.assessed + ' passed' : 'No checks assessed',
-    detail: 'The sample is too limited for a readiness score. See the page evidence below.' };
+  const passed = report.shopping.filter(item => item.result === 'Confirmed').length;
+  const issues = report.shopping.filter(item => item.result === 'Needs attention').length;
+  const unknown = report.shopping.length - passed - issues;
+  return { label: 'Shopping checklist', value: unknown ? passed + ' confirmed' : passed + ' of ' + report.shopping.length + ' passed',
+    detail: [issues ? issues + ' need attention' : '', unknown ? unknown + ' still to check' : 'All checks completed'].filter(Boolean).join(' · ') + '.' };
+
 }
 
 export type ScanUpdate = { reading: PageKind; path: string } | { report: ScanReport } | { error: ScanError };

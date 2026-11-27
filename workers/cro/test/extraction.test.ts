@@ -87,7 +87,7 @@ test('two submissions to the Worker read the same storefront independently', asy
       if (url.href !== 'https://shop.example.com/') throw new Error('Unexpected URL');
       reads++;
       if (reads > 1) return new Response(null, {status:403});
-      return new Response('<html><body><main><h1>Shop</h1><a href="/cart">Cart</a></main></body></html>',
+      return new Response('<html><body><main><h1>Shop</h1><a href="/products/tote">Tote</a><a href="/cart">Cart</a></main></body></html>',
         {headers:{'content-type':'text/html'}});
     };
     const budget = { idFromName: () => 'test', get: () => ({ fetch: async () => new Response(null,{status:204}) }) };
@@ -140,5 +140,53 @@ test('only the local launch setting and loopback host select preview quotas', as
       assert.deepEqual(await response.json(), { error:'limited', scope:'visitor', retryAfter:60,
         name:preview ? 'local-preview-v1' : 'public-scan-v1', preview });
     }
+  } finally { await mf.dispose(); }
+});
+
+
+test('shopping scores track what an item page actually tells shoppers', async () => {
+  const mf = await fixture(`
+    import { extract } from './src/extract';
+    import { shoppingChecks } from './src/shopping';
+    export default { async fetch(request) {
+      const origin = new URL('https://merchant.example.com/');
+      const home = await extract(new Response('<main><a href="/contact">Contact us</a></main>'), origin);
+      const product = await extract(new Response(await request.text()), new URL('/products/bag',origin));
+      return Response.json(shoppingChecks(home, product));
+    }};
+  `);
+  const run = async (html: string) => {
+    const reply = await mf.dispatchFetch('http://fixture.test/', {method:'POST', body:'<body><main>' + html + '</main></body>'});
+    assert.equal(reply.status,200);
+    return (await reply.json()) as {title:string;result:string}[];
+  };
+  const details = '<div class="product__description">A linen bag with an inside pocket and a 40 cm strap.</div>';
+  const price = '<span class="price">$42</span>';
+  const buy = '<button name="add">Add to cart</button>';
+  const policies = '<p>Ships in 3 days.</p><p>Returns within 30 days.</p>';
+  const wrap = (body: string) => '<section class="product__info-container">' + body + '</section>';
+  try {
+    const bare = await run(wrap('<h1>Bag</h1><meta itemprop="price" content="42"><a href="/shipping">Shipping policy</a>'));
+    assert.equal(bare.filter(check => check.result === 'Confirmed').length,2);
+    const misleading = await run(wrap('<div hidden>' + details + price + policies + '</div>' +
+      '<aside>' + price + '</aside><button name="add" disabled>Add to cart</button><del>' + price + '</del>'));
+    assert.deepEqual(misleading,bare);
+    const unfinished = await run(wrap('<div class="product__description">Coming soon</div><span class="price">TBD</span>'));
+    assert.equal(unfinished.filter(check => check.result === 'Needs attention').length,2);
+    const complete = await run(wrap(details + price + buy + policies));
+    assert.deepEqual(complete.map(check => check.result), Array(7).fill('Confirmed'));
+    const customLayout = await run('<article class="product type-product">' + details + '<del>$50</del>' + price + buy + policies + '</article>');
+    assert.deepEqual(customLayout,complete);
+    const extras = await run('<article class="product type-product"><table><tr><td><span class="price">$50</span></td></tr></table>' +
+      '<p>We do not offer free shipping.</p><p>Is delivery free?</p><button name="add" class="disabled">Add to cart</button></article>');
+    assert.deepEqual(extras,bare);
+    const oldPrice = '<del><span class="price">$60</span></del>';
+    const announced = (text: string) => '<span class="screen-reader-text">' + text + '</span>';
+    const sale = await run(wrap(oldPrice + announced('Original price was: $60. Current price is: $42.')));
+    assert.equal(sale.find(check => check.title === 'See the item price')?.result,'Confirmed');
+    const expired = await run(wrap(oldPrice + announced('Original price was: $60.')));
+    assert.equal(expired.find(check => check.title === 'See the item price')?.result,'Could not confirm');
+    const withoutMarketing = await run(wrap(details + price + buy + policies + '<p>Gift wrapping available</p>'));
+    assert.deepEqual(complete,withoutMarketing);
   } finally { await mf.dispose(); }
 });

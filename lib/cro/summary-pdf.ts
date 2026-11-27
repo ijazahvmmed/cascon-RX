@@ -1,4 +1,4 @@
-import { assessment, sampleLabels } from './model';
+import { assessment, categoryResult, sampleLabels } from './model';
 import { PDFDocument, StandardFonts, rgb, type PDFFont } from 'pdf-lib';
 import { categories, type ScanReport } from './model';
 
@@ -36,7 +36,7 @@ function wrap(value: string, font: PDFFont, size: number, max: number) {
 
 export async function summaryPdf(report: ScanReport) {
   const doc = await PDFDocument.create();
-  doc.setTitle('Cascon Digital — Free CRO assessment');
+  doc.setTitle('Cascon Digital — Free store check');
   doc.setAuthor('Cascon Digital');
   const regular = await doc.embedFont(StandardFonts.Helvetica);
   const emphasis = await doc.embedFont(StandardFonts.HelveticaBold);
@@ -54,39 +54,46 @@ export async function summaryPdf(report: ScanReport) {
     if (y - pixels >= margin) return;
     page = doc.addPage([width,height]);
     y = height - margin;
-    text('CASCON DIGITAL / FREE CRO ASSESSMENT',10,true,muted);
+    text('CASCON DIGITAL / FREE STORE CHECK',10,true,muted);
     y -= 12;
   }
 
-  text('CASCON DIGITAL / FREE CRO ASSESSMENT',10,true,muted);
+  text('CASCON DIGITAL / FREE STORE CHECK',10,true,muted);
   y -= 9;
-  text('Conversion readiness',27,true);
-  text(report.store + '  /  ' + report.platform,11,false,muted);
+  text('Your store results',27,true);
+  text(report.store,11,false,muted);
   text('Recorded ' + new Date(report.capturedAt).toISOString().slice(0,10) + ' UTC',10,false,muted);
   y -= 18;
   page.drawRectangle({ x:margin, y:y-57, width:width-2*margin, height:66, color:green });
   y -= 9;
   const headline = assessment(report);
   text(headline.label + '  ' + headline.value,17,true,ink,margin+12);
-  text(report.overall.assessed + ' of ' + report.overall.applicable + ' applicable checks assessed',10,false,muted,margin+12);
+  text(report.overall.assessed + ' of ' + report.overall.applicable + ' other checks completed',10,false,muted,margin+12);
   y -= 32;
-  text('Sample evidence',14,true);
+  text('Shopping checklist',14,true);
+  for (const item of report.shopping) {
+    ensure(50);
+    text(item.title + '  /  ' + item.result,10,true);
+    text(item.detail,9,false,muted);
+  }
+  ensure(85);
+  text('Pages checked',14,true);
   for (const sample of report.samples) {
     text(sample.kind + '  /  ' + sampleLabels[sample.status] + (sample.path ? '  /  ' + sample.path : ''),9,false,muted);
   }
   y -= 11;
-  text('Category results',14,true);
+  text('Other store checks',14,true);
   for (const category of report.categories) {
-    text(categories[category.category] + '  /  ' + (category.score === null ? 'Insufficient evidence' : category.score + ' / 100') +
-      '  /  ' + category.assessed + ' of ' + category.applicable + ' assessed',10);
+    ensure(18);
+    text(categories[category.category] + '  /  ' + categoryResult(category),10);
   }
   y -= 13;
   ensure(66);
   text('Recommended next steps',14,true);
-  if (!report.recommendations.length) text('The available evidence did not support a recommendation.');
+  if (!report.recommendations.length) text('We did not find a change we could confidently recommend from these pages.');
   for (const item of report.recommendations.slice(0,3)) {
     const paragraphs = [
-      'Evidence: ' + item.evidence + ' (' + item.path + ')',
+      'What we found: ' + item.evidence + ' (' + item.path + ')',
       'Why it matters: ' + item.why,
       'Suggested change: ' + item.change,
       item.priority + ' priority / ' + item.effort + ' effort / ' + item.confidence + ' confidence',
@@ -100,7 +107,7 @@ export async function summaryPdf(report: ScanReport) {
   ensure(75);
   page.drawLine({ start:{x:margin,y}, end:{x:width-margin,y}, thickness:.5,color:line });
   y -= 15;
-  text('This summary is based on public HTML. Visual UX, interactive checkout and experimentation require a separate expert assessment.',9,false,muted);
+  text('A hands-on review can show how it feels to shop on a phone and go through checkout.',9,false,muted);
   text('www.cascondigital.com/tools/cro-audit/methodology',9,false,muted);
   return doc.save();
 

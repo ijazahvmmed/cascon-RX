@@ -98,3 +98,10 @@
 @media(max-width:880px){.hero{grid-template-columns:1fr;gap:37px;min-height:0;padding-block:110px 58px}.scope{max-width:640px}}
 @media(max-width:620px){.wrap{width:calc(100% - 38px)}.hero h1{margin-top:15px}.inputRow{flex-direction:column;border:0;background:transparent;padding:0}.inputRow:focus-within{box-shadow:none}.inputRow input{border:1px solid var(--color-border);border-radius:var(--radius-pill);background:#fff;min-height:46px;padding-inline:15px}.inputRow input:focus-visible{outline:2px solid var(--color-text);outline-offset:2px}.form{margin-top:23px}.categoryGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.scoreBox,.finding{grid-template-columns:1fr}.result{margin-top:0}.expert .primary{white-space:normal}.scopeRows li{padding-block:12px}.scopeRows p{max-width:25ch}.expert{align-items:start}}
 @media(prefers-reduced-motion:reduce){.pixels i,.shimmer,.introColumn,.result{animation:none}.primary,.secondary{transition:none}}
+
+.shoppingList{margin-block:18px}
+.shoppingList li{padding:12px 0;border-bottom:1px solid var(--color-border)}
+.shoppingList li>div{display:flex;align-items:baseline;justify-content:space-between;gap:16px}
+.shoppingList strong{font-weight:400}
+.shoppingList span,.shoppingList p{font-size:var(--font-size-sm);color:var(--color-text-secondary)}
+.shoppingList span{text-align:right}

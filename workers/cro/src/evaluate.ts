@@ -1,3 +1,5 @@
+import { merchantFinding } from './merchant-copy';
+import { shoppingChecks } from './shopping';
 import { categories } from '../../../lib/cro/model';
 import type { Category, Confidence, Coverage, Finding, PageKind, Principle, Priority, Sample, ScanReport } from '../../../lib/cro/model';
 import { principles } from '../../../lib/cro/principles';
@@ -91,7 +93,7 @@ const rules: Record<string, Rule> = {
 
   'cart-link': ['homepage', p => observed(p.links.has('cart'))],
   'cart-label': ['homepage', p => checkLabels(p.labels.cart,'A cart link has no text or name in the homepage HTML. Its rendered accessible name merits a check.')],
-  'cart-submit': ['product', p => p.insecureCart ? check(false,'A same-merchant cart form has an explicit HTTP action.') : p.purchase ? pass : unknown],
+  'cart-submit': ['product', p => p.insecureCart ? check(false,'A same-merchant cart form has an explicit HTTP action.') : p.secureCartForm ? pass : unknown],
   'cart-quantity': ['product', p => observed(p.labels.quantity.length > 0)],
 
   'checkout-entry': ['homepage', p => p.links.has('checkout') ? checkLabels(p.labels.checkout, 'A checkout link has no text or name in the homepage HTML. Check its rendered label.') : na],
@@ -120,7 +122,6 @@ const rules: Record<string, Rule> = {
     check(false,'A same-merchant link explicitly marked as a campaign destination uses HTTP.') : p.campaignSecure ? pass : na],
 };
 
-export const scoreThresholds = { category: 0.6, overall: 0.6, minimumCategories: 6, minimumOverallChecks: 18 };
 const weight: Record<Priority, number> = { High: 3, Medium: 2, Low: 1 };
 const effort = { Small: 3, Moderate: 2, Larger: 1 };
 const confidence = { High: 2, Moderate: 1 };
@@ -128,14 +129,11 @@ const automatable = principles.filter(p => p.mode === 'automated');
 if (automatable.length !== Object.keys(rules).length || automatable.some(p => !(p.id in rules))) throw new Error('CRO rule catalogue mismatch');
 
 interface Outcome { principle: Principle; page: PageKind; path?: string; decision: Decision }
-function coverage(outcomes: Outcome[], minimum: number, ratio: number): Coverage {
+function coverage(outcomes: Outcome[]): Coverage {
   const applicable = outcomes.filter(o => o.decision.state !== 'not-applicable');
   const assessed = applicable.filter(o => o.decision.state === 'pass' || o.decision.state === 'fail');
   const passed = assessed.filter(o => o.decision.state === 'pass');
-  const weightOf = (items: Outcome[]) => items.reduce((sum, o) => sum + weight[o.principle.priority], 0);
-  const measured = weightOf(assessed);
-  return { assessed: assessed.length, applicable: applicable.length, passed: passed.length, score:
-    assessed.length >= minimum && measured / weightOf(applicable) >= ratio ? Math.round(100 * weightOf(passed) / measured) : null };
+  return { assessed:assessed.length, applicable:applicable.length, passed:passed.length };
 }
 
 export function evaluate(home: DocumentEvidence, pages: Partial<Record<PageKind, DocumentEvidence>>, samples: Sample[], capturedAt: string): ScanReport {
@@ -149,20 +147,28 @@ export function evaluate(home: DocumentEvidence, pages: Partial<Record<PageKind,
     return { principle, page, path: evidence?.url.pathname, decision: absenceUncertain && result.state === 'fail' ? unknown : result };
   });
   const summary = (Object.keys(categories) as Category[]).map(category => ({
-    category, ...coverage(outcomes.filter(o => o.principle.category === category), 2, scoreThresholds.category),
+    category, ...coverage(outcomes.filter(o => o.principle.category === category)),
   }));
-  const overall = coverage(outcomes, scoreThresholds.minimumOverallChecks, scoreThresholds.overall);
-  if (!pages.product || summary.filter(c => c.score !== null).length < scoreThresholds.minimumCategories) overall.score = null;
-  const homepage = coverage(outcomes.filter(o => o.page === 'homepage'), 6, scoreThresholds.category);
+  const overall = coverage(outcomes);
   const candidates: Finding[] = outcomes.flatMap(({ principle, page, path, decision }) =>
     path && decision.state === 'fail' && decision.evidence && decision.confidence ?
       [{ ...principle, page, path, evidence: decision.evidence, confidence: decision.confidence }] : []);
   const rank = (f: Finding) => weight[f.priority] * 12 + confidence[f.confidence] * 4 + effort[f.effort];
+  const signals = pages.product?.itemSignals;
+  if (signals && pages.product) {
+    const add = (id: string, category: Category, title: string, evidence: string, why: string, change: string) =>
+      candidates.push({ id, category, title, evidence, why, change, priority:'High', effort:'Small',
+        confidence:'High', mode:'automated', page:'product', path:pages.product!.url.pathname });
+    if (signals.invalidPrice && !signals.price) add('unfinished-price','pricing','Finish the item price',
+      'The price area contains an unfinished price.','People need to know the amount before buying.','Replace the temporary text with the item price and currency.');
+    if (signals.placeholder && !signals.description) add('unfinished-description','product','Finish the item description',
+      'The description still contains placeholder text.','People need something to base their choice on.','Describe the item and give a detail that helps someone choose it.');
+  }
   candidates.sort((a,b) => rank(b) - rank(a) || a.id.localeCompare(b.id));
   const recommendations: Finding[] = [];
   for (const finding of candidates) {
     if (!recommendations.some(v => v.category === finding.category)) recommendations.push(finding);
     if (recommendations.length >= 3) break;
   }
-  return { version: 1, store: home.url.origin, platform: home.platform, capturedAt, overall, homepage, categories: summary, samples, recommendations };
+  return { version: 2, shopping: shoppingChecks(home, pages.product), store: home.url.origin, platform: home.platform, capturedAt, overall, categories: summary, samples, recommendations:recommendations.map(merchantFinding) };
 }

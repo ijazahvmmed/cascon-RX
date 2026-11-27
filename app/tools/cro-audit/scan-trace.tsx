@@ -45,16 +45,16 @@ export default function ScanTrace({ reads, result, started, settled }: {
   const open = manualOpen ?? !settled;
   const rows: { title: string; detail: string }[] = result ? result.samples.map(sample => ({
     title: labels[sample.kind], detail: [sampleLabels[sample.status], sample.path].filter(Boolean).join(' · '),
-  })) : reads.map(read => ({ title: labels[read.reading], detail: 'Requested ' + read.path }));
+  })) : reads.map(read => ({ title: labels[read.reading], detail: 'Opening ' + read.path }));
   if (result) {
     const summary = assessment(result);
-    rows.push({ title: 'Rule results', detail: result.overall.passed + ' passed out of ' + result.overall.assessed + ' assessed checks.' },
+    rows.push({ title: 'Other checks', detail: result.overall.passed + ' passed out of ' + result.overall.assessed + ' checks.' },
       { title: summary.label, detail: summary.detail });
     const first = result.recommendations[0];
     if (first) rows.push({ title: first.title, detail: first.evidence });
   }
   const visible = result && !settled ? Math.min(rows.length, 1 + Math.floor(elapsed / (presentationMs / rows.length))) : rows.length;
-  const title = settled ? 'Scan details' : result ? 'Reviewing scan evidence' : 'Reading the storefront';
+  const title = settled ? 'Scan details' : result ? 'Checking what we found' : 'Opening store pages';
   return <div className={styles.scanTrace} data-clarity-mask="true">
     <button type="button" className={styles.loading} aria-label={title} aria-expanded={open} aria-controls="cro-trace-rows"
       onClick={() => setManualOpen(!open)}>
@@ -66,7 +66,7 @@ export default function ScanTrace({ reads, result, started, settled }: {
     </button>
     <div id="cro-trace-rows" hidden={!open}>
       <ol className={styles.steps} aria-label="Scan activity">
-        {!rows.length && <li><span className={styles.spin} aria-hidden="true" />Request sent to scanner</li>}
+        {!rows.length && <li><span className={styles.spin} aria-hidden="true" />Opening the store</li>}
         {rows.slice(0, visible).map((row, index) => <li key={row.title + index + Boolean(result)}>
           <span aria-hidden="true" className={!result && index === visible - 1 ? styles.spin : styles.traceDot} />
           <span>{row.title}<small>{row.detail}</small></span>

@@ -5,7 +5,7 @@ import Scanner from './scanner';
 
 const path = '/tools/cro-audit';
 const title = 'Free Ecommerce CRO Audit';
-const description = 'Scan a public Shopify, WooCommerce or ecommerce storefront. Get a conversion readiness assessment and up to three recommendations based on observed HTML.';
+const description = 'Check your online store for the details shoppers need to buy. See what we found, what still needs checking and up to three changes to consider.';
 export const metadata = pageMetadata(path, title, description);
 
 export default function CroAuditPage() {
