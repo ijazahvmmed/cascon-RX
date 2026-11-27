@@ -30,8 +30,8 @@ test('has 120 unique principles and 48 backed checks across the 12 categories', 
   assert.equal(principles.filter(p => p.mode === 'automated').length, 48);
 });
 
-test('accepts a storefront origin and drops user-supplied paths, credentials are rejected', () => {
-  assert.equal(storeEntry(' Example.com/products/sale?token=a#part ').href, 'https://example.com/');
+test('preserves public page paths, strips query data and rejects unsafe inputs', () => {
+  assert.equal(storeEntry(' Example.com/products/sale?token=a#part ').href, 'https://example.com/products/sale');
   for (const value of ['https://user@example.com', 'file:///etc/passwd', 'http://127.0.0.1', 'http://2130706433',
     'http://0x7f000001', 'http://[::ffff:127.0.0.1]', 'http://localhost', 'http://a.x.internal',
     'http://a.sslip.io', 'https://host.workers.dev', 'https://example.com:8080', 'https://example.com\\@evil.com', 'https://example.com.']) {
@@ -39,6 +39,7 @@ test('accepts a storefront origin and drops user-supplied paths, credentials are
   }
   assert.equal(sampleUrl('https://other.example.com/product/a', at), null);
   assert.equal(sampleUrl('/products/shoes?private=no#link', at)?.href,'https://example.com/products/shoes');
+  assert.throws(() => storeEntry('https://example.com/checkout/order'), Rejection);
   assert.equal(sampleUrl('/checkout/order', at), null);
   assert.equal(sampleUrl('/%63art/test', at), null);
   assert.equal(sampleUrl('/pay/%2e%2e/cart/add', at), null);

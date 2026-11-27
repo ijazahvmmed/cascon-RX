@@ -20,6 +20,7 @@ const errors: Record<ScanError, string> = {
   denied: 'The storefront declined automated access. A report could not be prepared.',
   'store-limited': 'The storefront is limiting requests. Try again later.',
   unavailable: 'The storefront could not be read within the scan limits. Try the public homepage or try again later.',
+  unsampled: 'We couldn’t verify the submitted page as a linked product or collection. Try the store homepage for a storefront assessment.',
   unverified: 'The response did not contain enough storefront evidence to verify an ecommerce site.',
   busy: 'The scanner is temporarily unavailable. Try again later.',
   limited: 'The free scan limit has been reached. Try again later.',
@@ -28,7 +29,7 @@ const errors: Record<ScanError, string> = {
 const worker = process.env.NEXT_PUBLIC_CRO_WORKER_URL ||
   (process.env.NODE_ENV === 'development' ? 'http://localhost:8787' : '');
 
-function ScanLoader({ ready }: { ready: boolean }) {
+function ScanLoader() {
   const [elapsed, setElapsed] = useState(0);
   useEffect(() => {
     const started = performance.now();
@@ -39,7 +40,7 @@ function ScanLoader({ ready }: { ready: boolean }) {
     <span className={styles.pixels} aria-hidden="true">{Array.from({ length: 9 }, (_, i) => (
       <i key={i} style={{ animationDelay: ((i % 3) + Math.abs(Math.floor(i / 3) - 1)) * 90 + 'ms' }} />
     ))}</span>
-    <span role="status" className={styles.shimmer}>{ready ? 'Preparing your report' : 'Checking the storefront'}</span>
+    <span role="status" className={styles.shimmer}>Reading the storefront</span>
     <span className={styles.elapsed} aria-hidden="true">{elapsed.toFixed(1)}s</span>
   </div>;
 }
@@ -67,7 +68,6 @@ export default function Scanner() {
   const [target, setTarget] = useState('');
   const [state, setState] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
   const [report, setReport] = useState<ScanReport | null>(null);
-  const [ready, setReady] = useState(false);
   const [message, setMessage] = useState('');
   const [pdfError, setPdfError] = useState('');
   const [makingPdf, setMakingPdf] = useState(false);
@@ -86,8 +86,6 @@ export default function Scanner() {
     if (!worker) { setMessage(errors.busy); setState('error'); return; }
     const controller = new AbortController();
     active.current = controller;
-    const started = performance.now();
-    setReady(false);
     setState('loading');
     engagement.current.clear();
     const timer = window.setTimeout(() => controller.abort('timeout'), 21_000);
@@ -106,12 +104,6 @@ export default function Scanner() {
       }
       if (controller.signal.aborted) return;
       const result = payload as ScanReport;
-      const remaining = 1600 - (performance.now() - started);
-      if (remaining > 0) {
-        setReady(true);
-        await new Promise<void>(resolve => window.setTimeout(resolve, remaining));
-        if (controller.signal.aborted) return;
-      }
       setReport(result);
       setState('done');
       trackCro({ name: 'cro_scan_complete', coverage: result.overall.score === null ? 'partial' : 'scored',
@@ -172,12 +164,17 @@ export default function Scanner() {
             <div className={styles.inputRow}>
               <input id="cro-store" type="text" inputMode="url" autoCapitalize="none" autoCorrect="off" autoComplete="off" spellCheck={false}
                 placeholder="https://your-store.com" maxLength={2048} required disabled={state === 'loading'} value={target}
-                aria-describedby="cro-input-help" onChange={e => setTarget(e.target.value)} />
+                aria-describedby="cro-input-help" onChange={e => {
+                  setTarget(e.target.value);
+                  setReport(null);
+                  setState('idle');
+                  setMessage('');
+                }} />
               <button className={styles.primary} disabled={state === 'loading'} type="submit">Scan store</button>
             </div>
-            <p id="cro-input-help">Free summary. No email required.</p>
+            <p id="cro-input-help">Enter a homepage or a linked product or collection. No email required.</p>
           </form>
-          {state === 'loading' && <div className={styles.progress}><ScanLoader ready={ready} /><button type="button" onClick={cancel} className={styles.textAction}>Cancel scan</button></div>}
+          {state === 'loading' && <div className={styles.progress}><ScanLoader /><button type="button" onClick={cancel} className={styles.textAction}>Cancel scan</button></div>}
           {state === 'error' && <h2 ref={heading} tabIndex={-1} role="alert" className={styles.error}>{message}</h2>}
         </div>
         <aside className={styles.scope} aria-label="Pages the scanner samples">
@@ -198,6 +195,8 @@ export default function Scanner() {
           <div>
             <p className={styles.kicker}>{report.platform} · {new URL(report.store).hostname}</p>
             <h2 id="cro-report-title" ref={heading} tabIndex={-1}>Conversion readiness</h2>
+            <p>Scanned <time dateTime={report.capturedAt}>{new Date(report.capturedAt).toLocaleString()}</time>
+              {' · '}{report.samples.filter(page => page.status === 'read' || page.status === 'partial').length} of 3 pages read</p>
           </div>
           <div>
             <button className={styles.secondary} onClick={downloadReport} disabled={makingPdf} type="button">

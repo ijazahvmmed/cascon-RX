@@ -25,7 +25,10 @@ export function publicUrl(value: string, base?: URL) {
 export function storeEntry(value: string) {
   const raw = value.trim();
   const url = publicUrl(raw.includes('://') ? raw : 'https://' + raw);
-  return new URL(url.origin);
+  if (url.pathname === '/') return new URL(url.origin);
+  const page = sampleUrl(url.href, url);
+  if (!page) throw new Rejection('invalid');
+  return page;
 }
 
 export function merchantKey(url: URL) { return url.hostname.replace(/^www\./, ''); }

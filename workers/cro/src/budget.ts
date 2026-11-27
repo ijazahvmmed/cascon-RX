@@ -3,8 +3,8 @@ import { DurableObject } from 'cloudflare:workers';
 export class ScanBudget extends DurableObject {
   async fetch(request: Request) {
     if (request.method !== 'POST') return new Response(null, { status: 405 });
-    const { visitor, merchant, cacheHit } = await request.json<{visitor: string; merchant: string; cacheHit: boolean}>();
-    if (![visitor, merchant].every(value => /^[a-f0-9]{64}$/.test(value)) || typeof cacheHit !== 'boolean') {
+    const { visitor, merchant } = await request.json<{visitor: string; merchant: string}>();
+    if (![visitor, merchant].every(value => /^[a-f0-9]{64}$/.test(value))) {
       return new Response(null, { status: 400 });
     }
     const now = Date.now();
@@ -17,9 +17,9 @@ export class ScanBudget extends DurableObject {
     const limits: [key: string, expiry: number, limit: number][] = [
       ['ip:' + windowStart + ':' + visitor, windowStart + shortWindow, 6],
       ['day:' + dailyStart, dailyStart + period, 3000],
+      ['scan:' + dailyStart, dailyStart + period, 1200],
+      ['site:' + dailyStart + ':' + merchant, dailyStart + period, 20],
     ];
-    if (!cacheHit) limits.push(['scan:' + dailyStart, dailyStart + period, 1200],
-      ['site:' + dailyStart + ':' + merchant, dailyStart + period, 20]);
     const allowed = this.ctx.storage.transactionSync(() => {
       sql.exec('CREATE TABLE IF NOT EXISTS counters (id TEXT PRIMARY KEY, n INTEGER NOT NULL, expiry INTEGER NOT NULL)');
       sql.exec('CREATE INDEX IF NOT EXISTS counters_expiry ON counters (expiry)');

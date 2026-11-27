@@ -19,7 +19,7 @@ export default function MethodologyPage() {
       <p className={styles.intro}>A rule-based review of public storefront HTML, with a clear boundary around what the evidence can establish.</p>
       <section>
         <h2>Pages sampled</h2>
-        <p>The scanner reads the store entry page and samples one verified same-origin collection and one verified product when discoverable. The submitted URL is reduced to its origin. For larger pages the scanner reads a bounded HTML prefix and withholds findings that depend on missing content. Unavailable or ambiguous pages are reported separately. Only public page requests are made. The scanner spaces page requests and stops on access restrictions or rate limits. It does not load embedded assets or execute scripts, and never opens a cart or checkout or submits an order.</p>
+        <p>The scanner reads the store entry page and samples one verified same-origin collection and one verified product when discoverable. Each accepted submission starts a new scan. For a product or collection link, the scanner must discover and verify the submitted path before it returns a report. URL queries and fragments are discarded. For larger pages the scanner reads a bounded HTML prefix and withholds findings that depend on missing content. Unavailable or ambiguous pages are reported separately. Only public page requests are made. The scanner spaces page requests and stops on access restrictions or rate limits. It does not load embedded assets or execute scripts, and never opens a cart or checkout or submits an order.</p>
       </section>
       <section>
         <h2>Evidence and scoring</h2>
@@ -46,7 +46,7 @@ export default function MethodologyPage() {
       </section>
       <section>
         <h2>Privacy and availability</h2>
-        <p>Reports remain in the current browser tab. A short-lived edge cache can reuse report summaries. Site analytics follow your consent settings and omit submitted addresses. Choosing a consultation passes your store address and a short summary to Cal.com. The PDF saves the same free summary shown on screen.</p>
+        <p>Reports remain in the current browser tab. Site analytics follow your consent settings and omit submitted addresses. Choosing a consultation passes your store address and a short summary to Cal.com. The PDF saves the same free summary shown on screen.</p>
         <p>Scan capacity is limited. Stores that require scripts or block automated access may return partial evidence or be unavailable. The scanner makes no claim about how often it works across all stores.</p>
         <Link className={styles.back} href="/tools/cro-audit">Run a free scan</Link>
       </section>

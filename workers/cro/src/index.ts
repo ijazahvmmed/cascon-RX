@@ -9,9 +9,8 @@ interface Env {
   SCAN_BUDGET: DurableObjectNamespace<ScanBudget>;
 }
 const maximumInput = 2300;
-const reportCache = 20 * 60;
 const errors: Record<ScanError, number> = {
-  invalid: 400, denied: 422, 'store-limited': 429, blocked: 422, unverified: 422,
+  invalid: 400, denied: 422, 'store-limited': 429, blocked: 422, unverified: 422, unsampled: 422,
   unavailable: 502, timeout: 504, limited: 429, busy: 503,
 };
 const encoder = new TextEncoder();
@@ -58,7 +57,7 @@ function headers(origin: string) {
 }
 
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request, env) {
     const url = new URL(request.url);
     const origin = request.headers.get('origin') ?? '';
     const defaults = headers(origin);
@@ -81,26 +80,17 @@ export default {
       const ip = request.headers.get('cf-connecting-ip') ||
         (/^(localhost|127\.0\.0\.1)$/.test(url.hostname) ? 'local-dev' : '');
       if (!ip) return reject('busy');
-      const [visitor, merchant, bucket] = await Promise.all([
-        hash(new Date().toISOString().slice(0,10) + '|' + ip), hash(merchantKey(target)), hash(target.origin),
+      const [visitor, merchant] = await Promise.all([
+        hash(new Date().toISOString().slice(0,10) + '|' + ip), hash(merchantKey(target)),
       ]);
-      const key = new Request(new URL('/cache/cro-v2/' + bucket, url));
-      const cached = await caches.default.match(key).catch(() => undefined);
       const limiter = env.SCAN_BUDGET.get(env.SCAN_BUDGET.idFromName('public-scan-v1'));
       const allowance = await limiter.fetch('https://budget.internal/reserve', {
-        method: 'POST', body: JSON.stringify({ visitor, merchant, cacheHit: Boolean(cached) }), signal: deadline,
+        method: 'POST', body: JSON.stringify({ visitor, merchant }), signal: deadline,
       });
       if (allowance.status === 429) return reject('limited');
       if (!allowance.ok) return reject('busy');
-      if (cached) return new Response(cached.body, { headers: defaults });
       const report = await scan(target, deadline);
-      const body = JSON.stringify(report);
-      if (report.samples.every(sample => sample.status !== 'unavailable')) {
-        ctx.waitUntil(caches.default.put(key, new Response(body, {
-          headers: { 'content-type': defaults['content-type'], 'cache-control': 'public, max-age=' + reportCache },
-        })).catch(() => {}));
-      }
-      return new Response(body, { headers: defaults });
+      return Response.json(report, { headers: defaults });
     } catch (error) {
       if (deadline.aborted) return reject('timeout');
       return reject(error instanceof Rejection ? error.code : 'busy');
