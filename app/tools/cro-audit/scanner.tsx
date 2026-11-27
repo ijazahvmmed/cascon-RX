@@ -4,16 +4,18 @@ import Link from 'next/link';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { CAL_LINK } from '@/lib/constants';
 import { trackCro } from '@/lib/cro/activity';
-import { assessment, type ScanError, type ScanReport } from '@/lib/cro/model';
+import { type ScanError, type ScanReport } from '@/lib/cro/model';
 import styles from './scanner.module.css';
 import ScanTrace, { presentationMs, readStream, type PageRead } from './scan-trace';
+import Verification from './verification';
 import ScoreCard from './score-card';
 
 const errors: Record<ScanError, string> = {
+  verification: 'Please complete the visitor check and try again.',
   invalid: 'Enter a store address, such as https://your-store.com.',
   blocked: 'We could not open that address. Try the store homepage.',
   denied: 'The store did not let us open this page.',
-  'store-limited': 'The store asked us to pause. Please try again later.',
+  'store-limited': 'This store paused automated visits. You can try another store or come back later.',
   unavailable: 'We could not read this store. Try its homepage or come back later.',
   unsampled: 'We could not find that product or collection through the store. Try its homepage.',
   unverified: 'We could not tell that this is a shop. Try the main store address.',
@@ -27,7 +29,7 @@ const worker = process.env.NEXT_PUBLIC_CRO_WORKER_URL ||
 function consultationUrl(report: ScanReport) {
   const booking = new URL(CAL_LINK);
   const findingList = report.recommendations.map(item => item.title).join('. ');
-  const summary = assessment(report);
+  const summary = report.score;
   const score = summary.label + ' ' + summary.value + '. ' + summary.detail;
   booking.searchParams.set('notes', [
     'Store: ' + report.store,
@@ -40,6 +42,9 @@ function consultationUrl(report: ScanReport) {
 }
 
 export default function Scanner() {
+  const sitekey = process.env.NEXT_PUBLIC_CRO_TURNSTILE_SITE_KEY;
+  const [token,setToken] = useState('');
+  const [challengeKey,setChallengeKey] = useState(0);
   const [target, setTarget] = useState('');
   const [state, setState] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
   const [report, setReport] = useState<ScanReport | null>(null);
@@ -82,29 +87,29 @@ export default function Scanner() {
     setPendingReport(null);
     setState('loading');
     engagement.current.clear();
-    const timer = window.setTimeout(() => controller.abort('timeout'), 21_000);
+    const timer = window.setTimeout(() => controller.abort('timeout'), 40_000);
     try {
       const request = await fetch(new URL('/scan', worker), {
-        method: 'POST', signal: controller.signal, cache: 'no-store', credentials: 'omit',
+        method: 'POST', signal: controller.signal, cache: 'no-store', credentials: 'include',
         referrerPolicy: 'no-referrer',
-        headers: { 'content-type': 'application/json', accept: 'application/x-ndjson' }, body: JSON.stringify({ url: target.trim() }),
+        headers: { 'content-type': 'application/json', accept: 'application/x-ndjson' }, body: JSON.stringify({ url: target.trim(), token }),
       });
       const payload = request.headers.get('content-type')?.startsWith('application/x-ndjson')
         ? await readStream(request, event => {
             if (!controller.signal.aborted) setReads(previous => [...previous, event]);
           })
         : await request.json().catch(() => null);
-      if (!request.ok || payload?.version !== 2 || !Array.isArray(payload.shopping) || !payload.shopping.length || !Array.isArray(payload.recommendations)) {
+      if (!request.ok || payload?.version !== 2 || !Array.isArray(payload.shopping) || !payload.shopping.length || !payload.score || !Array.isArray(payload.recommendations)) {
         const code = payload?.error as ScanError;
         const error = Object.hasOwn(errors, code) ? errors[code] :
           request.status === 429 ? errors.limited : errors.busy;
         if (controller.signal.aborted) return;
         const seconds = payload?.retryAfter;
-        if (code === 'limited' && Number.isInteger(seconds) && seconds > 0 && seconds <= 86400) {
+        if ((code === 'limited' || code === 'store-limited') && Number.isInteger(seconds) && seconds > 0 && seconds <= 86400) {
           const reset = new Date(Date.now() + seconds * 1000).toLocaleString(undefined, {
             month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit',
           });
-          const limit = payload.scope === 'visitor' ? 'Your network reached its ten-minute scan limit.' :
+          const limit = code === 'store-limited' ? 'This store paused automated visits.' : payload.scope === 'visitor' ? 'You have used your three free audits for today.' : payload.scope === 'network' ? 'Your network reached its ten-minute scan limit.' :
             payload.scope === 'merchant' ? 'This store reached its daily scan limit.' : 'The scanner reached its daily capacity.';
           setMessage(limit + ' You can scan again at ' + reset + ' (your local time).');
         } else {
@@ -117,7 +122,7 @@ export default function Scanner() {
       const result = payload as ScanReport;
       window.clearTimeout(timer);
       setPendingReport(result);
-      const remaining = Math.max(0, presentationMs - (performance.now() - start));
+      const remaining = request.headers.get('x-cro-cache') === 'hit' ? 0 : Math.max(0, presentationMs - (performance.now() - start));
       if (remaining) await new Promise<void>(resolve => {
         const finish = () => {
           window.clearTimeout(reveal);
@@ -139,6 +144,8 @@ export default function Scanner() {
       setState('error');
     } finally {
       window.clearTimeout(timer);
+      setToken('');
+      setChallengeKey(previous => previous + 1);
       if (active.current === controller) active.current = null;
     }
   }
@@ -194,8 +201,9 @@ export default function Scanner() {
                   setState('idle');
                   setMessage('');
                 }} />
-              <button className={styles.primary} disabled={state === 'loading'} type="submit">Scan store</button>
+              <button className={styles.primary} disabled={state === 'loading' || Boolean(sitekey && !token)} type="submit">Scan store</button>
             </div>
+            {sitekey && <Verification key={challengeKey} sitekey={sitekey} onToken={setToken} />}
             <p id="cro-input-help">Enter a store or product page. No email required. <Link href="/tools/cro-audit/methodology">About the score</Link></p>
           </form>
           {(state === 'loading' || report) && <div className={styles.progress}>

@@ -60,7 +60,7 @@ const linkPatterns: Record<LinkSignal, RegExp> = {
   cart: /(?:^|\/)(?:cart|basket|shopping-cart)(?:\/|\.php|$)/i,
   checkout: /(?:^|\/)checkout(?:\/|\.php|$)/i,
 };
-const productPath = /\/(?:products?|p|item|product-detail)\/[a-z0-9._~-]+\/?$/i;
+const productPath = /\/(?:products?|p|items?|product-detail)\/[a-z0-9._~-]+\/?$/i;
 const collectionPath = /\/(?:collections?|product-category|collections-all|category|c|shop)\/[a-z0-9._~-]+\/?$/i;
 const productsIndex = /\/(?:collections|shop|products|catalog|catalogue|all-products)\/?$/i;
 const signals: LinkSignal[] = ['contact','about','privacy','shipping','returns','cart','checkout'];
@@ -84,7 +84,7 @@ function assetPath(value: unknown, base: URL): string {
   } catch { return ''; }
 }
 function candidateKind(path: string, hint: string): Hit['kind'] | null {
-  if (productPath.test(path) || /\b(?:woocommerce-loop-product__link|card-title-link|product-item-link|js-product-link)\b/i.test(hint)) return 'product';
+  if (productPath.test(path) || /\b(?:woocommerce-loop-product__link|card-title-link|product-item-link|js-product-link|product-card__link|product-card-link|wc-block-components-product-name)\b/i.test(hint)) return 'product';
   if (collectionPath.test(path) || productsIndex.test(path)) return 'collection';
   return null;
 }
@@ -113,7 +113,10 @@ export async function extract(document: Response, url: URL, kind?: PageKind): Pr
   const quantity: Array<{ id: string; name: boolean }> = [];
   const seenCandidates = new Set<string>();
   const markAsset = (link: string) => {
-    if (/cdn\.shopify\.com|\/cdn\/shop\//i.test(link)) detected.add('Shopify');
+    try {
+      const asset=new URL(link,url);
+      if (asset.hostname === 'cdn.shopify.com' || asset.origin === url.origin && asset.pathname.startsWith('/cdn/shop/')) detected.add('Shopify');
+    } catch { /* Unrecognized asset. */ }
     if (/\/(?:plugins\/woocommerce|woocommerce\/assets|wc-blocks)[/.-]/i.test(link)) detected.add('WooCommerce');
     if (/cdn\d*\.bigcommerce\.com|stencil-utils/i.test(link)) detected.add('BigCommerce');
     if (/Magento_(?:Catalog|Theme|Checkout)|\/mage\/(?:requirejs|cookies)/i.test(link)) detected.add('Magento');
@@ -125,7 +128,20 @@ export async function extract(document: Response, url: URL, kind?: PageKind): Pr
     el.getAttribute('title')?.trim() || el.tagName === 'input' && el.getAttribute('value')?.trim());
   let activeBuy: number | null = null;
   const addControl = /(?:^|[\s_-])(?:add.to.cart|single_add_to_cart_button|add-to-basket|product-submit)(?:$|[\s_-])/i;
+  // A node can match several selectors. The runtime retains one native end-tag
+  // handler per element, so share it across all evidence collectors.
+  let callbacks: (() => void)[] | undefined;
+  function onEnd(el: Element, callback: () => void) {
+    if (callbacks) {
+      callbacks.push(callback);
+      return;
+    }
+    const closing = [callback];
+    callbacks = closing;
+    el.onEndTag(() => { for (const finish of closing) finish(); });
+  }
   const rewriter = new HTMLRewriter()
+    .on('*', { element() { callbacks = undefined; } })
     .on('html', { element(el) { proof.lang ||= Boolean(el.getAttribute('lang')?.trim()); } })
     .on('body', { element(el) {
       sawBody = true;
@@ -152,7 +168,7 @@ export async function extract(document: Response, url: URL, kind?: PageKind): Pr
     } })
     .on('link[href], script[src]', { element(el) { markAsset(el.getAttribute('href') ?? el.getAttribute('src') ?? ''); } })
     .on('script[type="application/ld+json"]', {
-      element(el) { json = ''; el.onEndTag(() => {
+      element(el) { json = ''; onEnd(el, () => {
         if (!json || json.length >= 18000 || schemas.length >= 30) return;
         try {
           for (const data of nodes(JSON.parse(json))) {
@@ -166,7 +182,7 @@ export async function extract(document: Response, url: URL, kind?: PageKind): Pr
       element(el) {
         if (h1s++ > 12 || el.hasAttribute('hidden') || el.getAttribute('aria-hidden') === 'true') return;
         heading = '';
-        el.onEndTag(() => { if (heading.trim()) proof.headings++; });
+        onEnd(el, () => { if (heading.trim()) proof.headings++; });
       },
       text(chunk) { if (heading.length < 240) heading += chunk.text.slice(0,240); },
     })
@@ -206,7 +222,7 @@ export async function extract(document: Response, url: URL, kind?: PageKind): Pr
             if (!sameMerchant) continue;
             const initial = { group: signal, label: named(el) ? 1 : 0 };
             activeAnchor = initial;
-            el.onEndTag(() => { proof.labels[initial.group].push(initial.label); activeAnchor = null; });
+            onEnd(el, () => { proof.labels[initial.group].push(initial.label); activeAnchor = null; });
           }
         }
         if (/(?:^|[\s_-])(?:campaign|seasonal)-link(?:$|[\s_-])/i.test(hint) && sameMerchant) {
@@ -241,13 +257,13 @@ export async function extract(document: Response, url: URL, kind?: PageKind): Pr
         proof.purchase = true;
         if (el.tagName === 'input') { proof.labels.purchase.push(named(el) ? 1 : 0); return; }
         activeBuy = named(el) ? 1 : 0;
-        el.onEndTag(() => { if (activeBuy !== null) proof.labels.purchase.push(activeBuy); activeBuy = null; });
+        onEnd(el, () => { if (activeBuy !== null) proof.labels.purchase.push(activeBuy); activeBuy = null; });
       },
       text(chunk) { if (activeBuy !== null && chunk.text.trim()) activeBuy = 1; },
     })
     .on('label[for]', { element(el) { if (labelIds.size < 140) labelIds.add(el.getAttribute('for') ?? ''); } })
     .on('main, [itemtype*="schema.org/Product"], .product__info-wrapper, .summary.entry-summary', {
-      element(el) { openProduct++; el.onEndTag(() => { openProduct--; }); },
+      element(el) { openProduct++; onEnd(el, () => { openProduct--; }); },
     })
     .on('img', { element(el) {
       const src = el.getAttribute('src') ?? el.getAttribute('data-src');
@@ -283,11 +299,11 @@ export async function extract(document: Response, url: URL, kind?: PageKind): Pr
     });
 
   const isHome = kind ? kind === 'homepage' : url.pathname === '/';
-  const homeShopping = isHome ? readHomeShopping(rewriter, url, (link, hint) => {
+  const homeShopping = isHome ? readHomeShopping(rewriter, onEnd, url, (link, hint) => {
     if (candidateKind(link.pathname,hint) !== 'product') return null;
     return sampleUrl(link.href,url)?.pathname ?? null;
   }) : undefined;
-  const itemSignals = !isHome && kind !== 'collection' ? readItemSignals(rewriter) : undefined;
+  const itemSignals = !isHome && kind !== 'collection' ? readItemSignals(rewriter, onEnd) : undefined;
   const reader = rewriter.transform(document).body!.getReader();
   try { while (!(await reader.read()).done) { /* Drain to complete extraction. */ } }
   finally { reader.releaseLock(); }
@@ -325,6 +341,7 @@ export function verifies(evidence: DocumentEvidence, kind: PageKind, routeHint =
   if (!evidence.visible || evidence.blocked) return false;
   const productCount = evidence.candidates.filter(x => x.kind === 'product').length;
   if (kind === 'product') {
+    if (routeHint && evidence.headings && evidence.itemSignals?.price && evidence.itemSignals.buy && evidence.itemSignals.description) return true;
     return (evidence.productSchema && (evidence.purchase || evidence.visiblePrice || evidence.offers.length > 0 || evidence.productTemplate) ||
       evidence.productTemplate && evidence.purchase) && (routeHint || evidence.productTemplate);
   }

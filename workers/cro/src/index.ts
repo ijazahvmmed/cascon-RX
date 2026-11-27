@@ -1,17 +1,23 @@
+import { WorkerEntrypoint } from 'cloudflare:workers';
 import type { ScanError, ScanUpdate } from '../../../lib/cro/model';
 import { ScanBudget } from './budget';
 import { scan } from './scan';
 import { merchantKey, Rejection, storeEntry } from './target';
 
+import { identity, challenge } from './admission';
 export { ScanBudget };
 interface Env {
+  VISITOR_SECRET?: string;
+  TURNSTILE_SECRET?: string;
+  REPORT_CACHE?: KVNamespace;
   LOCAL_PREVIEW?: string;
   ALLOWED_ORIGINS: string;
   SCAN_BUDGET: DurableObjectNamespace<ScanBudget>;
 }
-const maximumInput = 2300;
+const reportNamespace = 'cro-4-';
+const maximumInput = 4600;
 const errors: Record<ScanError, number> = {
-  invalid: 400, denied: 422, 'store-limited': 429, blocked: 422, unverified: 422, unsampled: 422,
+  verification: 403, invalid: 400, denied: 422, 'store-limited': 429, blocked: 422, unverified: 422, unsampled: 422,
   unavailable: 502, timeout: 504, limited: 429, busy: 503,
 };
 const encoder = new TextEncoder();
@@ -38,7 +44,7 @@ async function input(request: Request, deadline: AbortSignal) {
     }
     const value: unknown = JSON.parse(raw + decoder.decode());
     if (typeof value !== 'object' || !value || !('url' in value) || typeof value.url !== 'string') throw new Rejection('invalid');
-    return storeEntry(value.url);
+    return { target:storeEntry(value.url), token:'token' in value && typeof value.token === 'string' ? value.token : '' };
   } catch { throw new Rejection('invalid'); }
   finally { deadline.removeEventListener('abort',abort); reader.releaseLock(); }
 }
@@ -48,7 +54,9 @@ function headers(origin: string) {
     'access-control-allow-origin': origin,
     'access-control-allow-methods': 'POST, OPTIONS',
     'access-control-allow-headers': 'content-type',
+    'access-control-expose-headers': 'x-cro-cache',
     'access-control-max-age': '600',
+    'access-control-allow-credentials': 'true',
     'cache-control': 'no-store',
     'content-type': 'application/json; charset=utf-8',
     'x-content-type-options': 'nosniff',
@@ -57,6 +65,15 @@ function headers(origin: string) {
   };
 }
 
+// Only a separately authorized staff service can bind this named entrypoint.
+export class ConsultationReports extends WorkerEntrypoint<Env> {
+  async read(store:string) {
+    const key=reportNamespace + await hash(storeEntry(store).href);
+    const owner=this.env.SCAN_BUDGET.get(this.env.SCAN_BUDGET.idFromName(key));
+    const reply=await owner.fetch('https://internal/review',{method:'POST'});
+    return reply.ok ? reply.json() : null;
+  }
+}
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -75,19 +92,24 @@ export default {
 
     const deadline = AbortSignal.any([request.signal, AbortSignal.timeout(17_000)]);
     try {
-      const target = await input(request, deadline);
+      const {target,token} = await input(request, deadline);
       if (deadline.aborted) return reject('timeout');
       if (merchantKey(target) === merchantKey(url)) return reject('invalid');
       const ip = request.headers.get('cf-connecting-ip') ||
         (/^(localhost|127\.0\.0\.1)$/.test(url.hostname) ? 'local-dev' : '');
       if (!ip) return reject('busy');
-      const [visitor, merchant] = await Promise.all([
-        hash(new Date().toISOString().slice(0,10) + '|' + ip), hash(merchantKey(target)),
+      const preview = env.LOCAL_PREVIEW === 'true' && ['localhost','127.0.0.1'].includes(url.hostname);
+      if (!preview && (!env.VISITOR_SECRET || env.VISITOR_SECRET.length < 32 || !env.TURNSTILE_SECRET || !env.REPORT_CACHE)) return reject('busy');
+      if (!preview && !await challenge(env.TURNSTILE_SECRET!,token,origin,ip,deadline)) return reject('verification');
+      const user = preview ? {id:ip,cookie:undefined} : await identity(request.headers.get('cookie') || '',env.VISITOR_SECRET!);
+      const [network, visitor, merchant] = await Promise.all([
+        hash(new Date().toISOString().slice(0,10) + '|' + ip), hash(user.id), hash(merchantKey(target)),
       ]);
-      const preview = env.LOCAL_PREVIEW === 'true' && ['localhost', '127.0.0.1'].includes(url.hostname);
+      const responseHeaders = new Headers(defaults);
+      if (user.cookie) responseHeaders.set('set-cookie',user.cookie);
       const limiter = env.SCAN_BUDGET.get(env.SCAN_BUDGET.idFromName(preview ? 'local-preview-v1' : 'public-scan-v1'));
       const allowance = await limiter.fetch('https://budget.internal/reserve', {
-        method: 'POST', body: JSON.stringify({ visitor, merchant, preview }), signal: deadline,
+        method: 'POST', body: JSON.stringify({ network, visitor, merchant, preview }), signal: deadline,
       });
       if (allowance.status === 429) {
         const retryAfter = allowance.headers.get('retry-after');
@@ -96,6 +118,27 @@ export default {
         });
       }
       if (!allowance.ok) return reject('busy');
+      if (!preview) {
+        const grant = allowance.headers.get('x-internal-grant');
+        async function release() {
+          if (grant) await limiter.fetch('https://budget.internal/release', {method:'POST',body:grant});
+        }
+        try {
+          const cacheKey = reportNamespace + await hash(target.href);
+          const cached = await env.REPORT_CACHE!.get(cacheKey).catch(() => null);
+          if (cached) {
+            responseHeaders.set('x-cro-cache','hit');
+            return new Response(cached,{headers:responseHeaders});
+          }
+          const owner = env.SCAN_BUDGET.get(env.SCAN_BUDGET.idFromName(cacheKey));
+          const reply = await owner.fetch('https://internal/analyze',{method:'POST',body:JSON.stringify({url:target.href,cacheKey})});
+          if (!reply.ok) await release();
+          return new Response(reply.body,{status:reply.status,headers:responseHeaders});
+        } catch (error) {
+          await release();
+          throw error;
+        }
+      }
       if (request.headers.get('accept') === 'application/x-ndjson') {
         const channel = new AbortController();
         const signal = AbortSignal.any([deadline, channel.signal]);

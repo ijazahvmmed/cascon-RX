@@ -40,6 +40,7 @@ export default function MethodologyPage() {
         </div>
       </details>
       <section><h2>Your report</h2>
+        <p>You can receive three free reports per day. Your allowance resets at midnight UTC. A store that declines a visit does not use one of your three reports. We reuse results for up to 24 hours.</p>
         <p>You can read and save the summary without giving us an email address. If you choose a consultation, we pass your store address and a short summary to the booking page.</p>
         <Link className={styles.back} href="/tools/cro-audit">Run a free scan</Link>
       </section>

@@ -9,14 +9,14 @@ export interface HomeShopping {
 }
 
 // A price belongs to a listing only when the card identifies one product.
-export function readHomeShopping(rewriter: HTMLRewriter, page: URL, productPath: (url: URL, hint: string) => string | null) {
+export function readHomeShopping(rewriter: HTMLRewriter, onEnd: (el: Element, finish: () => void) => void, page: URL, productPath: (url: URL, hint: string) => string | null) {
   const result: HomeShopping = { itemLink:false, pricedItems:new Set(), contact:false };
   let hidden = 0;
   rewriter.on('template, script, style, noscript, del, s, blockquote, q, .testimonial, .review, [itemprop="review"], [hidden], [inert], [aria-hidden="true"], [style*="display:none"], [style*="display: none"], .price--compare, .compare-at-price, .price__savings', {
     element(el) {
       if (voidTags.has(el.tagName)) return;
       hidden++;
-      el.onEndTag(() => { hidden--; });
+      onEnd(el, () => { hidden--; });
     },
   });
   let card: { path: string; ambiguous: boolean; named: boolean; price: boolean } | undefined;
@@ -25,7 +25,7 @@ export function readHomeShopping(rewriter: HTMLRewriter, page: URL, productPath:
       if (hidden || card || voidTags.has(el.tagName) || result.pricedItems.size >= 40) return;
       const listing = { path:'', ambiguous:false, named:false, price:false };
       card = listing;
-      el.onEndTag(() => {
+      onEnd(el, () => {
         if (listing.named && listing.price && !listing.ambiguous) result.pricedItems.add(listing.path);
         card = undefined;
       });
@@ -54,7 +54,7 @@ export function readHomeShopping(rewriter: HTMLRewriter, page: URL, productPath:
       }
       const anchor = { text: (el.getAttribute('aria-label') || el.getAttribute('title') || '').slice(0,120) };
       link = anchor;
-      el.onEndTag(() => {
+      onEnd(el, () => {
         const name = anchor.text.trim();
         if (name && path) { result.itemLink = true; if (listing) listing.named = true; }
         if (name && (contact || helpHost && /\b(contact|help cent(?:er|re)|customer (?:care|support|service)|get in touch)\b/i.test(name))) result.contact = true;
@@ -76,7 +76,7 @@ export function readHomeShopping(rewriter: HTMLRewriter, page: URL, productPath:
         if (current || hidden || voidTags.has(el.tagName) || !enabled()) return;
         const entry = { text:'' };
         current = entry;
-        el.onEndTag(() => {
+        onEnd(el, () => {
           if (entry.text.length <= 180) receive(entry.text.replace(/\s+/g,' ').trim());
           current = undefined;
         });

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { assessment, sampleLabels } from '@/lib/cro/model';
+import { sampleLabels } from '@/lib/cro/model';
 import type { PageKind, ScanReport, ScanUpdate } from '@/lib/cro/model';
 import styles from './scanner.module.css';
 
@@ -47,9 +47,12 @@ export default function ScanTrace({ reads, result, started, settled }: {
     title: labels[sample.kind], detail: [sampleLabels[sample.status], sample.path].filter(Boolean).join(' · '),
   })) : reads.map(read => ({ title: labels[read.reading], detail: 'Opening ' + read.path }));
   if (result) {
-    const summary = assessment(result);
+    const summary = result.score;
     rows.push({ title: 'Other checks', detail: result.overall.passed + ' passed out of ' + result.overall.assessed + ' checks.' },
       { title: summary.label, detail: summary.value + '. ' + summary.detail });
+    if (result.viewports) rows.push({title:'Screen sizes',detail:result.viewports.length ?
+      result.viewports.map(v => v.width+'px: '+(v.headingInView === null ? 'heading unconfirmed' : v.headingInView ? 'heading in view' : 'heading outside view')).join(' · ') + '. Based on the saved page with built-in styles.' :
+      'Screen sizes were not inspected.'});
     const first = result.recommendations[0];
     if (first) rows.push({ title: first.title, detail: first.evidence });
   }

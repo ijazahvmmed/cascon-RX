@@ -1,0 +1,694 @@
+[
+  {
+    "host": "https://hamercop.com",
+    "ms": 1805,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://muffynn.com",
+    "ms": 1993,
+    "assessed": 3,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://kanakavalli.com",
+    "ms": 2651,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://motohog.com",
+    "ms": 1483,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://soie.in",
+    "ms": 2453,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "not found",
+      "rate limited"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://nidharshanasarees.com",
+    "ms": 1958,
+    "assessed": 1,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://fazalandsons.com",
+    "ms": 2174,
+    "assessed": 1,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://madrassarees.com",
+    "ms": 1396,
+    "assessed": 3,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://linentrail.com",
+    "ms": 1436,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://14cosmicsecrets.com",
+    "ms": 1535,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://kenstar.in",
+    "ms": 1331,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://veliyathgarden.com",
+    "ms": 1418,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://angiehomes.co",
+    "ms": 1632,
+    "assessed": 1,
+    "pages": [
+      "read",
+      "not found",
+      "rate limited"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://nurserylive.com",
+    "ms": 1908,
+    "assessed": 0,
+    "pages": [
+      "partial",
+      "not found",
+      "rate limited"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://organicbazar.net",
+    "ms": 1834,
+    "assessed": 1,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://sridurgahandicrafts.com",
+    "ms": 1635,
+    "assessed": 3,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://jainsonslightsonline.com",
+    "ms": 1906,
+    "assessed": 1,
+    "pages": [
+      "partial",
+      "not found",
+      "rate limited"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://saralhome.com",
+    "ms": 1782,
+    "assessed": 1,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://cozycoir.com",
+    "ms": 1539,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 2
+  },
+  {
+    "host": "https://fixmycurls.com",
+    "ms": 2112,
+    "assessed": 1,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://jrkresearch.com",
+    "ms": 1663,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://ruheindia.com",
+    "ms": 2480,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://shahnaz.in",
+    "ms": 1417,
+    "assessed": 3,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://belvish.com",
+    "ms": 1360,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "not found",
+      "rate limited"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://skinska.com",
+    "ms": 1518,
+    "assessed": 4,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://deyga.in",
+    "ms": 2364,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://aqualogica.in",
+    "ms": 2403,
+    "assessed": 1,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://discovergbs.com",
+    "ms": 2910,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 2
+  },
+  {
+    "host": "https://bblunt.com",
+    "ms": 1660,
+    "assessed": 1,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://discoverpilgrim.com",
+    "ms": 1726,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://snackible.com",
+    "ms": 1732,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://desikhana.in",
+    "ms": 1450,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://powergummies.com",
+    "ms": 1483,
+    "assessed": 3,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://bluetea.co.in",
+    "ms": 1467,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://jayshreetea.com",
+    "ms": 1638,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://www.hariomatta.com",
+    "ms": 1899,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://mittalteas.com",
+    "ms": 2281,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 3
+  },
+  {
+    "host": "https://happilo.com",
+    "ms": 1628,
+    "assessed": 1,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://kanwarjis.in",
+    "ms": 1484,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://srikrishnasweets.com",
+    "ms": 1928,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://justintime.in",
+    "ms": 1593,
+    "assessed": 1,
+    "pages": [
+      "partial",
+      "not found",
+      "rate limited"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://v2awatch.com",
+    "ms": 1510,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "not found",
+      "rate limited"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://vijayandsons.com",
+    "ms": 1524,
+    "assessed": 5,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://hornback.bike",
+    "ms": 1791,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://watchtopia.in",
+    "ms": 1455,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://riddhika.com",
+    "ms": 1502,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 2
+  },
+  {
+    "host": "https://sylvi.in",
+    "ms": 1861,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "not found",
+      "rate limited"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://asmah.co",
+    "ms": 1761,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://espiragems.com",
+    "ms": 2431,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "not found",
+      "rate limited"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://ambarhouse.com",
+    "ms": 2146,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://finewares.in",
+    "ms": 2121,
+    "assessed": 3,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://wearslept.com",
+    "ms": 1319,
+    "assessed": 3,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://www.allbirds.com",
+    "ms": 1272,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://www.brooklinen.com",
+    "ms": 744,
+    "error": "unverified"
+  },
+  {
+    "host": "https://bagus.in",
+    "ms": 2575,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://ridge.com",
+    "ms": 1577,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://landyachtz.com",
+    "ms": 347,
+    "error": "unverified"
+  },
+  {
+    "host": "https://www.pangaia.com",
+    "ms": 2466,
+    "assessed": 1,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://www.nutribullet.com",
+    "ms": 3214,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "not found",
+      "unverified"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://cipherskincare.com",
+    "ms": 2681,
+    "assessed": 4,
+    "pages": [
+      "read",
+      "read",
+      "read"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://partakefoods.com",
+    "ms": 1375,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://www.pipsnacks.com",
+    "ms": 1324,
+    "assessed": 2,
+    "pages": [
+      "read",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 1
+  },
+  {
+    "host": "https://drinkolipop.com",
+    "ms": 1400,
+    "assessed": 2,
+    "pages": [
+      "partial",
+      "rate limited",
+      "skipped"
+    ],
+    "recommendations": 0
+  },
+  {
+    "host": "https://bonsoy.com",
+    "ms": 9269,
+    "assessed": 1,
+    "pages": [
+      "read",
+      "unverified",
+      "read"
+    ],
+    "recommendations": 2
+  }
+]

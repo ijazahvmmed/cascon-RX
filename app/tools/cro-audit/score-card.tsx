@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, type CSSProperties, type Ref } from 'react';
-import { assessment, categories, categoryResult, type CategoryResult, type ScanReport } from '@/lib/cro/model';
+import { categories, categoryResult, type CategoryResult, type ScanReport } from '@/lib/cro/model';
 import styles from './score-card.module.css';
 
 const outcomes = [
@@ -28,7 +28,7 @@ function Counter({ value }: { value: number }) {
   return <><span aria-hidden="true" ref={display}>{value}</span><span className={styles.srOnly}>{value}</span></>;
 }
 
-function ScorePlot({ score }: { score: ReturnType<typeof assessment> | null }) {
+function ScorePlot({ score }: { score: ScanReport['score'] | null }) {
   const [active, setActive] = useState<string | null>(null);
   return <div className={styles.plot} aria-label="Shopping questions by outcome" role="group">
     {outcomes.map(({ key, label }, index) => {
@@ -82,7 +82,7 @@ export default function ScoreCard({ report, loading, headingRef }: {
   report: ScanReport | null; loading: boolean; headingRef: Ref<HTMLHeadingElement>;
 }) {
   const [view, setView] = useState<'score' | 'areas'>('score');
-  const score = report && assessment(report);
+  const score = report && report.score;
   const areas = view === 'areas' && Boolean(report);
   const value = areas && report ? report.overall.assessed : score?.minimum;
   const title = areas ? 'Store checks completed' : score?.label ?? 'Shopping score';

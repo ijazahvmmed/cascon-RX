@@ -2,7 +2,7 @@ import ipaddr from 'ipaddr.js';
 import type { ScanError } from '../../../lib/cro/model';
 
 export class Rejection extends Error {
-  constructor(readonly code: ScanError) { super(code); }
+  constructor(readonly code: ScanError, readonly retryAfter?: number) { super(code); }
 }
 
 const hostname = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z][a-z0-9-]{1,62}$/;
@@ -88,6 +88,13 @@ export async function checkDns(host: string, signal: AbortSignal, transport: Tra
   if (!addresses.length || addresses.some(address => !isPublicIp(address.data, address.type))) throw new Rejection('blocked');
 }
 
+// Retry-After may be a delay in seconds or an HTTP date.
+export function retryDelay(value: string | null, now = Date.now()) {
+  if (!value) return undefined;
+  const seconds = /^\d+$/.test(value) ? Number(value) : Math.ceil((Date.parse(value) - now) / 1000);
+  return Number.isSafeInteger(seconds) && seconds >= 0 ? seconds : undefined;
+}
+
 export function fetcher(signal: AbortSignal, transport: Transport = fetch, resolve = checkDns) {
   let outbound = 0, lastPageRequest = 0, restricted = false;
   const delay = async () => {
@@ -102,16 +109,15 @@ export function fetcher(signal: AbortSignal, transport: Transport = fetch, resol
     signal.throwIfAborted();
     lastPageRequest = Date.now();
   };
-  // Every hop is preflighted afresh. At connection time Workers' public-only egress is
-  // the enforcement boundary, including when a DNS answer changes after preflight.
+  // Recheck each hop immediately before fetch. DNS preflight does not pin the connection.
   return async (entry: URL, home: URL, homeFetch = false) => {
     let current = entry;
     for (let hop = 0; hop <= 2; hop++) {
       if (restricted) throw new Rejection('blocked');
       if (++outbound > 8) throw new Rejection('unavailable');
+      await delay();
       try { await resolve(current.hostname, signal, transport); }
       catch (error) { throw error instanceof Rejection ? error : new Rejection('unavailable'); }
-      await delay();
       const response = await transport(current, {
         redirect: 'manual', signal,
         headers: { accept: 'text/html,application/xhtml+xml', 'user-agent': 'CasconCROAudit/1.0 (+https://www.cascondigital.com/tools/cro-audit/methodology)' },
@@ -128,7 +134,7 @@ export function fetcher(signal: AbortSignal, transport: Transport = fetch, resol
         !/^(text\/html|application\/xhtml\+xml)(?:;|$)/i.test(response.headers.get('content-type')?.trim() ?? '') ||
         !response.body) {
         void response.body?.cancel().catch(() => {});
-        if (response.status === 429) throw new Rejection('store-limited');
+        if (response.status === 429) throw new Rejection('store-limited', retryDelay(response.headers.get('retry-after')));
         if (restricted) throw new Rejection('denied');
         throw new Rejection('unavailable');
       }

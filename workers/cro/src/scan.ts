@@ -18,15 +18,17 @@ function requireRead(sample: Sample) {
   throw new Rejection('unsampled');
 }
 
-export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signal), onRead?: (kind: PageKind, path: string) => void) {
+export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signal), onRead?: (kind: PageKind, path: string) => void, captureHome?: (html:string)=>void, captureReview?: (evidence:unknown)=>void) {
   const root = new URL(entry.origin);
   onRead?.('homepage', root.pathname);
   const homeResponse = await read(root, root, true);
+  const snapshot = captureHome ? homeResponse.document.clone() : undefined;
   const home = await extract(homeResponse.document, homeResponse.url, 'homepage');
   home.complete = !homeResponse.isPartial();
   if (home.blocked) throw new Rejection('denied');
   if (!verifies(home, 'homepage')) throw new Rejection('unverified');
 
+  if (snapshot && captureHome && home.complete) captureHome(await snapshot.text());
   const samples: Sample[] = [{ kind: 'homepage', path: home.url.pathname, status: home.complete ? 'read' : 'partial' }];
   const tried = new Set([home.url.pathname]);
   const pages: Partial<Record<PageKind, DocumentEvidence>> = { homepage: home };
@@ -97,5 +99,5 @@ export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signa
     // The homepage is still valid evidence when deeper pages time out.
     for (const sample of samples) if (sample.status !== 'read' && sample.status !== 'partial' && !['blocked','rate limited','skipped','outside scope'].includes(sample.status)) sample.status = 'unavailable';
   }
-  return evaluate(home, pages, samples, new Date().toISOString());
+  return evaluate(home, pages, samples, new Date().toISOString(),captureReview);
 }

@@ -3,13 +3,70 @@
   "name": "cascon-cro-audit",
   "main": "src/index.ts",
   "compatibility_date": "2026-11-24",
-  "compatibility_flags": ["global_fetch_strictly_public"],
+  "compatibility_flags": [
+    "global_fetch_strictly_public"
+  ],
   "workers_dev": true,
   "preview_urls": false,
-  "observability": { "enabled": false },
-  "vars": { "ALLOWED_ORIGINS": "https://www.cascondigital.com,https://cascondigital.com" },
-  "durable_objects": {
-    "bindings": [{ "name": "SCAN_BUDGET", "class_name": "ScanBudget" }]
+  "observability": {
+    "enabled": false
   },
-  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ScanBudget"] }]
+  "vars": {
+    "ALLOWED_ORIGINS": "https://www.cascondigital.com,https://cascondigital.com"
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "SCAN_BUDGET",
+        "class_name": "ScanBudget"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": [
+        "ScanBudget"
+      ]
+    }
+  ],
+  "env": {
+    "staging": {
+      "name": "cascon-cro-audit-staging",
+      "workers_dev": false,
+      "preview_urls": false,
+      "vars": {
+        "ALLOWED_ORIGINS": "https://staging.cascondigital.com,http://localhost:3012",
+        "FREE_ENRICHMENT": "verified-free"
+      },
+      "kv_namespaces": [
+        {
+          "binding": "REPORT_CACHE",
+          "id": "bc171546cf04415eab66b2929be6764a"
+        }
+      ],
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "SCAN_BUDGET",
+            "class_name": "ScanBudget"
+          }
+        ]
+      },
+      "migrations": [
+        {
+          "tag": "v1",
+          "new_sqlite_classes": [
+            "ScanBudget"
+          ]
+        }
+      ],
+      "ai": {
+        "binding": "AI"
+      },
+      "browser": {
+        "binding": "BROWSER"
+      }
+    }
+  }
 }

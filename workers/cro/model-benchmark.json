@@ -1,0 +1,60 @@
+[
+  {
+    "model": "@cf/ibm-granite/granite-4.0-h-micro",
+    "ids": [
+      "mobile-zoom",
+      "price-value"
+    ],
+    "http": 200,
+    "exact": true,
+    "ms": 921
+  },
+  {
+    "model": "@cf/ibm-granite/granite-4.0-h-micro",
+    "ids": [
+      "collection-title"
+    ],
+    "http": 200,
+    "exact": true,
+    "ms": 664
+  },
+  {
+    "model": "@cf/ibm-granite/granite-4.0-h-micro",
+    "ids": [
+      "home-heading",
+      "product-action"
+    ],
+    "http": 200,
+    "exact": true,
+    "ms": 560
+  },
+  {
+    "model": "@cf/openai/gpt-oss-20b",
+    "ids": [
+      "mobile-zoom",
+      "price-value"
+    ],
+    "http": 200,
+    "exact": true,
+    "ms": 1161
+  },
+  {
+    "model": "@cf/openai/gpt-oss-20b",
+    "ids": [
+      "collection-title"
+    ],
+    "http": 200,
+    "exact": false,
+    "ms": 4505
+  },
+  {
+    "model": "@cf/openai/gpt-oss-20b",
+    "ids": [
+      "home-heading",
+      "product-action"
+    ],
+    "http": 200,
+    "exact": true,
+    "ms": 1103
+  }
+]

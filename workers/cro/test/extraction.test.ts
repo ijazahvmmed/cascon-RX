@@ -100,7 +100,7 @@ test('two submissions to the Worker read the same storefront independently', asy
     };
     const budget = { idFromName: () => 'test', get: () => ({ fetch: async () => new Response(null,{status:204}) }) };
     export default { async fetch(request, env, ctx) {
-      return scanner.fetch(request, { ALLOWED_ORIGINS:'https://tool.example.com', SCAN_BUDGET:budget }, ctx);
+      return scanner.fetch(request, { LOCAL_PREVIEW:'true', ALLOWED_ORIGINS:'https://tool.example.com', SCAN_BUDGET:budget }, ctx);
     }};
   `);
   const submit = () => mf.dispatchFetch('http://localhost/scan', {
@@ -143,6 +143,7 @@ test('only the local launch setting and loopback host select preview quotas', as
           'cf-connecting-ip':'192.0.2.1', 'x-test-config':enabled ? 'preview' : 'public'},
         body:JSON.stringify({url:'https://shop.example.com', preview:true}),
       });
+      if (!preview) {assert.equal(response.status,503); continue;}
       assert.equal(response.status,429);
       assert.equal(response.headers.get('retry-after'),'60');
       assert.deepEqual(await response.json(), { error:'limited', scope:'visitor', retryAfter:60,
@@ -242,5 +243,32 @@ test('shopping scores track what an item page actually tells shoppers', async ()
     assert.equal(expired.find(check => check.title === 'See the item price')?.result,'Could not confirm');
     const withoutMarketing = await run(wrap(details + price + buy + policies + '<p>Gift wrapping available</p>'));
     assert.deepEqual(complete,withoutMarketing);
+  } finally { await mf.dispose(); }
+});
+
+test('custom server-rendered product routes require item-specific visible evidence', async () => {
+  const worker = `
+    import {extract, verifies} from './src/extract';
+    export default {async fetch(request) {
+      const url = new URL('https://shop.example.com/items/linen');
+      const proof = await extract(new Response(await request.text()), url, 'product');
+      return Response.json({verified:verifies(proof,'product',true), signals:proof.itemSignals});
+    }};
+  `;
+  const mf = await fixture(worker);
+  const item = '<p data-testid="product-description">Woven linen bag with a reinforced shoulder strap.</p>' +
+    '<span data-testid="product-price">USD 35</span><button data-testid="add-to-cart">Add to cart</button>';
+  async function inspect(contents: string) {
+    const body = '<html><body><main><h1>Linen bag</h1><section data-testid="product-details">' +
+      contents + '</section></main></body></html>';
+    return (await mf.dispatchFetch('http://fixture.test/',{method:'POST',body})).json();
+  }
+  try {
+    const observation = await inspect(item);
+    assert.equal(observation.verified,true,JSON.stringify(observation));
+    const related = await inspect('<aside data-testid="related-products">' + item + '</aside>');
+    assert.equal(related.verified,false);
+    assert.equal(related.signals.price,false);
+    assert.equal(related.signals.buy,false);
   } finally { await mf.dispose(); }
 });

@@ -1,3 +1,4 @@
+import { assessment } from './score';
 import { merchantFinding } from './merchant-copy';
 import { shoppingChecks } from './shopping';
 import { categories } from '../../../lib/cro/model';
@@ -25,8 +26,8 @@ const exists = (value: unknown) => value !== undefined && value !== null;
 const condition = (values: unknown[], valid: (value: unknown) => boolean, evidence: string): Decision =>
   values.length ? check(values.every(valid), evidence) : na;
 const knownCurrency = new Set(Intl.supportedValuesOf('currency'));
-const checkLabels = (labels: number[], evidence: string): Decision => labels.length ?
-  check(labels.every(bool => bool > 0), evidence, 'Moderate') : unknown;
+const checkLabels = (labels: number[]): Decision => labels.length ?
+  observed(labels.every(bool => bool > 0)) : unknown;
 const structured = (nodes: Data[], key: string) => nodes.map(node => node[key]).filter(exists);
 
 function validDate(value: unknown) {
@@ -39,7 +40,7 @@ const rules: Record<string, Rule> = {
   'home-title': ['homepage', p => check(Boolean(p.title), 'The sampled homepage has no readable HTML title.')],
   'home-heading': ['homepage', p => p.headings ? pass : p.main ? check(false, 'The server HTML has a main content landmark and no text-bearing H1.', 'Moderate') : unknown],
   'home-catalogue': ['homepage', p => observed(p.candidates.length > 0)],
-  'home-description': ['homepage', p => check(p.description, 'No non-empty meta description was found in the homepage HTML.')],
+  'home-description': ['homepage', p => observed(p.description)],
 
   'collection-title': ['collection', p => check(Boolean(p.title), 'The validated collection has no readable HTML title.')],
   'collection-heading': ['collection', p => p.headings ? pass : p.main ? check(false, 'The sampled collection HTML has a main landmark and no text-bearing H1.', 'Moderate') : unknown],
@@ -49,9 +50,9 @@ const rules: Record<string, Rule> = {
   'product-heading': ['product', p => p.headings ? pass : p.main ? check(false, 'The verified product HTML has a main landmark and no text-bearing H1.', 'Moderate') : unknown],
   'product-image': ['product', p => observed(p.images)],
   'product-image-alt': ['product', p => p.productImage ? check(p.productImage.alt, 'The identified primary product image has empty or missing alt text.', 'Moderate') : unknown],
-  'product-action': ['product', p => checkLabels(p.labels.purchase,'An identified add-to-cart control has no label in the sampled HTML. Check its rendered accessible name.')],
+  'product-action': ['product', p => checkLabels(p.labels.purchase)],
 
-  'nav-landmark': ['homepage', p => p.nav ? pass : p.candidates.length > 2 ? check(false, 'Catalogue links were present, with no navigation landmark in the homepage HTML.', 'Moderate') : unknown],
+  'nav-landmark': ['homepage', p => observed(p.nav)],
   'nav-search': ['homepage', p => observed(p.search)],
   'nav-breadcrumb': ['product', p => observed(p.breadcrumbs)],
   'nav-main': ['homepage', p => p.main ? pass : p.headings ? check(false, 'The homepage has a primary heading and no main landmark in its HTML.', 'Moderate') : unknown],
@@ -92,11 +93,11 @@ const rules: Record<string, Rule> = {
     'An inline MerchantReturnPolicy object has no recognized return policy category.')],
 
   'cart-link': ['homepage', p => observed(p.links.has('cart'))],
-  'cart-label': ['homepage', p => checkLabels(p.labels.cart,'A cart link has no text or name in the homepage HTML. Its rendered accessible name merits a check.')],
+  'cart-label': ['homepage', p => checkLabels(p.labels.cart)],
   'cart-submit': ['product', p => p.insecureCart ? check(false,'A same-merchant cart form has an explicit HTTP action.') : p.secureCartForm ? pass : unknown],
   'cart-quantity': ['product', p => observed(p.labels.quantity.length > 0)],
 
-  'checkout-entry': ['homepage', p => p.links.has('checkout') ? checkLabels(p.labels.checkout, 'A checkout link has no text or name in the homepage HTML. Check its rendered label.') : na],
+  'checkout-entry': ['homepage', p => p.links.has('checkout') ? checkLabels(p.labels.checkout) : na],
   'checkout-https': ['homepage', p => p.insecureCheckout ? check(false,'An identified same-merchant checkout link points to HTTP.') : p.labels.checkout.length ? pass : na],
   'checkout-methods': ['homepage', p => observed(p.payment)],
   'checkout-fast': ['product', p => p.express ? pass : na],
@@ -136,7 +137,7 @@ function coverage(outcomes: Outcome[]): Coverage {
   return { assessed:assessed.length, applicable:applicable.length, passed:passed.length };
 }
 
-export function evaluate(home: DocumentEvidence, pages: Partial<Record<PageKind, DocumentEvidence>>, samples: Sample[], capturedAt: string): ScanReport {
+export function evaluate(home: DocumentEvidence, pages: Partial<Record<PageKind, DocumentEvidence>>, samples: Sample[], capturedAt: string, capture?: (evidence:unknown)=>void): ScanReport {
   const absenceSensitive = new Set(['home-title','home-heading','home-description','collection-title','collection-heading','product-heading','product-action','nav-landmark','nav-main','cart-label','checkout-entry']);
   const outcomes: Outcome[] = automatable.map(principle => {
     const [page, observe] = rules[principle.id];
@@ -146,6 +147,7 @@ export function evaluate(home: DocumentEvidence, pages: Partial<Record<PageKind,
       principle.id === 'mobile-viewport' && evidence.viewport === null);
     return { principle, page, path: evidence?.url.pathname, decision: absenceUncertain && result.state === 'fail' ? unknown : result };
   });
+  capture?.(outcomes.map(({principle,page,path,decision})=>({rule:principle.id,page,path,...decision})));
   const summary = (Object.keys(categories) as Category[]).map(category => ({
     category, ...coverage(outcomes.filter(o => o.principle.category === category)),
   }));
@@ -171,5 +173,6 @@ export function evaluate(home: DocumentEvidence, pages: Partial<Record<PageKind,
     if (recommendations.length >= 3) break;
   }
   const attemptedProduct = samples.find(sample => sample.kind === 'product');
-  return { version: 2, shopping: shoppingChecks(home, pages.product, attemptedProduct?.path), store: home.url.origin, platform: home.platform, capturedAt, overall, categories: summary, samples, recommendations:recommendations.map(merchantFinding) };
+  const shopping = shoppingChecks(home, pages.product, attemptedProduct?.path);
+  return { version: 2, score: assessment({ shopping }), shopping, store: home.url.origin, platform: home.platform, capturedAt, overall, categories: summary, samples, recommendations:recommendations.map(merchantFinding) };
 }

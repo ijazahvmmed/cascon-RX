@@ -1,10 +1,11 @@
+import { assessment } from '../src/score';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { checkDns, fetcher, isPublicIp, MAX_HTML_BYTES, publicUrl, Rejection, sampleUrl, storeEntry } from '../src/target';
 import { evaluate } from '../src/evaluate';
 import { verifies } from '../src/extract';
 import type { DocumentEvidence } from '../src/extract';
-import { assessment, type ShoppingCheck } from '../../../lib/cro/model';
+import { type ShoppingCheck } from '../../../lib/cro/model';
 import { principles } from '../../../lib/cro/principles';
 
 const at = new URL('https://example.com/');

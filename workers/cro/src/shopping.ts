@@ -33,20 +33,20 @@ function disabled(el: Element) {
   return el.hasAttribute('disabled') || el.getAttribute('aria-disabled') === 'true' || /(?:^|\s)disabled(?:\s|$)/i.test(el.getAttribute('class') || '');
 }
 
-export function readItemSignals(rewriter: HTMLRewriter) {
+export function readItemSignals(rewriter: HTMLRewriter, onEnd: (el: Element, finish: () => void) => void) {
   const signals: ItemSignals = { description:false, placeholder:false, price:false, invalidPrice:false, buy:false, shipping:false, returns:false };
   let excluded = 0, inItem = 0, outsideItem = 0, inTable = 0, disabledGroup = 0;
   function within(selector: string, enter: () => void, leave: () => void) {
     rewriter.on(selector, { element(el) {
-      if (!voidTags.has(el.tagName)) { enter(); el.onEndTag(leave); }
+      if (!voidTags.has(el.tagName)) { enter(); onEnd(el, leave); }
     } });
   }
-  within('template, script, style, noscript, del, s, [hidden], [aria-hidden="true"], [style*="display:none"], [style*="display: none"], product-recommendations, .related, .upsells, .product-card, .card-wrapper',
+  within('template, script, style, noscript, del, s, [hidden], [aria-hidden="true"], [style*="display:none"], [style*="display: none"], product-recommendations, .related, .upsells, [data-testid="product-card"], [data-testid="related-products"], .product-card, .card-wrapper',
     () => excluded++, () => excluded--);
   within('table', () => inTable++, () => inTable--);
   within('fieldset[disabled], [inert]', () => disabledGroup++, () => disabledGroup--);
   within('footer, aside', () => outsideItem++, () => outsideItem--);
-  within('article.product.type-product, div.product.type-product, form.variations_form.cart, product-info, .product__info-container, .product__info-wrapper, .summary.entry-summary, .product-info-main, [itemtype*="schema.org/Product"], [data-product-information], form[action*="/cart/add"]',
+  within('article.product.type-product, div.product.type-product, form.variations_form.cart, product-info, .product__info-container, .product__info-wrapper, .summary.entry-summary, .product-info-main, [itemtype*="schema.org/Product"], [data-product-information], main [data-testid="product-details"], main [data-product-details], form[action*="/cart/add"]',
     () => inItem++, () => inItem--);
 
   function inspect(selector: string, apply: (value: string) => void,
@@ -61,7 +61,7 @@ export function readItemSignals(rewriter: HTMLRewriter) {
         // Copy attributes before the element callback returns.
         const unavailable = disabled(el);
         const label = el.getAttribute('aria-label') || '';
-        el.onEndTag(() => {
+        onEnd(el, () => {
           buffers.pop();
           if (!unavailable) apply((label + ' ' + buffer.text).replace(/\s+/g,' ').trim());
         });
@@ -76,9 +76,9 @@ export function readItemSignals(rewriter: HTMLRewriter) {
     if (/^(?:coming soon|description (?:goes here|coming soon)|lorem ipsum\b.*|tbd)[.!]?$/i.test(value)) signals.placeholder = true;
     else if (value.length >= 24 && /\p{L}/u.test(value)) signals.description = true;
   };
-  inspect('[class$="__description"], .product-description, [itemprop="description"]', describe);
+  inspect('[class$="__description"], .product-description, [data-testid="product-description"], [itemprop="description"]', describe);
   inspect('.product__description, .woocommerce-product-details__short-description, #tab-description, [data-product-description]', describe, { outsideProduct: true });
-  inspect('.price, [itemprop="price"], .woocommerce-Price-amount, .price-item--sale, .price-item--regular, [data-product-price]', value => {
+  inspect('.price, [itemprop="price"], .woocommerce-Price-amount, .price-item--sale, .price-item--regular, [data-product-price], [data-testid="product-price"]', value => {
     if (inTable) return;
     if (/^(?:tbd|nan|price coming soon)[.!]?$/i.test(value)) signals.invalidPrice = true;
     else if (hasSellingPrice(value)) signals.price = true;
@@ -91,7 +91,7 @@ export function readItemSignals(rewriter: HTMLRewriter) {
   function buyButton(value: string) {
     if (!disabledGroup && /add to (?:my |your |the )?(cart|bag|basket)|buy now|ajouter au panier|in den warenkorb|añadir al carrito/i.test(value) && !/sold out|unavailable|notify me|coming soon/i.test(value)) signals.buy = true;
   }
-  inspect('button[name="add"], button[name="add-to-cart"], button.single_add_to_cart_button, button.product-form__submit', buyButton);
+  inspect('button[name="add"], button[name="add-to-cart"], button.single_add_to_cart_button, button.product-form__submit, button[data-testid="add-to-cart"], button[data-add-to-cart]', buyButton);
   rewriter.on('input[type="submit"][name="add"], input[type="submit"][name="add-to-cart"]', { element(el) {
     if (!inItem || excluded || outsideItem || disabled(el) || el.hasAttribute('hidden') || el.hasAttribute('inert') ||
       el.getAttribute('aria-hidden') === 'true' || /display\s*:\s*none/i.test(el.getAttribute('style') || '')) return;

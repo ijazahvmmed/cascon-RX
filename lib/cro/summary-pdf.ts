@@ -1,5 +1,5 @@
 import { PDFDocument, StandardFonts, rgb, type PDFFont } from 'pdf-lib';
-import { assessment, categories, categoryResult, type ScanReport } from './model';
+import { categories, categoryResult, type ScanReport } from './model';
 
 const width = 595.28;
 const height = 841.89;
@@ -63,7 +63,7 @@ export async function summaryPdf(report: ScanReport) {
   text(report.store,11,false,muted);
   text('Recorded ' + new Date(report.capturedAt).toISOString().slice(0,10) + ' UTC',10,false,muted);
   y -= 18;
-  const headline = assessment(report);
+  const headline = report.score;
   const cardTop = y, cardHeight = 105;
   page.drawRectangle({ x:margin, y:cardTop-cardHeight, width:width-2*margin, height:cardHeight, color:paper, borderColor:line, borderWidth:0.5 });
   y -= 9;
