@@ -111,3 +111,4 @@
 .photos{border-top:1px solid var(--color-border);padding-top:24px}
 .photos>.photoGrid figure[data-viewport="390"]{max-width:200px}
 .captureStatus{max-width:58ch;color:var(--color-text-secondary)}
+.speedLink{display:inline-block;margin-top:9px;font-size:.85rem;text-decoration:underline;text-underline-offset:3px}

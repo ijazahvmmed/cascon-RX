@@ -311,8 +311,8 @@ test('captures a styled body with attributes while keeping the browser offline',
     "export default { async fetch() {",
     "let calls=0;",
     "const browser={async quickAction(action, options){",
-    "if(action!=='snapshot'||options.setJavaScriptEnabled||options.rejectRequestPattern[0]!=='.*'||options.html.includes('<script')||!options.html.includes('Store heading')) throw Error('unexpected render');",
-    "calls++; return calls===1 ? Response.json({result:{screenshot:'/9j/2Q==',scrape:[]}}) : new Response(null,{status:429});}};",
+    "if(action!=='snapshot'||options.setJavaScriptEnabled||options.waitForTimeout!==1500||options.gotoOptions.waitUntil!=='load'||options.rejectRequestPattern[0]!=='.*'||options.html.includes('<script')||!options.html.includes('Store heading')) throw Error('unexpected render');",
+    "calls++; return calls===1 ? Response.json({result:{screenshot:'/9j/2Q==',scrape:[{}, {results:[{width:340,height:230,left:10,top:100}]}]}}) : new Response(null,{status:429});}};",
     "const readings=await inspectWidths(browser,'<html><body class=store><h1>Store heading</h1><script>untrusted</script></body></html>');",
     "return Response.json({calls,readings});}};",
   ].join('');
@@ -323,6 +323,7 @@ test('captures a styled body with attributes while keeping the browser offline',
     assert.equal(result.readings.length,1);
     assert.equal(result.readings[0].width,390);
     assert.equal(result.readings[0].screenshot,'/9j/2Q==');
+    assert.equal(result.readings[0].missingVisibleImages,true);
   } finally { await mf.dispose(); }
 });
 

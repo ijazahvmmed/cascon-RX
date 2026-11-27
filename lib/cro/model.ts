@@ -60,8 +60,9 @@ export function categoryResult(category: CategoryResult) {
 
 export interface ScanReport {
   score: { total:number; passed:number; issues:number; open:number; minimum:number; maximum:number; partial:boolean; label:string; value:string; detail:string };
+  homepageResponseMs?: number;
   screenshotStatus?: 'captured' | 'capacity' | 'unavailable';
-  viewports?: { width:number; headingInView:boolean|null; screenshot?:string }[];
+  viewports?: { width:number; headingInView:boolean|null; screenshot?:string; missingVisibleImages?:boolean }[];
   shopping: ShoppingCheck[];
   version: 2;
   store: string;

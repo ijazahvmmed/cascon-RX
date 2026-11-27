@@ -1,29 +1,40 @@
 import { publicUrl, sampleUrl, type fetcher } from './target';
 
 type ReadStore = ReturnType<typeof fetcher>;
-interface Asset { url:URL; source:string; rank:number; kind:'css'|'image' }
+interface Asset { url:URL; source:string; rank:number; kind:'css'|'image'; viewport?: 'mobile' | 'desktop' }
 
 export async function prepareCapture(document:string, home:URL, read:ReadStore) {
   const candidates: Asset[] = [];
   function collect(el:Element, kind:Asset['kind']) {
     if (candidates.length >= 80) return;
     const source = el.getAttribute(kind === 'css' ? 'href' : 'src');
+    const classes = el.getAttribute('class') || '';
+    const viewport = /(?:-|_)mobile\b/i.test(classes) ? 'mobile' : /(?:-|_)desktop\b/i.test(classes) ? 'desktop' : undefined;
     if (!source) return;
     try {
       const url = publicUrl(source,home);
       if (url.protocol !== 'https:' || !sampleUrl(url.href,home) ||
           !(kind === 'css' ? /\.css$/i : /\.(?:png|jpe?g|webp)$/i).test(url.pathname) ||
           [...url.searchParams.keys()].some(key => !['ver','v','width','height'].includes(key))) return;
+      const width = Number(url.searchParams.get('width'));
+      if (kind === 'image' && url.pathname.startsWith('/cdn/shop/') && width > 800) {
+        url.searchParams.set('width',viewport === 'mobile' ? '416' : '800');
+      }
       const rank = kind === 'css' ? Number(/(?:theme|main|base|global|style)(?:\.min)?\.css$|\/themes\//i.test(url.pathname))
-        : Number(/hero|banner|cover/i.test(url.pathname + ' ' + (el.getAttribute('class') || '')));
-      candidates.push({url,source,kind,rank});
+        : Number(el.getAttribute('fetchpriority') === 'high') * 4 + Number(/hero|banner|cover|slide__image/i.test(classes));
+      candidates.push({url,source,kind,rank,viewport});
     } catch { /* Ignore external and unsupported destinations. */ }
   }
   const found = new HTMLRewriter().on('link[rel="stylesheet"][href]',{element:el=>collect(el,'css')})
     .on('img[src]',{element:el=>collect(el,'image')}).transform(new Response(document));
   await found.arrayBuffer();
   const ordered = candidates.sort((a,b) => b.rank - a.rank);
-  const selected = [...ordered.filter(a=>a.kind==='css').slice(0,2),...ordered.filter(a=>a.kind==='image').slice(0,1)];
+  const images = ordered.filter(asset => asset.kind === 'image');
+  const firstImage = images[0];
+  const alternate = firstImage?.viewport && images.find(asset => asset.viewport && asset.viewport !== firstImage.viewport);
+  const selected = [...ordered.filter(asset => asset.kind === 'css').slice(0,2)];
+  if (firstImage) selected.push(firstImage);
+  if (alternate) selected.push(alternate);
   const loaded = new Map<string,string>();
   for (const asset of selected) {
     if (loaded.has(asset.source)) continue;
@@ -47,7 +58,7 @@ export async function prepareCapture(document:string, home:URL, read:ReadStore) 
     el.replace('<style>'+css+'</style>',{html:true});
   }}).on('img[src]', {element(el) {
     const src = loaded.get(el.getAttribute('src') || '');
-    if (src) { el.removeAttribute('srcset'); el.setAttribute('src',src); }
+    if (src) { el.removeAttribute('srcset'); el.setAttribute('loading','eager'); el.setAttribute('src',src); }
   }}).transform(new Response(document));
   return styled.text();
 }
@@ -56,6 +67,7 @@ export interface ViewportReading {
   width: number;
   headingInView: boolean | null;
   screenshot?: string;
+  missingVisibleImages?: boolean;
 }
 
 interface Snapshot {
@@ -67,7 +79,7 @@ interface Snapshot {
 
 export async function inspectWidths(browser: BrowserRun, document: string): Promise<ViewportReading[]> {
   const cleaned = await new HTMLRewriter()
-    .on('script,iframe,frame,object,embed,base,meta[http-equiv],link,template,foreignObject', {
+    .on('script,iframe,frame,object,embed,base,meta[http-equiv],link,template,foreignObject,picture source', {
       element(el) { el.remove(); },
     }).transform(new Response(document)).text();
   if (!/<body[\s>]/i.test(cleaned) || cleaned.length > 1450000) return [];
@@ -78,22 +90,28 @@ export async function inspectWidths(browser: BrowserRun, document: string): Prom
     const height = width === 390 ? 844 : 900;
     try {
       const response = await browser.quickAction('snapshot', {
-        html, formats:['screenshot','scrape'], elements:[{selector:'h1:first-of-type'}],
+        html, formats:['screenshot','scrape'], elements:[
+          {selector:'h1:first-of-type'},
+          {selector:'img[src]:not([src^="data:"])'},
+        ],
         screenshotOptions:{type:'jpeg',quality:60,fullPage:false},
         viewport:{width,height,isMobile:width === 390,hasTouch:width === 390},
         setJavaScriptEnabled:false, rejectRequestPattern:['.*'],
-        gotoOptions:{timeout:3500}, actionTimeout:2000,
+        gotoOptions:{timeout:3500,waitUntil:'load'}, waitForTimeout:1500, actionTimeout:3500,
       });
       if (!response.ok) break;
       const { result } = await response.json<Snapshot>();
       const headings = result?.scrape?.[0]?.results;
-      const headingInView = headings?.length ? headings.some(h =>
-        h.width > 0 && h.height > 0 && h.left < width && h.left + h.width > 0 &&
-        h.top < height && h.top + h.height > 0) : null;
+      const inViewport = ({width:elementWidth,height:elementHeight,left,top}: NonNullable<typeof headings>[number]) =>
+        elementWidth > 0 && elementHeight > 0 && left < width && left + elementWidth > 0 &&
+        top < height && top + elementHeight > 0;
+      const headingInView = headings?.length ? headings.some(inViewport) : null;
+      const missingVisibleImages = result?.scrape?.[1]?.results?.some(
+        image => image.width >= 120 && image.height >= 100 && inViewport(image));
       const image = result?.screenshot;
       const screenshot = image && image.length < 320000 && image.startsWith('/9j/') &&
         /^[A-Za-z0-9+/]+={0,2}$/.test(image) ? image : undefined;
-      observations.push({width,headingInView,screenshot});
+      observations.push({width,headingInView,screenshot,missingVisibleImages});
     } catch { break; }
   }
   return observations;

@@ -124,10 +124,12 @@ export function fetcher(signal: AbortSignal, transport: Transport = fetch, resol
       await delay();
       try { await resolve(current.hostname, signal, transport); }
       catch (error) { throw error instanceof Rejection ? error : new Rejection('unavailable'); }
+      const requestedAt = Date.now();
       const response = await transport(current, {
         redirect: 'manual', signal,
         headers: { accept, 'user-agent': 'CasconCROAudit/1.0 (+https://www.cascondigital.com/tools/cro-audit/methodology)' },
       }).catch(() => { throw new Rejection('unavailable'); });
+      const responseMs = Date.now() - requestedAt;
       restricted ||= response.status === 403 || response.status === 429 || response.headers.has('cf-mitigated');
       if (redirects.has(response.status)) {
         void response.body?.cancel().catch(() => {});
@@ -165,7 +167,7 @@ export function fetcher(signal: AbortSignal, transport: Transport = fetch, resol
       });
       // Only the bounded decompressed prefix reaches the extractor.
       return {
-        url: current, isPartial: () => partial,
+        url: current, responseMs, isPartial: () => partial,
         document: new Response(bounded, { headers: { 'content-type': response.headers.get('content-type')! } }),
       };
     }

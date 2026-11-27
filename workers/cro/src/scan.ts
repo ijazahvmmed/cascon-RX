@@ -120,5 +120,7 @@ export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signa
       if (error instanceof Rejection && ['denied','store-limited','blocked'].includes(error.code)) break;
     }
   }
-  return evaluate(home, pages, samples, new Date().toISOString(),captureReview,policies);
+  const report = evaluate(home, pages, samples, new Date().toISOString(),captureReview,policies);
+  return Number.isFinite(homeResponse.responseMs)
+    ? {...report, homepageResponseMs: homeResponse.responseMs} : report;
 }
