@@ -195,15 +195,11 @@ export default function Scanner() {
           <p className={styles.kicker}>Cascon Digital <span>/</span> Store tools</p>
           <h1 id="cro-title">Free online store check</h1>
           <p className={styles.intro}>See what shoppers can find before they buy, from the item price to delivery and returns.</p>
-          <aside className={styles.scopeNotice} aria-label="Important note about the scan">
-            <strong>Automated first look</strong>
-            <p>This scan checks a few public store pages. A full CRO audit needs an expert review.</p>
-            <button className={styles.textAction} type="button" aria-haspopup="dialog"
-              onClick={() => scopeDialog.current?.showModal()}>What this scan covers</button>
-          </aside>
+          <button className={styles.scopePill} type="button" aria-haspopup="dialog"
+            onClick={() => scopeDialog.current?.showModal()}>What this scan covers</button>
           <dialog ref={scopeDialog} className={styles.scopeDialog} aria-labelledby="cro-scope-title">
             <h2 id="cro-scope-title">What this scan covers</h2>
-            <p>It checks whether shoppers can find essentials such as product details, prices, delivery terms and returns. The report points to the evidence it could verify.</p>
+            <p>This automated scan provides a first look at a few public store pages. It checks whether shoppers can find essentials such as product details, prices, delivery terms and returns. The report points to the evidence it could verify.</p>
             <p>A CRO expert can try the full shopping journey, review how customers behave and recommend what to change or test first.</p>
             <form method="dialog">
               <button className={styles.secondary} type="submit">Close</button>
@@ -248,11 +244,6 @@ export default function Scanner() {
             {pdfError && <p role="alert" className={styles.error}>{pdfError}</p>}
           </div>
         </header>
-
-        <p className={styles.reportNote}>
-          This automated scan provides a first look at a few public store pages. A CRO expert can go further by trying key shopping journeys,
-          reviewing customer behavior, and identifying what to test first.
-        </p>
 
         <section className={styles.photos} aria-label="Homepage screenshots">
           <h3>Homepage screenshots</h3>
