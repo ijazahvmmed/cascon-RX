@@ -35,6 +35,7 @@ test('public admission coalesces cold requests, reuses a summary, and enforces t
         return Response.json({success:init.body.get('response')==='valid',action:'cro_scan',hostname:'tool.example.com'});
       }
       if(url.hostname==='cloudflare-dns.com')return Response.json({Status:0,Answer:url.searchParams.get('type')==='1'?[{type:1,data:'93.184.216.34'}]:[]});
+      if(url.hostname==='pause-without-header.example.com')return new Response(null,{status:429});
       if(url.hostname==='paused.example.com'){pauses++;return new Response(null,{status:429,headers:{'retry-after':'300'}});}
       if(url.pathname==='/'){homes++;return new Response('<html><body><main><h1>Shop</h1><a href="/products/tote">Tote</a><a href="/cart">Cart</a></main></body></html>',{headers:{'content-type':'text/html'}});}
       return new Response(null,{status:403});
@@ -45,7 +46,7 @@ test('public admission coalesces cold requests, reuses a summary, and enforces t
   const mf=new Miniflare(convertV4MiniflareOptions({name:'admission',modules:true,script:bundle.outputFiles[0].text,compatibilityDate:'2026-11-24',kvNamespaces:['REPORT_CACHE'],
     durableObjects:{SCAN_BUDGET:{className:'ScanBudget',useSQLite:true}},
     bindings:{VISITOR_SECRET:'v'.repeat(40),TURNSTILE_SECRET:'fixture',ALLOWED_ORIGINS:'https://tool.example.com'}}));
-  const post=(token:string,cookie='',url='https://shop.example.com')=>mf.dispatchFetch('https://scanner.example.com/scan',{method:'POST',headers:{origin:'https://tool.example.com','content-type':'application/json',cookie,'cf-connecting-ip':'192.0.2.10'},body:JSON.stringify({url,token})});
+  const post=(token:string,cookie='',url='https://shop.example.com')=>mf.dispatchFetch('https://scanner.example.com/scan',{method:'POST',headers:{origin:'https://tool.example.com','content-type':'application/json',cookie,'cf-connecting-ip':url.includes('pause-without-header') ? '192.0.2.11' : '192.0.2.10'},body:JSON.stringify({url,token})});
   try{
     assert.equal((await post('bad')).status,403);
     assert.equal((await post('redirect')).status,403);
@@ -60,6 +61,9 @@ test('public admission coalesces cold requests, reuses a summary, and enforces t
     assert.deepEqual(await paused.json(),{error:'store-limited',retryAfter:300});
     assert.equal((await post('valid',cookie,'https://paused.example.com')).status,429);
     assert.equal(await (await mf.dispatchFetch('https://scanner.example.com/pauses')).json(),1);
+    const unannouncedPause = await post('valid',cookie,'https://pause-without-header.example.com');
+    assert.equal(unannouncedPause.status,429);
+    assert.deepEqual(await unannouncedPause.json(),{error:'store-limited',retryAfter:60});
     for(let i=0;i<2;i++)assert.deepEqual(await (await post('valid',cookie)).json(),report);
     assert.equal((await post('valid',cookie)).status,429);
     assert.equal(await (await mf.dispatchFetch('https://scanner.example.com/count')).json(),1);

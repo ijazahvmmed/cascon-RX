@@ -47,6 +47,7 @@ export class ScanBudget extends DurableObject<Resources> {
         const until = Date.now() + seconds * 1000;
         await this.ctx.storage.put('merchantPause', until);
         await this.ctx.storage.setAlarm(until);
+        throw new Rejection(error.code, seconds);
       }
       throw error;
     });

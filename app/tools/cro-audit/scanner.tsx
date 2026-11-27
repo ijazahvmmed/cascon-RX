@@ -15,7 +15,7 @@ const errors: Record<ScanError, string> = {
   invalid: 'Enter a store address, such as https://your-store.com.',
   blocked: 'We could not open that address. Try the store homepage.',
   denied: 'The store did not let us open this page.',
-  'store-limited': 'This store paused automated visits. You can try another store or come back later.',
+  'store-limited': 'This store paused the scan. This attempt did not use one of your free audits.',
   unavailable: 'We could not read this store. Try its homepage or come back later.',
   unsampled: 'We could not find that product or collection through the store. Try its homepage.',
   unverified: 'We could not tell that this is a shop. Try the main store address.',
@@ -111,7 +111,9 @@ export default function Scanner() {
           });
           const limit = code === 'store-limited' ? 'This store paused automated visits.' : payload.scope === 'visitor' ? 'You have used your three free audits for today.' : payload.scope === 'network' ? 'Your network reached its ten-minute scan limit.' :
             payload.scope === 'merchant' ? 'This store reached its daily scan limit.' : 'The scanner reached its daily capacity.';
-          setMessage(limit + ' You can scan again at ' + reset + ' (your local time).');
+          setMessage(code === 'store-limited'
+            ? 'This store paused the scan. You can retry after ' + reset + ' (your local time). This attempt did not use one of your free audits.'
+            : limit + ' You can scan again at ' + reset + ' (your local time).');
         } else {
           setMessage(error);
         }
