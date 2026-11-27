@@ -95,7 +95,8 @@ export class ScanBudget extends DurableObject<Resources> {
           sql.exec('INSERT OR REPLACE INTO browser_slot VALUES(1,?)',Date.now()+30000);
         }
         const used=row?.day===day ? row.used : 0;
-        if(used >= (path==='/browser'?4:60)) return false;
+        // Keep the daily capture windows below ten minutes.
+        if (used >= (path === '/browser' ? 24 : 60)) return false;
         sql.exec('INSERT OR REPLACE INTO allowances VALUES (?,?,?)',path,day,used+1);
         return true;
       });
