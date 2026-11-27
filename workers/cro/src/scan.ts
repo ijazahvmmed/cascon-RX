@@ -1,4 +1,5 @@
 import type { PageKind, Sample } from '../../../lib/cro/model';
+import { readPolicy, type Policies } from './policy';
 import { evaluate } from './evaluate';
 import { extract, verifies } from './extract';
 import type { DocumentEvidence } from './extract';
@@ -28,7 +29,7 @@ export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signa
   if (home.blocked) throw new Rejection('denied');
   if (!verifies(home, 'homepage')) throw new Rejection('unverified');
 
-  if (snapshot && captureHome && home.complete) captureHome(await snapshot.text());
+  if (snapshot && captureHome) captureHome(await snapshot.text());
   const samples: Sample[] = [{ kind: 'homepage', path: home.url.pathname, status: home.complete ? 'read' : 'partial' }];
   const tried = new Set([home.url.pathname]);
   const pages: Partial<Record<PageKind, DocumentEvidence>> = { homepage: home };
@@ -99,5 +100,25 @@ export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signa
     // The homepage is still valid evidence when deeper pages time out.
     for (const sample of samples) if (sample.status !== 'read' && sample.status !== 'partial' && !['blocked','rate limited','skipped','outside scope'].includes(sample.status)) sample.status = 'unavailable';
   }
-  return evaluate(home, pages, samples, new Date().toISOString(),captureReview);
+  const policies: Policies = {};
+  const sources = [home, pages.product, pages.collection];
+  for (const kind of ['shipping','returns'] as const) {
+    const path = sources.map(page => page?.homeShopping?.policies?.[kind]).find(Boolean);
+    if (!path || home.homeShopping?.[kind] || pages.product?.itemSignals?.[kind]) continue;
+    const candidate = sampleUrl(path, home.url);
+    if (!candidate) continue;
+    policies[kind] = {path, checked:false};
+    if (signal.aborted || merchantStopped(product) || merchantStopped(collection)) continue;
+    try {
+      const policy = await read(candidate, home.url);
+      if (stripSlash(policy.url.pathname) !== stripSlash(candidate.pathname)) {
+        await policy.document.body?.cancel(); continue;
+      }
+      const quote = await readPolicy(policy.document, kind);
+      policies[kind] = {path, quote, checked:true};
+    } catch (error) {
+      if (error instanceof Rejection && ['denied','store-limited','blocked'].includes(error.code)) break;
+    }
+  }
+  return evaluate(home, pages, samples, new Date().toISOString(),captureReview,policies);
 }

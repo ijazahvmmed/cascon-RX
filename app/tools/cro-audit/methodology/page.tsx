@@ -19,7 +19,7 @@ export default function MethodologyPage() {
       <section><h2>What we look for</h2>
         <p>We start on your homepage and follow store links to one product and one collection when we can. We check for a way to reach the product, its description, its price, an add-to-cart button, delivery terms, return terms and a way to contact the store.</p>
         <p>If an item page will not open, we can still confirm a visible item link and a selling price shown alongside it on the homepage. We check that both belong to the same item.</p>
-        <p>We also look for a delivery time or charge, a return period or a no-returns statement. A stated fee and a free-delivery offer both answer the shipping question. Your report says where we found each answer. A policy link alone leaves the question open.</p>
+        <p>We also look for a delivery time or charge, a return period or a no-returns statement. A stated fee and a free-delivery offer both answer the shipping question. Your report says where we found each answer. When these details are unclear, we also check linked delivery and return policies if the store allows the visit. The report links to the page behind each verified answer.</p>
       </section>
       <section><h2>How the score works</h2>
         <p>The seven questions share 100 points equally. We round the total to the nearest whole point. A confirmed answer earns its share. An unfinished price or description can count as a problem. If we cannot see the answer, its points stay open.</p>

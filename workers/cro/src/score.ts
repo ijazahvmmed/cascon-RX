@@ -10,10 +10,10 @@ export function assessment(report: Pick<ScanReport, 'shopping'>) {
   const partial = open > 0 || !total;
   return {
     total, passed, issues, open, minimum, maximum, partial,
-    label: !passed && !issues ? 'Confirmed points' : partial ? 'Shopping score so far' : 'Shopping score',
+    label: !passed && !issues ? 'Confirmed points' : partial ? 'Verified shopping points' : 'Shopping score',
     value: minimum + '/100',
     detail: partial
-      ? (maximum - minimum) + ' points still open. Possible score ' + minimum + '–' + maximum + '.'
+      ? 'Scan complete. ' + open + ' of ' + total + ' questions unverified. Possible score ' + minimum + '–' + maximum + '.'
       : passed + ' of ' + total + ' shopping questions confirmed.',
   };
 }

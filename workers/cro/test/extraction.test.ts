@@ -272,3 +272,71 @@ test('custom server-rendered product routes require item-specific visible eviden
     assert.equal(related.signals.buy,false);
   } finally { await mf.dispose(); }
 });
+
+test('reads linked policy terms, cites their source and finds product-page support', async () => {
+  const handler = [
+    "import {scan} from './src/scan';",
+    "export default {async fetch(request) {",
+    "const root=new URL('https://merchant.example.com/');",
+    "const pages={'/':'<nav><a href=/cart>Cart</a><a href=/products/bag>Bag</a><a href=/policies/shipping-policy>Shipping</a><a href=/policies/refund-policy>Returns</a></nav>',",
+    "'/products/bag':'<main data-product-information><h1>Bag</h1><div id=product-description>A woven shoulder bag with an adjustable cotton strap.</div><span class=price>$36</span><button name=add>Add to cart</button></main><a href=/pages/contact-information>Contact the shop</a>',",
+    "'/policies/shipping-policy':'<main><h1>Delivery</h1><p>Orders are dispatched within 3 working days.</p></main>',",
+    "'/policies/refund-policy':'<main><h1>Returns</h1><p hidden>30-day returns.</p><p>Returns within 10 days?</p><p>Read the conditions for your order.</p></main>'};",
+    "const read=async(url)=>({url,document:new Response('<html><body>'+pages[url.pathname]+'</body></html>'),isPartial:()=>false});",
+    "return Response.json(await scan(root,new AbortController().signal,read));}};",
+  ].join('');
+  const mf = await fixture(handler);
+  try {
+    const result = await (await mf.dispatchFetch('http://fixture.test/')).json();
+    const [item,desc,,,shipping,returns,contact] = result.shopping;
+    assert.equal(item.result,'Confirmed');
+    assert.match(desc.detail,/adjustable cotton strap/);
+    assert.equal(shipping.source,'/policies/shipping-policy');
+    assert.match(shipping.detail,/3 working days/);
+    assert.equal(shipping.result,'Confirmed');
+    assert.equal(returns.result,'Could not confirm');
+    assert.match(returns.detail,/linked policy was checked/);
+    assert.equal(contact.source,'/products/bag');
+    assert.equal(contact.result,'Confirmed');
+    assert.ok(result.recommendations.some(finding => finding.id === 'shipping-at-purchase'));
+  } finally { await mf.dispose(); }
+});
+
+test('captures a styled body with attributes while keeping the browser offline', async () => {
+  const worker = [
+    "import {inspectWidths} from './src/viewport';",
+    "export default { async fetch() {",
+    "let calls=0;",
+    "const browser={async quickAction(action, options){",
+    "if(action!=='snapshot'||options.setJavaScriptEnabled||options.rejectRequestPattern[0]!=='.*'||options.html.includes('<script')||!options.html.includes('Store heading')) throw Error('unexpected render');",
+    "calls++; return calls===1 ? Response.json({result:{screenshot:'/9j/2Q==',scrape:[]}}) : new Response(null,{status:429});}};",
+    "const readings=await inspectWidths(browser,'<html><body class=store><h1>Store heading</h1><script>untrusted</script></body></html>');",
+    "return Response.json({calls,readings});}};",
+  ].join('');
+  const mf = await fixture(worker);
+  try {
+    const result = await (await mf.dispatchFetch('http://fixture.test/')).json();
+    assert.equal(result.calls,2);
+    assert.equal(result.readings.length,1);
+    assert.equal(result.readings[0].width,390);
+    assert.equal(result.readings[0].screenshot,'/9j/2Q==');
+  } finally { await mf.dispose(); }
+});
+
+test('snapshot assets come from explicit store links and stay within three bounded reads', async () => {
+  const handler = [
+    "import {prepareCapture} from './src/viewport';",
+    "export default {async fetch(){const visits=[];",
+    "const html='<html><head><link rel=stylesheet href=/theme.css><link rel=stylesheet href=https://third.example.com/other.css></head><body><img src=/hero.png></body></html>';",
+    "const saved=await prepareCapture(html,new URL('https://store.example.com/'),async(url,home,root,kind)=>{",
+    "visits.push(url.pathname);return {isPartial:()=>false,document:new Response(kind==='css'?'body{color:green}':'raster',{headers:{'content-type':kind==='css'?'text/css':'image/png'}})};",
+    "});return Response.json({saved,visits});}};",
+  ].join('');
+  const mf = await fixture(handler);
+  try {
+    const result=await (await mf.dispatchFetch('http://fixture.test/')).json();
+    assert.deepEqual(result.visits,['/theme.css','/hero.png']);
+    assert.match(result.saved,/<style>body\{color:green\}<\/style>/);
+    assert.match(result.saved,/data:image\/png;base64,/);
+  } finally {await mf.dispose();}
+});

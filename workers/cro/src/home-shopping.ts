@@ -1,6 +1,7 @@
 import { hasDeliveryFee, hasSellingPrice, voidTags } from './shopping';
 
 export interface HomeShopping {
+  policies?: Partial<Record<"shipping" | "returns",string>>;
   itemLink: boolean;
   pricedItems: Set<string>;
   shipping?: 'free' | 'time' | 'fee';
@@ -43,10 +44,17 @@ export function readHomeShopping(rewriter: HTMLRewriter, onEnd: (el: Element, fi
       let url: URL;
       try { url = new URL(href,page); } catch { return; }
       const path = url.origin === page.origin ? productPath(url,el.getAttribute('class') ?? '') : null;
-      const contact = url.origin === page.origin && /(?:^|\/)(?:contact(?:-us)?|customer-service|customer-care|customer-support|support|get-in-touch)\/?$/i.test(url.pathname) ||
+      if (url.origin === page.origin && !url.search && !url.hash && !url.username && !url.password) {
+        const slug = url.pathname.split('/').filter(Boolean).pop() || '';
+        const policy = !/^\/(?:[a-z]{2}(?:-[a-z]{2})?\/)?(?:(?:policies|pages|help|legal)\/)?[^/]+\/?$/i.test(url.pathname) ? undefined : /^(shipping|delivery)(-policy|-information|-and-delivery)?$/i.test(slug) ? 'shipping'
+          : /^(refund-policy|returns?|return-policy|refunds-and-returns|returns-and-exchanges)$/i.test(slug) ? 'returns' : undefined;
+        if (policy) (result.policies ??= {})[policy] ??= url.pathname;
+      }
+      const contact = url.origin === page.origin && /(?:^|\/)(?:contact(?:-us)?|customer-service|customer-care|customer-support|support|help-center|help-centre|contact-information|get-in-touch)\/?$/i.test(url.pathname) ||
         url.protocol === 'mailto:' && url.pathname.includes('@') || url.protocol === 'tel:' && /\d{3}/.test(url.pathname);
       const helpHost = url.protocol === 'https:' && !url.port && !url.username && !url.password && helpHosts.has(url.hostname);
-      if (!path && !contact && !helpHost) return;
+      const helpPage = url.origin === page.origin && /\/(?:help|contact)(?:\.html)?\/?$/i.test(url.pathname);
+      if (!path && !contact && !helpHost && !helpPage) return;
       const listing = card;
       if (path && listing) {
         if (listing.path && listing.path !== path) listing.ambiguous = true;
@@ -57,7 +65,7 @@ export function readHomeShopping(rewriter: HTMLRewriter, onEnd: (el: Element, fi
       onEnd(el, () => {
         const name = anchor.text.trim();
         if (name && path) { result.itemLink = true; if (listing) listing.named = true; }
-        if (name && (contact || helpHost && /\b(contact|help cent(?:er|re)|customer (?:care|support|service)|get in touch)\b/i.test(name))) result.contact = true;
+        if (name && (contact || (helpHost || helpPage) && /\b(contact|help cent(?:er|re)|customer (?:care|support|service)|get in touch)\b/i.test(name))) result.contact = true;
         link = undefined;
       });
     },

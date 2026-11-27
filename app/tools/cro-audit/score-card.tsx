@@ -7,7 +7,7 @@ import styles from './score-card.module.css';
 const outcomes = [
   { key: 'passed', label: 'Confirmed' },
   { key: 'issues', label: 'To fix' },
-  { key: 'open', label: 'Still open' },
+  { key: 'open', label: 'Unverified' },
 ] as const;
 
 function Counter({ value }: { value: number }) {
@@ -78,8 +78,8 @@ function AreaPlot({ areas }: { areas: CategoryResult[] }) {
   </div>;
 }
 
-export default function ScoreCard({ report, loading, headingRef }: {
-  report: ScanReport | null; loading: boolean; headingRef: Ref<HTMLHeadingElement>;
+export default function ScoreCard({ report, headingRef }: {
+  report: ScanReport; headingRef: Ref<HTMLHeadingElement>;
 }) {
   const [view, setView] = useState<'score' | 'areas'>('score');
   const score = report && report.score;
@@ -98,8 +98,7 @@ export default function ScoreCard({ report, loading, headingRef }: {
       {value === undefined ? '—' : <Counter key={view} value={value} />}
       <span className={styles.unit}> / {areas && report ? report.overall.applicable : 100}</span>
     </div>
-    <p className={styles.description}>{areas ? 'Individual checks across the store.' : score ? score.detail :
-      loading ? 'Your score will appear when the scan finishes.' : 'Enter your store address to see your score.'}</p>
+    <p className={styles.description}>{areas ? 'Individual checks across the store.' : score.detail}</p>
     {areas && report ? <AreaPlot areas={report.categories} /> : <ScorePlot score={score} />}
   </section>;
 }

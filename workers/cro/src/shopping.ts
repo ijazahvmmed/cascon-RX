@@ -1,8 +1,10 @@
-import type { ShoppingCheck } from '../../../lib/cro/model';
+import type { Policies, PolicyKind } from './policy';
+import type { Sample, ShoppingCheck } from '../../../lib/cro/model';
 import type { DocumentEvidence } from './extract';
 
 export interface ItemSignals {
   description: boolean;
+  excerpt?: string;
   placeholder: boolean;
   price: boolean;
   invalidPrice: boolean;
@@ -74,10 +76,13 @@ export function readItemSignals(rewriter: HTMLRewriter, onEnd: (el: Element, fin
   }
   const describe = (value: string) => {
     if (/^(?:coming soon|description (?:goes here|coming soon)|lorem ipsum\b.*|tbd)[.!]?$/i.test(value)) signals.placeholder = true;
-    else if (value.length >= 24 && /\p{L}/u.test(value)) signals.description = true;
+    else if (value.length >= 24 && /\p{L}/u.test(value)) {
+      signals.description = true;
+      signals.excerpt ??= value.length > 150 ? value.slice(0,147).replace(/\s+\S*$/, '') + '…' : value;
+    }
   };
   inspect('[class$="__description"], .product-description, [data-testid="product-description"], [itemprop="description"]', describe);
-  inspect('.product__description, .woocommerce-product-details__short-description, #tab-description, [data-product-description]', describe, { outsideProduct: true });
+  inspect('.product__description, .woocommerce-product-details__short-description, #tab-description, #product-description, #productDescription, .product-single__description, .product__text.description, [id^="ProductDescription-"], [data-product-description]', describe, { outsideProduct: true });
   inspect('.price, [itemprop="price"], .woocommerce-Price-amount, .price-item--sale, .price-item--regular, [data-product-price], [data-testid="product-price"]', value => {
     if (inTable) return;
     if (/^(?:tbd|nan|price coming soon)[.!]?$/i.test(value)) signals.invalidPrice = true;
@@ -110,30 +115,52 @@ export function readItemSignals(rewriter: HTMLRewriter, onEnd: (el: Element, fin
   return signals;
 }
 
-export function shoppingChecks(home: DocumentEvidence, product?: DocumentEvidence, attemptedPath?: string): ShoppingCheck[] {
+export function shoppingChecks(home: DocumentEvidence, product?: DocumentEvidence, attemptedPath?: string,
+  policies: Policies = {}, collection?: DocumentEvidence, productStatus?: Sample['status']): ShoppingCheck[] {
   const signals = product?.itemSignals;
   const front = home.homeShopping;
   const path = product?.url.pathname ?? attemptedPath;
   const listedPrice = !signals?.invalidPrice && (path ? front?.pricedItems.has(path) : Boolean(front?.pricedItems.size));
-  const delivery = { free:'The homepage advertises a free-shipping offer.', time:'The homepage gives a dispatch or delivery time.', fee:'The homepage lists a delivery charge.' };
-  const confirmed = (title: string, yes: boolean | undefined, good: string, bad?: string): ShoppingCheck => ({
-    title, result: yes ? 'Confirmed' : bad ? 'Needs attention' : 'Could not confirm',
-    detail: yes ? good : bad || (!product && title !== 'Reach customer support' ? 'We could not check a product page.' : 'We could not confirm this on the pages we checked.'),
-  });
+  const homePath = home.url.pathname;
+  const support = [home, product, collection].find(page => page?.homeShopping?.contact);
+  const unavailable = productStatus === 'rate limited' || productStatus === 'blocked'
+    ? 'The store stopped the visit to the product page.'
+    : 'The scan did not reach a verified product page.';
+  function check(title:string, verified:boolean | undefined, evidence:string, unknown:string, source?:string, issue?:string): ShoppingCheck {
+    return {title, result:verified ? 'Confirmed' : issue ? 'Needs attention' : 'Could not confirm',
+      detail:verified ? evidence : issue || unknown, source};
+  }
+  function terms(kind:PolicyKind): ShoppingCheck {
+    const shipping = kind === 'shipping';
+    const title = shipping ? 'Find delivery terms' : 'Find return terms';
+    if (signals?.[kind]) return check(title,true,shipping ? 'The item details give a delivery time or shipping cost.'
+      : 'The item details state a return period or whether returns are accepted.','',path);
+    if (front?.[kind]) {
+      const delivery = {free:'The homepage advertises a free-shipping offer.', time:'The homepage gives a dispatch or delivery time.', fee:'The homepage lists a delivery charge.'};
+      const message = shipping ? delivery[front.shipping!] : typeof front.returns === 'number'
+        ? 'The homepage lists a ' + front.returns + '-day return period.' : 'The homepage says returns are unavailable.';
+      return check(title,true,message,'',homePath);
+    }
+    const policy = policies[kind];
+    const sought = shipping ? 'a delivery estimate or shipping cost' : 'a return window or an explicit final-sale policy';
+    const detail = policy ? policy.checked ? 'The linked policy was checked for ' + sought + '. No clear statement was verified.'
+      : 'The store links to a policy. Its terms could not be checked during this visit.'
+      : 'The pages checked did not establish ' + sought + '.';
+    return check(title,Boolean(policy?.quote), 'The linked policy says “' + policy?.quote + '”',detail,policy?.path);
+  }
   return [
-    confirmed('Find an item', Boolean(product || front?.itemLink), product
-      ? 'We followed a store link and opened a product.' : 'The homepage shows a link to an item.'),
-    confirmed('Read about the item', signals?.description, 'The product has its own written description.',
-      signals?.placeholder ? 'The description still contains placeholder text.' : undefined),
-    confirmed('See the item price', signals?.price || listedPrice, signals?.price
-      ? 'We found the current price in the item details.' : 'The homepage shows a selling price beside the link to the item.',
-      signals?.invalidPrice ? 'The price area contains an unfinished price.' : undefined),
-    confirmed('Start buying the item', signals?.buy, 'The item has an available button to add it to the cart or buy it.'),
-    confirmed('Find delivery terms', signals?.shipping || Boolean(front?.shipping), front?.shipping && !signals?.shipping
-      ? delivery[front.shipping] : 'The item details give a delivery time or say what shipping costs.'),
-    confirmed('Find return terms', signals?.returns || Boolean(front?.returns), signals?.returns
-      ? 'The item details give a return period or say that returns are unavailable.' : typeof front?.returns === 'number'
-        ? 'The homepage lists a ' + front.returns + '-day return period.' : 'The homepage says returns are unavailable.'),
-    confirmed('Reach customer support', front?.contact, 'The homepage has contact details or a customer support link.'),
+    check('Find an item',Boolean(product || front?.itemLink),product ? 'We followed a store link and opened a product.'
+      : 'The homepage shows a named link to an item.',unavailable,product?.url.pathname ?? homePath),
+    check('Read about the item',signals?.description,signals?.excerpt ? 'From the item description: “' + signals.excerpt + '”'
+      : 'The product has its own written description.',product ? 'The item page opened, but its description could not be identified separately from the rest of the page.' : unavailable,
+      path,signals?.placeholder ? 'The description still contains placeholder text.' : undefined),
+    check('See the item price',signals?.price || listedPrice,signals?.price ? 'The item details show a current selling price.'
+      : 'The homepage shows a selling price beside the item link.','No current selling price could be tied to the sampled item.',
+      signals?.price ? path : homePath,signals?.invalidPrice ? 'The price area contains an unfinished price.' : undefined),
+    check('Start buying the item',signals?.buy,'The item has an available button to add it to the cart or buy it.',
+      product ? 'The item page opened, but an enabled purchase button could not be verified.' : unavailable,path),
+    terms('shipping'), terms('returns'),
+    check('Reach customer support',Boolean(support),'This page contains contact details or a named customer support link.',
+      'The pages checked did not show a named contact link, phone link or email link that the scan could verify.',support?.url.pathname),
   ];
 }

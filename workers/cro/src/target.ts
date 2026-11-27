@@ -110,7 +110,13 @@ export function fetcher(signal: AbortSignal, transport: Transport = fetch, resol
     lastPageRequest = Date.now();
   };
   // Recheck each hop immediately before fetch. DNS preflight does not pin the connection.
-  return async (entry: URL, home: URL, homeFetch = false) => {
+  return async (entry: URL, home: URL, homeFetch = false, kind: 'html' | 'css' | 'image' = 'html') => {
+    const media = kind === 'html' ? /^(text\/html|application\/xhtml\+xml)(?:;|$)/i
+      : kind === 'css' ? /^text\/css(?:;|$)/i : /^image\/(?:webp|jpeg|png)(?:;|$)/i;
+    const accept = kind === 'html' ? 'text/html,application/xhtml+xml' : kind === 'css' ? 'text/css' : 'image/webp,image/jpeg,image/png';
+    if (kind !== 'html' && (entry.protocol !== 'https:' || !sampleUrl(entry.href,home) ||
+      !(kind === 'css' ? /\.css$/i : /\.(?:webp|jpe?g|png)$/i).test(entry.pathname))) throw new Rejection('blocked');
+    const maxBytes = kind === 'html' ? MAX_HTML_BYTES : 192 * 1024;
     let current = entry;
     for (let hop = 0; hop <= 2; hop++) {
       if (restricted) throw new Rejection('blocked');
@@ -120,18 +126,18 @@ export function fetcher(signal: AbortSignal, transport: Transport = fetch, resol
       catch (error) { throw error instanceof Rejection ? error : new Rejection('unavailable'); }
       const response = await transport(current, {
         redirect: 'manual', signal,
-        headers: { accept: 'text/html,application/xhtml+xml', 'user-agent': 'CasconCROAudit/1.0 (+https://www.cascondigital.com/tools/cro-audit/methodology)' },
+        headers: { accept, 'user-agent': 'CasconCROAudit/1.0 (+https://www.cascondigital.com/tools/cro-audit/methodology)' },
       }).catch(() => { throw new Rejection('unavailable'); });
       restricted ||= response.status === 403 || response.status === 429 || response.headers.has('cf-mitigated');
       if (redirects.has(response.status)) {
         void response.body?.cancel().catch(() => {});
         const location = response.headers.get('location');
-        if (hop === 2 || !location) throw new Rejection('blocked');
+        if (kind !== 'html' || hop === 2 || !location) throw new Rejection('blocked');
         current = redirectUrl(location, current, home, homeFetch);
         continue;
       }
       if (response.status !== 200 || response.headers.has('cf-mitigated') ||
-        !/^(text\/html|application\/xhtml\+xml)(?:;|$)/i.test(response.headers.get('content-type')?.trim() ?? '') ||
+        !media.test(response.headers.get('content-type')?.trim() ?? '') ||
         !response.body) {
         void response.body?.cancel().catch(() => {});
         if (response.status === 429) throw new Rejection('store-limited', retryDelay(response.headers.get('retry-after')));
@@ -144,7 +150,7 @@ export function fetcher(signal: AbortSignal, transport: Transport = fetch, resol
         async pull(controller) {
           const chunk = await reader.read();
           if (chunk.done) { controller.close(); return; }
-          const remainder = MAX_HTML_BYTES - size;
+          const remainder = maxBytes - size;
           if (chunk.value.byteLength > remainder) {
             partial = true;
             if (remainder) controller.enqueue(chunk.value.subarray(0,remainder));

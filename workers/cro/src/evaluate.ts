@@ -1,3 +1,4 @@
+import type { Policies } from './policy';
 import { assessment } from './score';
 import { merchantFinding } from './merchant-copy';
 import { shoppingChecks } from './shopping';
@@ -137,7 +138,7 @@ function coverage(outcomes: Outcome[]): Coverage {
   return { assessed:assessed.length, applicable:applicable.length, passed:passed.length };
 }
 
-export function evaluate(home: DocumentEvidence, pages: Partial<Record<PageKind, DocumentEvidence>>, samples: Sample[], capturedAt: string, capture?: (evidence:unknown)=>void): ScanReport {
+export function evaluate(home: DocumentEvidence, pages: Partial<Record<PageKind, DocumentEvidence>>, samples: Sample[], capturedAt: string, capture?: (evidence:unknown)=>void, policies: Policies = {}): ScanReport {
   const absenceSensitive = new Set(['home-title','home-heading','home-description','collection-title','collection-heading','product-heading','product-action','nav-landmark','nav-main','cart-label','checkout-entry']);
   const outcomes: Outcome[] = automatable.map(principle => {
     const [page, observe] = rules[principle.id];
@@ -166,6 +167,18 @@ export function evaluate(home: DocumentEvidence, pages: Partial<Record<PageKind,
     if (signals.placeholder && !signals.description) add('unfinished-description','product','Finish the item description',
       'The description still contains placeholder text.','People need something to base their choice on.','Describe the item and give a detail that helps someone choose it.');
   }
+  const policy = policies.shipping?.quote ? 'shipping' : policies.returns?.quote ? 'returns' : undefined;
+  if (policy && pages.product?.complete && signals?.buy && !signals[policy]) {
+    const delivery = policy === 'shipping';
+    candidates.push({
+      id:policy + '-at-purchase', category:policy, page:'product', path:pages.product.url.pathname,
+      title:delivery ? 'Check delivery information beside the buy button' : 'Check return terms beside the buy button',
+      evidence:'The product has a purchase button. The linked policy says “' + policies[policy]!.quote + '”',
+      why:delivery ? 'Knowing when an order will arrive helps a shopper decide whether to buy.' : 'Knowing the return window helps a shopper decide whether to commit.',
+      change:'Open this item on a phone. If these terms are hard to find before adding it to the cart, show a short summary with any conditions and link to the full policy.',
+      mode:'automated', priority:'Medium', confidence:'Moderate', effort:'Small',
+    });
+  }
   candidates.sort((a,b) => rank(b) - rank(a) || a.id.localeCompare(b.id));
   const recommendations: Finding[] = [];
   for (const finding of candidates) {
@@ -173,6 +186,6 @@ export function evaluate(home: DocumentEvidence, pages: Partial<Record<PageKind,
     if (recommendations.length >= 3) break;
   }
   const attemptedProduct = samples.find(sample => sample.kind === 'product');
-  const shopping = shoppingChecks(home, pages.product, attemptedProduct?.path);
+  const shopping = shoppingChecks(home, pages.product, attemptedProduct?.path, policies, pages.collection, attemptedProduct?.status);
   return { version: 2, score: assessment({ shopping }), shopping, store: home.url.origin, platform: home.platform, capturedAt, overall, categories: summary, samples, recommendations:recommendations.map(merchantFinding) };
 }

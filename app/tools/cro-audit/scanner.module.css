@@ -86,3 +86,12 @@
 .shoppingList strong{font-weight:400}
 .shoppingList span,.shoppingList p{font-size:var(--font-size-sm);color:var(--color-text-secondary)}
 .shoppingList span{text-align:right}
+
+.hero[data-has-report="false"]{grid-template-columns:minmax(0,650px);min-height:0}
+.photos{margin-block:32px}
+.photos>div{display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-top:16px}
+.photos figure{margin:0;min-width:0;flex:1}
+.photos figure:first-child:has(+figure){flex:0 1 22%}
+.photos img{display:block;width:100%;height:auto;border:1px solid var(--color-border)}
+.photos figcaption{font-size:.875rem;margin-top:6px}
+@media(max-width:620px){.photos>div{display:grid}.photos figure:first-child:has(+figure){max-width:195px}}

@@ -44,6 +44,7 @@ export const sampleLabels: Record<Sample['status'], string> = {
 };
 
 export interface ShoppingCheck {
+  source?: string;
   title: string;
   result: 'Confirmed' | 'Needs attention' | 'Could not confirm';
   detail: string;
@@ -59,7 +60,8 @@ export function categoryResult(category: CategoryResult) {
 
 export interface ScanReport {
   score: { total:number; passed:number; issues:number; open:number; minimum:number; maximum:number; partial:boolean; label:string; value:string; detail:string };
-  viewports?: { width:number; headingInView:boolean|null }[];
+  screenshotStatus?: 'captured' | 'capacity' | 'unavailable';
+  viewports?: { width:number; headingInView:boolean|null; screenshot?:string }[];
   shopping: ShoppingCheck[];
   version: 2;
   store: string;

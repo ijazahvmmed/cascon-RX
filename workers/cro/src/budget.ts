@@ -1,10 +1,10 @@
 import { DurableObject } from 'cloudflare:workers';
 
 import { scan } from './scan';
-import { storeEntry, Rejection } from './target';
+import { storeEntry, Rejection, fetcher } from './target';
 
 import { enhance } from './advice';
-import { inspectWidths } from './viewport';
+import { inspectWidths, prepareCapture } from './viewport';
 
 interface Resources {
   REPORT_CACHE?: KVNamespace;
@@ -36,7 +36,9 @@ export class ScanBudget extends DurableObject<Resources> {
     const enabled=this.env.FREE_ENRICHMENT === 'verified-free';
     let privateEvidence:unknown;
     let html='';
-    const reading = scan(storeEntry(url), AbortSignal.timeout(17000),undefined,undefined,
+    const deadline = AbortSignal.timeout(17000);
+    const read = fetcher(deadline);
+    const reading = scan(storeEntry(url), deadline, read,undefined,
       enabled && this.env.BROWSER ? value=>{html=value;} : undefined, evidence=>{privateEvidence=evidence;});
     const original = await reading.catch(async error => {
       if (error instanceof Rejection && error.code === 'store-limited') {
@@ -48,13 +50,18 @@ export class ScanBudget extends DurableObject<Resources> {
       }
       throw error;
     });
+    const browserAllowed = Boolean(enabled && html && this.env.BROWSER && await this.reserve('browser'));
     const [viewports,enhanced]=await Promise.all([
-      enabled && html && this.env.BROWSER && await this.reserve('browser') ?
-        bounded(inspectWidths(this.env.BROWSER,html),[],18500) : [],
+      browserAllowed && this.env.BROWSER ?
+        bounded((original.samples.some(sample => sample.status === 'blocked' || sample.status === 'rate limited')
+          ? Promise.resolve(html) : prepareCapture(html,new URL(original.store),read))
+          .then(page => inspectWidths(this.env.BROWSER!,page)),[],22500) : [],
       enabled && original.recommendations.length && this.env.AI && await this.reserve('ai') ?
         bounded(enhance(original,this.env.AI,'granite'),original,3500) : original
     ]);
-    const report={...enhanced,viewports};
+    const screenshotStatus = viewports.some(view => view.screenshot) ? 'captured'
+      : enabled && html && this.env.BROWSER && !browserAllowed ? 'capacity' : 'unavailable';
+    const report = {...enhanced,viewports,screenshotStatus};
     const body = JSON.stringify(report);
     const expires = Date.now()+86400000;
     await this.ctx.storage.put({summary:{expires,body},review:{expires,evidence:privateEvidence}});

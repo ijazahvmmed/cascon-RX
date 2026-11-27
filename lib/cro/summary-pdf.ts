@@ -73,7 +73,7 @@ export async function summaryPdf(report: ScanReport) {
   const groups = [
     { label: 'Confirmed', count: headline.passed },
     { label: 'To fix', count: headline.issues },
-    { label: 'Still open', count: headline.open },
+    { label: 'Unverified', count: headline.open },
   ];
   groups.forEach(({ label, count }, i) => {
     const x = margin + 14 + i * 154;

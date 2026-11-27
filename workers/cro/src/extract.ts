@@ -299,10 +299,10 @@ export async function extract(document: Response, url: URL, kind?: PageKind): Pr
     });
 
   const isHome = kind ? kind === 'homepage' : url.pathname === '/';
-  const homeShopping = isHome ? readHomeShopping(rewriter, onEnd, url, (link, hint) => {
-    if (candidateKind(link.pathname,hint) !== 'product') return null;
+  const homeShopping = readHomeShopping(rewriter, onEnd, url, (link, hint) => {
+    if (!isHome || candidateKind(link.pathname,hint) !== 'product') return null;
     return sampleUrl(link.href,url)?.pathname ?? null;
-  }) : undefined;
+  });
   const itemSignals = !isHome && kind !== 'collection' ? readItemSignals(rewriter, onEnd) : undefined;
   const reader = rewriter.transform(document).body!.getReader();
   try { while (!(await reader.read()).done) { /* Drain to complete extraction. */ } }
