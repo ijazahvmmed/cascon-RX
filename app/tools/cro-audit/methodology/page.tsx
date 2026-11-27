@@ -24,7 +24,7 @@ export default function MethodologyPage() {
       <section>
         <h2>Evidence and scoring</h2>
         <p>Each rule can pass, fail, remain unknown or be outside the observed page’s scope. Weighted passes are divided by weighted assessed checks. High, medium and low priority checks weigh 3, 2 and 1. Unknown checks affect evidence coverage only. Optional offers do not affect the score by being absent.</p>
-        <p>A category score requires at least two assessed checks and at least 60% of its applicable evidence weight. The overall score also requires a verified product page, at least 18 assessed checks and six scored categories. The report shows assessed and applicable counts alongside the result. Score thresholds describe evidence coverage and do not predict revenue, usability or performance.</p>
+        <p>A category score requires at least two assessed checks and at least 60% of its applicable evidence weight. The overall score also requires a verified product page, at least 18 assessed checks and six scored categories. When the overall threshold is unmet, we can score just the homepage using all automated homepage rules, with at least six assessed checks and 60% of applicable evidence weight. Below both thresholds we show verified counts. The report shows assessed and applicable counts alongside the result. Score thresholds describe evidence coverage and do not predict revenue, usability or performance.</p>
         <p>Recommendations are limited to three confirmed observations from distinct categories. Higher business priority weighs first, then confidence and implementation effort. Moderate confidence marks a static observation that merits checking in the rendered page.</p>
       </section>
       <section>

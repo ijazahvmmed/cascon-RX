@@ -1,4 +1,4 @@
-import type { ScanError } from '../../../lib/cro/model';
+import type { ScanError, ScanUpdate } from '../../../lib/cro/model';
 import { ScanBudget } from './budget';
 import { scan } from './scan';
 import { merchantKey, Rejection, storeEntry } from './target';
@@ -96,6 +96,23 @@ export default {
         });
       }
       if (!allowance.ok) return reject('busy');
+      if (request.headers.get('accept') === 'application/x-ndjson') {
+        const channel = new AbortController();
+        const signal = AbortSignal.any([deadline, channel.signal]);
+        const stream = new ReadableStream<Uint8Array>({
+          start(controller) {
+            const send = (event: ScanUpdate) => {
+              if (!channel.signal.aborted) controller.enqueue(encoder.encode(JSON.stringify(event) + '\n'));
+            };
+            void scan(target, signal, undefined, (reading, path) => send({ reading, path }))
+              .then(report => send({ report }))
+              .catch(error => send({ error: deadline.aborted ? 'timeout' : error instanceof Rejection ? error.code : 'busy' }))
+              .finally(() => { if (!channel.signal.aborted) controller.close(); });
+          },
+          cancel() { channel.abort(); },
+        });
+        return new Response(stream, { headers: { ...defaults, 'content-type': 'application/x-ndjson; charset=utf-8' } });
+      }
       const report = await scan(target, deadline);
       return Response.json(report, { headers: defaults });
     } catch (error) {

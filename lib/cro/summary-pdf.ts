@@ -1,4 +1,4 @@
-import { sampleLabels } from './model';
+import { assessment, sampleLabels } from './model';
 import { PDFDocument, StandardFonts, rgb, type PDFFont } from 'pdf-lib';
 import { categories, type ScanReport } from './model';
 
@@ -66,7 +66,8 @@ export async function summaryPdf(report: ScanReport) {
   y -= 18;
   page.drawRectangle({ x:margin, y:y-57, width:width-2*margin, height:66, color:green });
   y -= 9;
-  text(report.overall.score === null ? 'Overall score withheld' : 'Overall assessment  ' + report.overall.score + ' / 100',17,true,ink,margin+12);
+  const headline = assessment(report);
+  text(headline.label + '  ' + headline.value,17,true,ink,margin+12);
   text(report.overall.assessed + ' of ' + report.overall.applicable + ' applicable checks assessed',10,false,muted,margin+12);
   y -= 32;
   text('Sample evidence',14,true);

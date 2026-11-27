@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { CAL_LINK } from '@/lib/constants';
 import { trackCro } from '@/lib/cro/activity';
-import { categories, sampleLabels } from '@/lib/cro/model';
+import { assessment, categories, sampleLabels } from '@/lib/cro/model';
 import type { ScanError, ScanReport, Sample } from '@/lib/cro/model';
 import styles from './scanner.module.css';
+import ScanTrace, { presentationMs, readStream, type PageRead } from './scan-trace';
 
 const pages = [
   { kind: 'homepage', label: 'Homepage', detail: 'Store entry and visible navigation' },
@@ -16,11 +17,11 @@ const pages = [
 
 const errors: Record<ScanError, string> = {
   invalid: 'Enter a public storefront URL, such as a store homepage.',
-  blocked: 'This address falls outside the scanner’s public storefront scope. Try the store’s main domain.',
+  blocked: 'This address falls outside the scannerâ€™s public storefront scope. Try the storeâ€™s main domain.',
   denied: 'The storefront declined automated access. A report could not be prepared.',
   'store-limited': 'The storefront is limiting requests. Try again later.',
   unavailable: 'The storefront could not be read within the scan limits. Try the public homepage or try again later.',
-  unsampled: 'We couldn’t verify the submitted page as a linked product or collection. Try the store homepage for a storefront assessment.',
+  unsampled: 'We couldnâ€™t verify the submitted page as a linked product or collection. Try the store homepage for a storefront assessment.',
   unverified: 'The response did not contain enough storefront evidence to verify an ecommerce site.',
   busy: 'The scanner is temporarily unavailable. Try again later.',
   limited: 'The free scan limit has been reached. Try again later.',
@@ -28,22 +29,6 @@ const errors: Record<ScanError, string> = {
 };
 const worker = process.env.NEXT_PUBLIC_CRO_WORKER_URL ||
   (process.env.NODE_ENV === 'development' ? 'http://localhost:8787' : '');
-
-function ScanLoader() {
-  const [elapsed, setElapsed] = useState(0);
-  useEffect(() => {
-    const started = performance.now();
-    const timer = window.setInterval(() => setElapsed((performance.now() - started) / 1000), 100);
-    return () => window.clearInterval(timer);
-  }, []);
-  return <div className={styles.loading}>
-    <span className={styles.pixels} aria-hidden="true">{Array.from({ length: 9 }, (_, i) => (
-      <i key={i} style={{ animationDelay: ((i % 3) + Math.abs(Math.floor(i / 3) - 1)) * 90 + 'ms' }} />
-    ))}</span>
-    <span role="status" className={styles.shimmer}>Reading the storefront</span>
-    <span className={styles.elapsed} aria-hidden="true">{elapsed.toFixed(1)}s</span>
-  </div>;
-}
 
 function scopeStatus(report: ScanReport | null, kind: Sample['kind']) {
   const sample = report?.samples.find(s => s.kind === kind);
@@ -53,10 +38,11 @@ function scopeStatus(report: ScanReport | null, kind: Sample['kind']) {
 function consultationUrl(report: ScanReport) {
   const booking = new URL(CAL_LINK);
   const findingList = report.recommendations.map(item => item.title).join('. ');
-  const score = report.overall.score === null ? 'score withheld' : report.overall.score + '/100';
+  const summary = assessment(report);
+  const score = summary.label + ' ' + summary.value;
   booking.searchParams.set('notes', [
     'Store: ' + report.store,
-    'Cascon CRO assessment: ' + score + ' · ' + report.overall.assessed + ' checks assessed',
+    'Cascon CRO assessment: ' + score + ' Â· ' + report.overall.assessed + ' checks assessed',
     findingList && 'Observed priorities: ' + findingList,
   ].filter(Boolean).join('\n'));
   booking.searchParams.set('utm_source', 'cascon_cro_audit');
@@ -68,6 +54,9 @@ export default function Scanner() {
   const [target, setTarget] = useState('');
   const [state, setState] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
   const [report, setReport] = useState<ScanReport | null>(null);
+  const [pendingReport, setPendingReport] = useState<ScanReport | null>(null);
+  const [reads, setReads] = useState<PageRead[]>([]);
+  const [started, setStarted] = useState(0);
   const [message, setMessage] = useState('');
   const [pdfError, setPdfError] = useState('');
   const [makingPdf, setMakingPdf] = useState(false);
@@ -86,6 +75,10 @@ export default function Scanner() {
     if (!worker) { setMessage(errors.busy); setState('error'); return; }
     const controller = new AbortController();
     active.current = controller;
+    const start = performance.now();
+    setStarted(start);
+    setReads([]);
+    setPendingReport(null);
     setState('loading');
     engagement.current.clear();
     const timer = window.setTimeout(() => controller.abort('timeout'), 21_000);
@@ -93,9 +86,13 @@ export default function Scanner() {
       const request = await fetch(new URL('/scan', worker), {
         method: 'POST', signal: controller.signal, cache: 'no-store', credentials: 'omit',
         referrerPolicy: 'no-referrer',
-        headers: { 'content-type': 'application/json' }, body: JSON.stringify({ url: target.trim() }),
+        headers: { 'content-type': 'application/json', accept: 'application/x-ndjson' }, body: JSON.stringify({ url: target.trim() }),
       });
-      const payload = await request.json().catch(() => null);
+      const payload = request.headers.get('content-type')?.startsWith('application/x-ndjson')
+        ? await readStream(request, event => {
+            if (!controller.signal.aborted) setReads(previous => [...previous, event]);
+          })
+        : await request.json().catch(() => null);
       if (!request.ok || payload?.version !== 1 || !Array.isArray(payload.recommendations)) {
         const code = payload?.error as ScanError;
         const error = Object.hasOwn(errors, code) ? errors[code] :
@@ -117,6 +114,19 @@ export default function Scanner() {
       }
       if (controller.signal.aborted) return;
       const result = payload as ScanReport;
+      window.clearTimeout(timer);
+      setPendingReport(result);
+      const remaining = Math.max(0, presentationMs - (performance.now() - start));
+      if (remaining) await new Promise<void>(resolve => {
+        const finish = () => {
+          window.clearTimeout(reveal);
+          controller.signal.removeEventListener('abort', finish);
+          resolve();
+        };
+        const reveal = window.setTimeout(finish, remaining);
+        controller.signal.addEventListener('abort', finish, { once: true });
+      });
+      if (controller.signal.aborted) return;
       setReport(result);
       setState('done');
       trackCro({ name: 'cro_scan_complete', coverage: result.overall.score === null ? 'partial' : 'scored',
@@ -165,13 +175,14 @@ export default function Scanner() {
     }
   }
 
+  const summary = report && assessment(report);
   return <div className={styles.surface}>
     <div className={styles.wrap}>
       <section className={styles.hero} aria-labelledby="cro-title">
         <div className={styles.introColumn}>
           <p className={styles.kicker}>Cascon Digital <span>/</span> Conversion tools</p>
           <h1 id="cro-title">Free ecommerce CRO audit</h1>
-          <p className={styles.intro}>Check your storefront’s public HTML. Get a readiness assessment and up to three evidence-backed improvements.</p>
+          <p className={styles.intro}>Check your storefrontâ€™s public HTML. Get a readiness assessment and up to three evidence-backed improvements.</p>
           <form onSubmit={submit} className={styles.form} data-clarity-mask="true">
             <label htmlFor="cro-store">Storefront URL</label>
             <div className={styles.inputRow}>
@@ -187,7 +198,10 @@ export default function Scanner() {
             </div>
             <p id="cro-input-help">Enter a homepage or a linked product or collection. No email required.</p>
           </form>
-          {state === 'loading' && <div className={styles.progress}><ScanLoader /><button type="button" onClick={cancel} className={styles.textAction}>Cancel scan</button></div>}
+          {(state === 'loading' || report) && <div className={styles.progress}>
+            <ScanTrace key={started} reads={reads} result={report ?? pendingReport} started={started} settled={Boolean(report)} />
+            {state === 'loading' && <button type="button" onClick={cancel} className={styles.textAction}>Cancel scan</button>}
+          </div>}
           {state === 'error' && <h2 ref={heading} tabIndex={-1} role="alert" className={styles.error}>{message}</h2>}
         </div>
         <aside className={styles.scope} aria-label="Pages the scanner samples">
@@ -206,10 +220,10 @@ export default function Scanner() {
       {report && <section className={styles.result} data-cro-report="" data-clarity-mask="true" aria-labelledby="cro-report-title">
         <header className={styles.resultTop}>
           <div>
-            <p className={styles.kicker}>{report.platform} · {new URL(report.store).hostname}</p>
+            <p className={styles.kicker}>{report.platform} Â· {new URL(report.store).hostname}</p>
             <h2 id="cro-report-title" ref={heading} tabIndex={-1}>Conversion readiness</h2>
             <p>Scanned <time dateTime={report.capturedAt}>{new Date(report.capturedAt).toLocaleString()}</time>
-              {' · '}{report.samples.filter(page => page.status === 'read' || page.status === 'partial').length} of 3 pages read</p>
+              {' Â· '}{report.samples.filter(page => page.status === 'read' || page.status === 'partial').length} of 3 pages read</p>
           </div>
           <div>
             <button className={styles.secondary} onClick={downloadReport} disabled={makingPdf} type="button">
@@ -220,15 +234,15 @@ export default function Scanner() {
         </header>
 
         <div className={styles.scoreBox}>
-          <div><p>Overall assessment</p><strong>{report.overall.score === null ? 'Score withheld' : report.overall.score + ' / 100'}</strong></div>
-          <p>{report.overall.assessed} of {report.overall.applicable} applicable checks were assessed. {report.overall.score === null && 'More evidence is needed for an overall score.'}</p>
+          <div><p>{summary?.label}</p><strong>{summary?.value}</strong></div>
+          <p>{summary?.detail}</p>
         </div>
 
         <details className={styles.trace} open>
           <summary>Scan evidence</summary>
           <ul>{report.samples.map(sample => <li key={sample.kind}>
             <span>{pages.find(page => page.kind === sample.kind)?.label}</span>
-            <span>{sampleLabels[sample.status]}{sample.path ? ' · ' + sample.path : ''}</span>
+            <span>{sampleLabels[sample.status]}{sample.path ? ' Â· ' + sample.path : ''}</span>
           </li>)}</ul>
           {report.samples.some(sample => sample.status === 'rate limited' || sample.status === 'blocked') &&
             <p className={styles.sampleNote}>The store limited automated access. The report uses the pages it could read. Missing evidence carries no score penalty.</p>}
@@ -252,7 +266,7 @@ export default function Scanner() {
                 <div><dt>Observed evidence</dt><dd>{item.evidence} <span>{item.path}</span></dd></div>
                 <div><dt>Why it matters</dt><dd>{item.why}</dd></div>
                 <div><dt>Suggested change</dt><dd>{item.change}</dd></div>
-                <div><dt>Priority, effort and confidence</dt><dd>{item.priority} priority · {item.effort} effort · {item.confidence} confidence</dd></div>
+                <div><dt>Priority, effort and confidence</dt><dd>{item.priority} priority Â· {item.effort} effort Â· {item.confidence} confidence</dd></div>
               </dl>
             </details>)}
         </section>

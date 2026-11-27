@@ -4,6 +4,7 @@ import { checkDns, fetcher, isPublicIp, MAX_HTML_BYTES, publicUrl, Rejection, sa
 import { evaluate } from '../src/evaluate';
 import { verifies } from '../src/extract';
 import type { DocumentEvidence } from '../src/extract';
+import { assessment } from '../../../lib/cro/model';
 import { principles } from '../../../lib/cro/principles';
 
 const at = new URL('https://example.com/');
@@ -133,4 +134,21 @@ test('prefix scans do not flag content missing beyond the byte limit', () => {
   const report = evaluate(home,{ homepage:home },[{kind:'homepage',path:'/',status:'partial'}],time);
   assert.equal(report.recommendations.length,0);
   assert.equal(report.overall.score,null);
+});
+
+
+test('uses a scoped homepage score only with sufficient homepage evidence', () => {
+  const home = evidence({ candidates:[{kind:'product',path:'/products/a',quality:2}],
+    links:new Set(['about','shipping','returns','contact','privacy','cart']), search:true });
+  const samples = [{kind:'homepage',path:'/',status:'read'}, {kind:'product',status:'rate limited'}] as const;
+  const report = evaluate(home, {homepage:home}, [...samples], time);
+  assert.equal(report.overall.score,null);
+  assert.equal(report.homepage.score,100);
+  assert.equal(assessment(report).label,'Homepage readiness');
+  assert.match(assessment(report).detail,/rate-limited/);
+  const sparse = evidence({complete:false, title:'', description:false, headings:0, nav:false,
+    main:false, search:false, lang:false, viewport:null, candidates:[], links:new Set()});
+  const insufficient = evaluate(sparse, {homepage:sparse}, [], time);
+  assert.equal(insufficient.homepage.score,null);
+  assert.equal(assessment(insufficient).label,'Verified checks');
 });

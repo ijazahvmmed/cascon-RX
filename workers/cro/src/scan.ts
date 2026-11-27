@@ -14,8 +14,9 @@ function requireRead(sample: Sample) {
   throw new Rejection('unsampled');
 }
 
-export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signal)) {
+export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signal), onRead?: (kind: PageKind, path: string) => void) {
   const root = new URL(entry.origin);
+  onRead?.('homepage', root.pathname);
   const homeResponse = await read(root, root, true);
   const home = await extract(homeResponse.document, homeResponse.url);
   home.complete = !homeResponse.isPartial();
@@ -38,6 +39,7 @@ export async function scan(entry: URL, signal: AbortSignal, read = fetcher(signa
       attemptedPath = candidate.pathname;
       tried.add(candidate.pathname);
       try {
+        onRead?.(kind, candidate.pathname);
         const response = await read(candidate, home.url);
         const page = await extract(response.document, response.url);
         page.complete = !response.isPartial();

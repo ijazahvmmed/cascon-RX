@@ -33,7 +33,16 @@
 .methodLink,.back,.textAction{display:inline-flex;align-items:center;gap:10px;min-height:44px;text-underline-offset:4px;font-weight:400}
 .methodLink:hover,.back:hover,.textAction:hover{text-decoration:underline}
 .methodLink{margin-top:6px;font-size:var(--font-size-sm);text-decoration:underline;color:var(--color-text)}
-.progress{margin-top:9px;display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+.progress{margin-top:16px}
+.scanTrace{max-width:100%;border-top:1px solid var(--color-border);padding-top:10px}
+.loading{min-height:40px}
+.steps{margin:4px 0 6px 7px;padding-left:17px;border-left:1px solid var(--color-border)}
+.steps li{position:relative;line-height:1.4;padding:5px 0 9px;animation:enter .35s var(--ease-out-quint) both}
+.steps small{display:block;color:var(--color-text-secondary);font-size:var(--font-size-xs);overflow-wrap:anywhere}
+.traceDot,.spin{position:absolute;left:-22px;top:9px;width:8px;height:8px;border-radius:50%;background:#888;outline:3px solid var(--color-bg)}
+.spin{background:var(--color-bg);border:1.5px solid #bbb;border-top-color:var(--color-text);animation:rotate .7s linear infinite}
+.doneDot{color:var(--color-text-secondary)}
+@keyframes rotate{to{transform:rotate(360deg)}}
 .loading{display:flex;align-items:center;gap:9px;font-weight:400}
 .pixels{display:grid;grid-template-columns:repeat(3,4px);gap:2px}
 .pixels i{width:4px;height:4px;border-radius:1px;background:var(--color-text);opacity:.24;animation:pixel 650ms ease-in-out infinite}
@@ -53,7 +62,7 @@
 .trace summary,.catalogue summary{min-height:44px;display:flex;align-items:center;gap:8px;cursor:pointer;font-size:.91rem;font-weight:400;list-style:none;padding:8px 0}
 .trace summary::-webkit-details-marker,.catalogue summary::-webkit-details-marker{display:none}
 .trace summary:after,.catalogue summary:after{margin-left:auto;content:'+';font-size:1.25rem;color:var(--color-text)}
-.trace[open] summary:after,.catalogue details[open] summary:after{content:'−'}
+.trace[open] summary:after,.catalogue details[open] summary:after{content:'âˆ’'}
 .trace summary:hover,.catalogue summary:hover{color:var(--color-text)}
 .trace ul{border-left:1px solid var(--color-border);margin:0 0 12px 7px;padding:2px 0 6px 15px}
 .sampleNote{font-size:var(--font-size-sm);margin:0 0 14px}

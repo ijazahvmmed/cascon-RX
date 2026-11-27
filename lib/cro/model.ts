@@ -50,8 +50,24 @@ export interface ScanReport {
   platform: Platform;
   capturedAt: string;
   overall: Coverage;
+  homepage: Coverage;
   categories: CategoryResult[];
   samples: Sample[];
   recommendations: Finding[];
 }
 export type ScanError = 'invalid' | 'blocked' | 'unavailable' | 'busy' | 'store-limited' | 'denied' | 'limited' | 'timeout' | 'unsampled' | 'unverified';
+
+export function assessment(report: ScanReport) {
+  if (report.overall.score !== null) return { label: 'Storefront readiness', value: report.overall.score + ' / 100',
+    detail: report.overall.passed + ' of ' + report.overall.assessed + ' assessed checks passed across the sampled storefront.' };
+  const product = report.samples.find(sample => sample.kind === 'product');
+  const reason = product?.status === 'rate limited' ? 'The store rate-limited the product page.' :
+    product?.status === 'blocked' ? 'The store declined the product-page request.' :
+    'Evidence for a storewide score is incomplete.';
+  if (report.homepage?.score != null) return { label: 'Homepage readiness', value: report.homepage.score + ' / 100',
+    detail: report.homepage.passed + ' of ' + report.homepage.assessed + ' assessed homepage checks passed. ' + reason };
+  return { label: 'Verified checks', value: report.overall.assessed ? report.overall.passed + ' of ' + report.overall.assessed + ' passed' : 'No checks assessed',
+    detail: 'The sample is too limited for a readiness score. See the page evidence below.' };
+}
+
+export type ScanUpdate = { reading: PageKind; path: string } | { report: ScanReport } | { error: ScanError };

@@ -153,6 +153,7 @@ export function evaluate(home: DocumentEvidence, pages: Partial<Record<PageKind,
   }));
   const overall = coverage(outcomes, scoreThresholds.minimumOverallChecks, scoreThresholds.overall);
   if (!pages.product || summary.filter(c => c.score !== null).length < scoreThresholds.minimumCategories) overall.score = null;
+  const homepage = coverage(outcomes.filter(o => o.page === 'homepage'), 6, scoreThresholds.category);
   const candidates: Finding[] = outcomes.flatMap(({ principle, page, path, decision }) =>
     path && decision.state === 'fail' && decision.evidence && decision.confidence ?
       [{ ...principle, page, path, evidence: decision.evidence, confidence: decision.confidence }] : []);
@@ -163,5 +164,5 @@ export function evaluate(home: DocumentEvidence, pages: Partial<Record<PageKind,
     if (!recommendations.some(v => v.category === finding.category)) recommendations.push(finding);
     if (recommendations.length >= 3) break;
   }
-  return { version: 1, store: home.url.origin, platform: home.platform, capturedAt, overall, categories: summary, samples, recommendations };
+  return { version: 1, store: home.url.origin, platform: home.platform, capturedAt, overall, homepage, categories: summary, samples, recommendations };
 }
