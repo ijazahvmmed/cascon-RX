@@ -13,7 +13,7 @@ const types = {
 const robots = { 'x-robots-tag': 'noindex, nofollow', 'cache-control': 'no-store' };
 
 export async function POST(request: Request) {
-  const secret = process.env.CRO_RELAY_SECRET;
+  const secret = process.env.CRO_RELAY_SECRET?.trim();
   const actual = Buffer.from(request.headers.get('authorization') ?? '');
   const expected = Buffer.from('Bearer ' + secret);
   if (!secret || actual.length !== expected.length || !timingSafeEqual(actual, expected)) {

@@ -8,8 +8,8 @@ const baseHeaders = { 'cache-control': 'no-store', 'x-robots-tag': 'noindex, nof
 export async function POST(request: Request) {
   const origin = request.headers.get('origin') ?? '';
   if (!allowedOrigins.has(origin)) return new Response(null, { status: 403, headers: baseHeaders });
-  const secret = process.env.CRO_RELAY_SECRET;
-  const worker = process.env.CRO_WORKER_URL;
+  const secret = process.env.CRO_RELAY_SECRET?.trim();
+  const worker = process.env.CRO_WORKER_URL?.trim();
   const ip = request.headers.get('x-vercel-forwarded-for')?.trim() ?? '';
   if (!secret || !worker || !isIP(ip)) return Response.json({ error: 'busy' }, { status: 503, headers: baseHeaders });
   if (!request.body || !/^application\/json(?:;|$)/i.test(request.headers.get('content-type') ?? '')) {

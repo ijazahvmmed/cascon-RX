@@ -23,7 +23,7 @@ const errors: Record<ScanError, string> = {
   limited: 'The scanner has reached its limit. Please try again later.',
   timeout: 'The store took too long to open. Please try again later.',
 };
-const worker = process.env.NEXT_PUBLIC_CRO_WORKER_URL;
+const worker = process.env.NEXT_PUBLIC_CRO_WORKER_URL?.trim();
 const scanUrl = worker ? worker + '/scan' : process.env.NODE_ENV === 'development'
   ? 'http://localhost:8787/scan' : '/api/cro/scan';
 
@@ -43,7 +43,7 @@ function consultationUrl(report: ScanReport) {
 }
 
 export default function Scanner() {
-  const sitekey = process.env.NEXT_PUBLIC_CRO_TURNSTILE_SITE_KEY;
+  const sitekey = process.env.NEXT_PUBLIC_CRO_TURNSTILE_SITE_KEY?.trim();
   const [token,setToken] = useState('');
   const [challengeKey,setChallengeKey] = useState(0);
   const [target, setTarget] = useState('');
