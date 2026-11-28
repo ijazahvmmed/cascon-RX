@@ -182,6 +182,10 @@ export const insights: Insight[] = [
         "title": "Estimate against the type of build",
         "paragraphs": [
           "For a straightforward store, decide on a theme, prepare product content and agree payment and shipping early. For a custom storefront, allow time to agree the layouts, build reusable sections and review the mobile experience. Complex builds add dependencies such as catalogue migration, multi-market configuration or fulfilment integrations."
+        ],
+        "link": [
+          "WooCommerce to Shopify migration checklist",
+          "/insights/woocommerce-to-shopify-migration-checklist"
         ]
       },
       {
