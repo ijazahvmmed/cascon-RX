@@ -12,8 +12,13 @@
     "enabled": false
   },
   "vars": {
-    "ALLOWED_ORIGINS": "https://www.cascondigital.com,https://cascondigital.com"
+    "ALLOWED_ORIGINS": "https://www.cascondigital.com,https://cascondigital.com",
+    "EGRESS_URL": "https://www.cascondigital.com/api/cro/egress",
+    "FREE_ENRICHMENT": "verified-free"
   },
+  "kv_namespaces": [{ "binding": "REPORT_CACHE", "id": "b953977e9d0f40d6984e155bcef101db" }],
+  "ai": { "binding": "AI" },
+  "browser": { "binding": "BROWSER" },
   "durable_objects": {
     "bindings": [
       {

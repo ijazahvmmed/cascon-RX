@@ -12,6 +12,8 @@ interface Resources {
   AI?:Ai;
   BROWSER?:BrowserRun;
   FREE_ENRICHMENT?:string;
+  EGRESS_URL?:string;
+  CRO_RELAY_SECRET?:string;
 }
 async function bounded<T>(work:Promise<T>, fallback:T, ms:number) {
   let timer:ReturnType<typeof setTimeout> | undefined;
@@ -37,7 +39,10 @@ export class ScanBudget extends DurableObject<Resources> {
     let privateEvidence:unknown;
     let html='';
     const deadline = AbortSignal.timeout(17000);
-    const read = fetcher(deadline);
+    const egress = this.env.EGRESS_URL && this.env.CRO_RELAY_SECRET
+      ? {url:this.env.EGRESS_URL,secret:this.env.CRO_RELAY_SECRET} : undefined;
+    if (this.env.EGRESS_URL && !egress) throw new Error('Missing egress authorization');
+    const read = fetcher(deadline, undefined, undefined, egress);
     const reading = scan(storeEntry(url), deadline, read,undefined,
       enabled && this.env.BROWSER ? value=>{html=value;} : undefined, evidence=>{privateEvidence=evidence;});
     const original = await reading.catch(async error => {

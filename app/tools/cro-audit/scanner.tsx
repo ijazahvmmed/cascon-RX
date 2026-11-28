@@ -23,8 +23,9 @@ const errors: Record<ScanError, string> = {
   limited: 'The scanner has reached its limit. Please try again later.',
   timeout: 'The store took too long to open. Please try again later.',
 };
-const worker = process.env.NEXT_PUBLIC_CRO_WORKER_URL ||
-  (process.env.NODE_ENV === 'development' ? 'http://localhost:8787' : '');
+const worker = process.env.NEXT_PUBLIC_CRO_WORKER_URL;
+const scanUrl = worker ? worker + '/scan' : process.env.NODE_ENV === 'development'
+  ? 'http://localhost:8787/scan' : '/api/cro/scan';
 
 function consultationUrl(report: ScanReport) {
   const booking = new URL(CAL_LINK);
@@ -79,7 +80,6 @@ export default function Scanner() {
     setReport(null);
     setMessage('');
     setPdfError('');
-    if (!worker) { setMessage(errors.busy); setState('error'); return; }
     const controller = new AbortController();
     active.current = controller;
     const start = performance.now();
@@ -90,7 +90,7 @@ export default function Scanner() {
     engagement.current.clear();
     const timer = window.setTimeout(() => controller.abort('timeout'), 40_000);
     try {
-      const request = await fetch(new URL('/scan', worker), {
+      const request = await fetch(scanUrl, {
         method: 'POST', signal: controller.signal, cache: 'no-store', credentials: 'include',
         referrerPolicy: 'no-referrer',
         headers: { 'content-type': 'application/json', accept: 'application/x-ndjson' }, body: JSON.stringify({ url: target.trim(), token }),

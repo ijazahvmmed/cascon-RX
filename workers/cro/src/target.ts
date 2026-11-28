@@ -95,7 +95,7 @@ export function retryDelay(value: string | null, now = Date.now()) {
   return Number.isSafeInteger(seconds) && seconds >= 0 ? seconds : undefined;
 }
 
-export function fetcher(signal: AbortSignal, transport: Transport = fetch, resolve = checkDns) {
+export function fetcher(signal: AbortSignal, transport: Transport = fetch, resolve = checkDns, egress?: { url: string; secret: string }) {
   let outbound = 0, lastPageRequest = 0, restricted = false;
   const delay = async () => {
     if (transport !== fetch) return;
@@ -122,13 +122,20 @@ export function fetcher(signal: AbortSignal, transport: Transport = fetch, resol
       if (restricted) throw new Rejection('blocked');
       if (++outbound > 8) throw new Rejection('unavailable');
       await delay();
-      try { await resolve(current.hostname, signal, transport); }
-      catch (error) { throw error instanceof Rejection ? error : new Rejection('unavailable'); }
+      if (!egress) {
+        try { await resolve(current.hostname, signal, transport); }
+        catch (error) { throw error instanceof Rejection ? error : new Rejection('unavailable'); }
+      }
       const requestedAt = Date.now();
-      const response = await transport(current, {
+      const response = await (egress ? transport(egress.url, {
+        method: 'POST', redirect: 'manual', signal,
+        headers: { authorization: 'Bearer ' + egress.secret, 'content-type': 'application/json' },
+        body: JSON.stringify({ url: current.href, kind }),
+      }) : transport(current, {
         redirect: 'manual', signal,
         headers: { accept, 'user-agent': 'CasconCROAudit/1.0 (+https://www.cascondigital.com/tools/cro-audit/methodology)' },
-      }).catch(() => { throw new Rejection('unavailable'); });
+      })).catch(() => { throw new Rejection('unavailable'); });
+      if (egress && response.headers.get('x-cro-egress-blocked') === '1') throw new Rejection('blocked');
       const responseMs = Date.now() - requestedAt;
       restricted ||= response.status === 403 || response.status === 429 || response.headers.has('cf-mitigated');
       if (redirects.has(response.status)) {

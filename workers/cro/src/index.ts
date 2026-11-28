@@ -12,6 +12,8 @@ interface Env {
   REPORT_CACHE?: KVNamespace;
   LOCAL_PREVIEW?: string;
   STAGING_TEST_ORIGIN?: string;
+  EGRESS_URL?: string;
+  CRO_RELAY_SECRET?: string;
   ALLOWED_ORIGINS: string;
   SCAN_BUDGET: DurableObjectNamespace<ScanBudget>;
 }
@@ -87,6 +89,8 @@ export default {
     if (!origin || !env.ALLOWED_ORIGINS?.split(',').map(x => x.trim()).includes(origin)) {
       return new Response(null,{ status: 403, headers: { 'x-robots-tag': 'noindex' } });
     }
+    if (env.EGRESS_URL && (!env.CRO_RELAY_SECRET ||
+      request.headers.get('authorization') !== 'Bearer ' + env.CRO_RELAY_SECRET)) return reject('verification');
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: defaults });
     if (request.method !== 'POST') return new Response(null, { status: 405, headers: { ...defaults, allow: 'POST, OPTIONS' } });
     if (!/^application\/json(?:;|$)/i.test(request.headers.get('content-type') ?? '')) return reject('invalid');
@@ -96,7 +100,7 @@ export default {
       const {target,token} = await input(request, deadline);
       if (deadline.aborted) return reject('timeout');
       if (merchantKey(target) === merchantKey(url)) return reject('invalid');
-      const ip = request.headers.get('cf-connecting-ip') ||
+      const ip = (env.EGRESS_URL ? request.headers.get('x-cro-client-ip') : request.headers.get('cf-connecting-ip')) ||
         (/^(localhost|127\.0\.0\.1)$/.test(url.hostname) ? 'local-dev' : '');
       if (!ip) return reject('busy');
       const preview = env.LOCAL_PREVIEW === 'true' && ['localhost','127.0.0.1'].includes(url.hostname);
