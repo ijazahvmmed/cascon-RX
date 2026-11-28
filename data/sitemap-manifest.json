@@ -150,14 +150,14 @@
     "/about": {
       "fingerprint": "59ca466692a5bd8f465459e4520f133db2dbb63cabfb4bb0cdaf7a6eccbf658a",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T09:18:53.1Z",
+      "sourceModifiedAt": "2026-11-26T09:18:53.100Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "lib/constants.ts"
     },
     "": {
       "fingerprint": "ec63e03d5756d676839e4f09574c297c663c81fad8f3a40d3fd73a8235a437ef",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T09:18:53.1Z",
+      "sourceModifiedAt": "2026-11-26T09:18:53.100Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "lib/constants.ts"
     },
@@ -262,7 +262,7 @@
     "/work/bagus": {
       "fingerprint": "0a69d38761b2871599514ed1d83224127ef5172769bc5be351b8a116aeec1fed",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T09:18:53.1Z",
+      "sourceModifiedAt": "2026-11-26T09:18:53.100Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "lib/constants.ts"
     },
@@ -290,14 +290,14 @@
     "/work/slept-club": {
       "fingerprint": "fd6703befc1ec6f70e71e3bfe7e7bc63bf4dfcff7b32f81d5001ef0e78acb387",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T09:18:53.1Z",
+      "sourceModifiedAt": "2026-11-26T09:18:53.100Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "lib/constants.ts"
     },
     "/shopify-agency/bangalore": {
       "fingerprint": "0b299969e168bf53d72e69b3781b286fa65154b4bb1d9d8f2999539d6214edb7",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T09:18:53.1Z",
+      "sourceModifiedAt": "2026-11-26T09:18:53.100Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "lib/constants.ts"
     },
@@ -339,7 +339,7 @@
     "/insights/shopify-website-development-cost-india": {
       "fingerprint": "32b3862c19012153215f7b2ed17571c2984e96fe5c172c355d11adb33fe3a4af",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T16:33:59.36Z",
+      "sourceModifiedAt": "2026-11-26T16:33:59.360Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "app/insights/[slug]/page.tsx"
     },
@@ -360,14 +360,14 @@
     "/insights/indian-shopify-storefronts-50-store-study": {
       "fingerprint": "5e88b5dfb31bd68f38d810ad1ee02372194906f7e66574632bf2aad487b89bf9",
       "lastModified": "2026-11-26",
-      "sourceModifiedAt": "2026-11-26T16:33:59.36Z",
+      "sourceModifiedAt": "2026-11-26T16:33:59.360Z",
       "dateBasis": "modified-working-tree-source",
       "dateSource": "app/insights/[slug]/page.tsx"
     },
     "/tools/cro-audit/methodology": {
       "fingerprint": "72a7b0bdd7cd19b077fbf5b7f6e3f047ad9ca0eb5eda54f43ba17a5d8d87693f",
       "lastModified": "2026-11-28",
-      "sourceModifiedAt": "2026-11-27T20:48:09Z",
+      "sourceModifiedAt": "2026-11-27T20:48:09.000Z",
       "dateBasis": "git-content-commit",
       "dateSource": "lib/cro/model.ts"
     },

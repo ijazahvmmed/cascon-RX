@@ -49,7 +49,15 @@ export async function contentFingerprint(html, projectRoot, base) {
   const attrs=attributes(match[0]);let src=attrs.src || attrs.href || attrs.srcset?.split(',')[0]?.trim().split(' ')[0];if(!src)continue;
   const url=new URL(src,base);if(url.pathname==='/_next/image')src=url.searchParams.get('url')||src;
   let assetHash=null, file=null;
-  if(src.startsWith('/')&&!src.startsWith('//')) { file=path.resolve(projectRoot,'public','.'+new URL(src,base).pathname);const publicRoot=path.resolve(projectRoot,'public')+path.sep;if(!file.startsWith(publicRoot))throw Error('Asset outside public directory');try{assetHash=sha(await readFile(file));}catch{throw Error('Missing local asset '+src);} }
+  if(src.startsWith('/')&&!src.startsWith('//')) {
+   file=path.resolve(projectRoot,'public','.'+new URL(src,base).pathname);
+   const publicRoot=path.resolve(projectRoot,'public')+path.sep;
+   if(!file.startsWith(publicRoot))throw Error('Asset outside public directory');
+   try {
+    const contents=await readFile(file);
+    assetHash=sha(path.extname(file).toLowerCase()==='.svg' ? contents.toString('utf8').replace(/\r\n?/g,'\n') : contents);
+   } catch {throw Error('Missing local asset '+src);}
+  }
   images.push({src,alt:attrs.alt||'',assetHash,file});
  }
  const meta=[...html.matchAll(/<(?:meta|link)\b[^>]*>/gi)].map(m=>attributes(m[0])).filter(t=>t.rel==='canonical'||t.name==='description'||t.property?.startsWith('og:'));
