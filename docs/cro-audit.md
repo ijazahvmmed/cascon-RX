@@ -1,11 +1,12 @@
 # Ecommerce CRO scanner
 
-Private staging on the Cascon Workers Free account, November 28, 2026. The feature branch is `feat/cro-audit`.
+The [public CRO scanner](https://www.cascondigital.com/tools/cro-audit) launched on 28 November 2026. A separate Worker remains available for private staging.
 
 ## Validation
 
 | Measurement | Result |
 | --- | --- |
+| Production browser smoke test | Turnstile admitted the Cipher Skincare scan. The report returned 57 verified shopping points, with three of seven questions unverified, mobile and desktop homepage screenshots, and a downloadable PDF. |
 | Real visitor on the local staging frontend | Turnstile admitted the jerso.in scan. The merchant returned HTTP 429 for the homepage, so the scanner stopped. A regression test covers the Siteverify redirect mode that had caused a misleading busy message. |
 | Hosted analysis of Cipher Skincare | All three pages read, five of seven shopping questions resolved, one free recommendation, 48 private rule outcomes. The cold analysis took 15.607 s. A repeat through the same report owner took 203 ms. Both viewport readings completed. These tests used an account-authorized private fixture. |
 | Local benchmark on live merchant pages | 64 distinct stores including Finewares, Wearslept and Bagus. 62 returned reports, 61 resolved at least one question, one supplied all three pages and none resolved all seven questions. 26 reports included at least one recommendation. Product requests were rate-limited on 50 of the 62 reports. |
