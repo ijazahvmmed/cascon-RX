@@ -104,11 +104,11 @@
     },
     {
       "path": "/tools/cro-audit",
-      "lastModified": "2026-11-27"
+      "lastModified": "2026-11-28"
     },
     {
       "path": "/tools/cro-audit/methodology",
-      "lastModified": "2026-11-27"
+      "lastModified": "2026-11-28"
     },
     {
       "path": "/work",
@@ -365,17 +365,17 @@
       "dateSource": "app/insights/[slug]/page.tsx"
     },
     "/tools/cro-audit/methodology": {
-      "fingerprint": "e4e9727ea25a069f3409613f1780503b4ce364d9e88fdf723626a0b09985df0a",
-      "lastModified": "2026-11-27",
-      "sourceModifiedAt": "2026-11-27T18:26:03.225Z",
-      "dateBasis": "modified-working-tree-source",
-      "dateSource": "app/tools/cro-audit/methodology/page.tsx"
+      "fingerprint": "72a7b0bdd7cd19b077fbf5b7f6e3f047ad9ca0eb5eda54f43ba17a5d8d87693f",
+      "lastModified": "2026-11-28",
+      "sourceModifiedAt": "2026-11-27T20:48:09.000Z",
+      "dateBasis": "git-content-commit",
+      "dateSource": "lib/cro/model.ts"
     },
     "/tools/cro-audit": {
-      "fingerprint": "01f48343bd77f1431906337eea84a785951e4ea59c51e4be37001628428cefb8",
-      "lastModified": "2026-11-27",
-      "sourceModifiedAt": "2026-11-27T18:24:24.037Z",
-      "dateBasis": "modified-working-tree-source",
+      "fingerprint": "468489bb4c623bc4546710e1c82f1dcd27e09d2802494caed0ffdcd89ec2b67e",
+      "lastModified": "2026-11-28",
+      "sourceModifiedAt": "2026-11-28T13:03:36.000Z",
+      "dateBasis": "git-content-commit",
       "dateSource": "app/tools/cro-audit/scanner.tsx"
     }
   },
