@@ -89,7 +89,9 @@ export default {
     if (!origin || !env.ALLOWED_ORIGINS?.split(',').map(x => x.trim()).includes(origin)) {
       return new Response(null,{ status: 403, headers: { 'x-robots-tag': 'noindex' } });
     }
-    if (env.EGRESS_URL && (!env.CRO_RELAY_SECRET ||
+    const preview = env.LOCAL_PREVIEW === 'true' && ['localhost','127.0.0.1'].includes(url.hostname);
+    const useRelay = !preview && Boolean(env.EGRESS_URL);
+    if (useRelay && (!env.CRO_RELAY_SECRET ||
       request.headers.get('authorization') !== 'Bearer ' + env.CRO_RELAY_SECRET)) return reject('verification');
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: defaults });
     if (request.method !== 'POST') return new Response(null, { status: 405, headers: { ...defaults, allow: 'POST, OPTIONS' } });
@@ -100,10 +102,9 @@ export default {
       const {target,token} = await input(request, deadline);
       if (deadline.aborted) return reject('timeout');
       if (merchantKey(target) === merchantKey(url)) return reject('invalid');
-      const ip = (env.EGRESS_URL ? request.headers.get('x-cro-client-ip') : request.headers.get('cf-connecting-ip')) ||
+      const ip = (useRelay ? request.headers.get('x-cro-client-ip') : request.headers.get('cf-connecting-ip')) ||
         (/^(localhost|127\.0\.0\.1)$/.test(url.hostname) ? 'local-dev' : '');
       if (!ip) return reject('busy');
-      const preview = env.LOCAL_PREVIEW === 'true' && ['localhost','127.0.0.1'].includes(url.hostname);
       if (!preview && (!env.VISITOR_SECRET || env.VISITOR_SECRET.length < 32 || !env.TURNSTILE_SECRET || !env.REPORT_CACHE)) return reject('busy');
       if (!preview && !await challenge(env.TURNSTILE_SECRET!,token,origin,ip,deadline)) return reject('verification');
       const user = preview ? {id:ip,cookie:undefined} : await identity(request.headers.get('cookie') || '',env.VISITOR_SECRET!);
